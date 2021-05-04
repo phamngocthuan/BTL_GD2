@@ -12,7 +12,7 @@ function ItemOption(props) {
         <>
             { nameIcon && 
                 <div className="icon-item-option">
-                    <Icon name={nameIcon} style={{ padding : '4px'}}/>
+                    <Icon name={nameIcon} style={{ margin : '4px'}}/>
                 </div>
             }
             { squareShape && 
