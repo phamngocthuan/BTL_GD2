@@ -82,6 +82,7 @@ export default function ModalDraggable(props)  {
               <div ref={draggleRef}>{modal}</div>
             </Draggable>
           )}
+          maskClosable={false}
         >
           {bodyModal}
         </Modal>
