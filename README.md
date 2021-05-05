@@ -177,3 +177,161 @@ axiosClient.interceptors.response.use(
 );
 export default axiosClient;
 export { headers };
+///////////////////////////
+Modal 
+////////////////////////////
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Icon from '../atomics/Icon';
+import '../../assets/styles/atomics/modal.css';
+Modal.propTypes = {
+    title: PropTypes.string,
+    mess: PropTypes.any,
+    width: PropTypes.string,
+    img: PropTypes.string,
+    buttons: PropTypes.array,
+    show: PropTypes.bool,
+    onClickClose: PropTypes.func,
+    messInnerHTML: PropTypes.any,
+};
+
+/**
+ * Component modal
+ * @param {*} props
+ * @author LQTUAN (28/12/2020)
+ */
+function Modal(props) {
+    const { title, mess, width, img, buttons, onClickClose, messInnerHTML } = props;
+    const List = buttons
+        ? buttons.map((button, index) => (
+              <div key={index} className="modal-button-item">
+                  {button}
+              </div>
+          ))
+        : '';
+    return (
+        <div className={props.show ? 'modal modal-show' : 'modal modal-hide'}>
+            <div className="modal-background"></div>
+            <div className="modal-main">
+                <div className="modal-icon-close" onClick={onClickClose}>
+                    <Icon name="IconTime" fill="#6E717D" />
+                </div>
+                {img ? (
+                    <div className="modal-img">
+                        <Icon name={img} />
+                    </div>
+                ) : (
+                    ''
+                )}
+                {title ? <div className="modal-title font-large-title-1">{title}</div> : ''}
+                {messInnerHTML ? (
+                    <div
+                        className="modal-mess font-body"
+                        dangerouslySetInnerHTML={{
+                            __html: messInnerHTML,
+                        }}
+                    ></div>
+                ) : mess ? (
+                    <div className="modal-mess font-body">{mess}</div>
+                ) : (
+                    ''
+                )}
+                {buttons ? <div className="modal-button">{List}</div> : ''}
+            </div>
+        </div>
+    );
+}
+export default Modal;
+///////////////////////////////////////
+.body {
+    position: relative;
+}
+
+.modal {
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 604;
+}
+
+.modal-hide {
+    display: none !important;
+}
+
+.modal-background {
+    position: fixed;
+    background-color: #060E2E;
+    opacity: 20%;
+    border: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
+.modal-main {
+    padding: 64px;
+    position: relative;
+    border-radius: 12px;
+    position: fixed;
+    z-index: 3;
+    background-color: #fff;
+    width: 634px;
+    box-shadow: 5px 20px 40px #00000033;
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 36px;
+}
+
+.modal-icon-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+}
+
+.modal-img {
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    margin-bottom: 16px;
+}
+
+.modal-title.font-large-title-1 {
+    color: #060E2E;
+}
+
+.modal-mess {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-button {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-button .btn-type-1 {
+    color: #060E2E;
+}
+
+.modal-button-item {
+    margin: 0 4px;
+}
+
+.modal-button-item .button-container {
+    min-width: 120px;
+}
+
+.modal-mess span.font-title-3{
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
