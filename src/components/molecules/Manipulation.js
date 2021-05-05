@@ -7,7 +7,10 @@ Manipolation.propTypes = {
 
 };
 const action = [
-    'Thêm', 'Sửa', 'Xóa', 'Nạp'
+    {title: "Thêm", nameIcon: "Pointer"},
+    {title: "Sửa", nameIcon: "IconModify"},
+    {title: "Xóa", nameIcon: "IconDelete"},
+    {title: "Nạp", nameIcon: "IconDownload"},
 ]
 const status = [
     {status : 'Chưa gửi', color : '#007b00'},
@@ -19,7 +22,7 @@ const status = [
 function Manipolation(props) {
     const elemtAction = action.map((item,index) => {
         return (
-            <ItemOption key={index} content={item} nameIcon={'abc'}>
+            <ItemOption key={index} content={item.title} nameIcon={item.nameIcon}>
 
             </ItemOption>
         )

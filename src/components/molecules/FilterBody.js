@@ -1,41 +1,55 @@
-import e from 'cors';
-import React, {  } from 'react';
+
+import React, {  useState} from 'react';
 import '../../assets/styles/molecules/FilterBody.scss'
 import ItemOption from '../atomics/ItemOption'
+import { Radio } from 'antd';
+import Selects from '../atomics/Select'
+import InputDate from '../atomics/InputTypeDate'
 
 
 FilterBody.propTypes = {
 
 };
 const status = [
-    {status : 'Chưa gửi11', color : '#007b00'},
+    {status : 'Chưa gửi', color : '#007b00'},
     {status : 'Chờ duyệt', color : '#000000'},
     {status : 'Từ chối', color : '#ff0000'},
     {status : 'Đã duyệt', color : '#0000ff'},
 ]
 function FilterBody(props) {
-    
+
+    const [value, setValue] = useState(status[0].status)
     const elemtStatus = status.map((item,index) => {
         return (
-            <ItemOption key={index} content={item.status} nameIcon={"InputRadio"} >
-
-            </ItemOption>
+            <Radio value={item.status}>
+                {item.status}
+            </Radio>
         )
     })
-
+    const onChange = e => {
+        setValue(e.target.value);
+    };
     return (
         <div className='filter-body-content'>
             <div className='filter-top'>
+               
+                <Radio.Group onChange={onChange} value={value}>
                 {elemtStatus}
-                <div>
-                    Xem theo
-                    <select>
-                        <option>abc</option>
-                    </select>
-                </div>
+                </Radio.Group>
+                {/* <div>
+                    <span style={{paddingRight : '5px'}}>Xem theo</span>
+                    <Selects ></Selects>
+                </div> */}
             </div>
             <div className='filter-bottom'>
-                    Chọn theo thời gian
+                    <div className="pre-time">
+                        <span style={{paddingRight:'5px'}}>Từ</span>
+                        <InputDate />
+                    </div>
+                    <div className="bef-time">
+                        <span style={{paddingRight:'5px'}}>Đến</span>
+                        <InputDate />
+                    </div>
             </div>
             
         </div>

@@ -9,7 +9,7 @@ ItemOption.propTypes = {
 function ItemOption(props) {
     const {content, nameIcon, squareShape} = props;
     return (
-        <>
+        <div class='item-option'>
             { nameIcon && 
                 <div className="icon-item-option">
                     <Icon name={nameIcon} style={{ margin : '4px'}}/>
@@ -32,7 +32,7 @@ function ItemOption(props) {
             <div>
                 {content}
             </div>
-        </>
+        </div>
     );
 }
 

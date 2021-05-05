@@ -5,3 +5,17 @@
     display: flex;
     align-items: center;
 }
+.header-left {
+    width: 224px;
+    display: flex;
+    padding-left: 12px;
+}
+.header-right {
+    width: calc(100% - 224px);
+}
+.name-logo{
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 12px;
+}
