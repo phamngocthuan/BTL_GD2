@@ -7,9 +7,14 @@ ItemOption.propTypes = {
 };
 
 function ItemOption(props) {
-    const {content, nameIcon, squareShape} = props;
+    const {content, nameIcon, squareShape, showModal, item} = props;
     return (
-        <div class='item-option'>
+        <div class='item-option' onClick={() => 
+            {
+                showModal(item.content)
+            }
+        
+        }>
             { nameIcon && 
                 <div className="icon-item-option">
                     <Icon name={nameIcon} style={{ margin : '4px'}}/>

@@ -153,7 +153,7 @@ const setRowClassName = (record) => {
           return {
             onClick: event => {
               props.setDataShow(record);
-            }, // click row
+            }, 
           };
         }}
       />

@@ -36,10 +36,7 @@ function FilterBody(props) {
                 <Radio.Group onChange={onChange} value={value}>
                 {elemtStatus}
                 </Radio.Group>
-                {/* <div>
-                    <span style={{paddingRight : '5px'}}>Xem theo</span>
-                    <Selects ></Selects>
-                </div> */}
+
             </div>
             <div className='filter-bottom'>
                     <div className="pre-time">

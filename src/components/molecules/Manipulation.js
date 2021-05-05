@@ -1,16 +1,16 @@
-import React, {  } from 'react';
-import '../../assets/styles/molecules/Manipolation.scss'
+import React, { useState } from 'react';
+import '../../assets/styles/molecules/Manipulation.scss'
 import ItemOption from '../atomics/ItemOption'
-
-
-Manipolation.propTypes = {
+import Modal from '../molecules/Modal'
+import BodyModal from '../atomics/BodyModal'
+Manipulation.propTypes = {
 
 };
 const action = [
-    {title: "Thêm", nameIcon: "Pointer"},
-    {title: "Sửa", nameIcon: "IconModify"},
-    {title: "Xóa", nameIcon: "IconDelete"},
-    {title: "Nạp", nameIcon: "IconDownload"},
+    {title: "Thêm", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
+    {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
+    {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
+    {title: "Nạp", nameIcon: "IconDownload", state : "", content : "Nạp"},
 ]
 const status = [
     {status : 'Chưa gửi', color : '#007b00'},
@@ -19,10 +19,27 @@ const status = [
     {status : 'Đã duyệt', color : '#0000ff'},
 ]
 
-function Manipolation(props) {
+
+
+function Manipulation(props) {
+
+    const [hideModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState('Thêm yêu cầu')
+
+    const showModal = (title) => {
+        setShowModal(!hideModal);
+        setTitleModal(title)
+    }
+
     const elemtAction = action.map((item,index) => {
         return (
-            <ItemOption key={index} content={item.title} nameIcon={item.nameIcon}>
+            <ItemOption 
+            key={index}
+            item={item} 
+            content={item.title}
+             nameIcon={item.nameIcon}
+             showModal={showModal}
+            >
 
             </ItemOption>
         )
@@ -44,9 +61,11 @@ function Manipolation(props) {
             <div style={{ alignItems : 'center'}}>
                 {elemtStatus}
             </div>
-            
+            <Modal visible={hideModal} setVisible={setShowModal}
+                title = {titleModal} bodyModal = {<BodyModal />}
+            />
         </div>
     );
 }
 
-export default Manipolation;
+export default Manipulation;
