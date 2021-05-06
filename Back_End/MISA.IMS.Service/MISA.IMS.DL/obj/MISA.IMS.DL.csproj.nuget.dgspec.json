@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {}
+    "C:\\Users\\pnthuan\\Desktop\\New folder\\BTL_GD2\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {}
   },
   "projects": {
-    "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
+    "C:\\Users\\pnthuan\\Desktop\\New folder\\BTL_GD2\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
+        "projectUniqueName": "C:\\Users\\pnthuan\\Desktop\\New folder\\BTL_GD2\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
         "projectName": "MISA.IMS.DL",
-        "projectPath": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
-        "packagesPath": "C:\\Users\\phamn\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\obj\\",
+        "projectPath": "C:\\Users\\pnthuan\\Desktop\\New folder\\BTL_GD2\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
+        "packagesPath": "C:\\Users\\pnthuan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pnthuan\\Desktop\\New folder\\BTL_GD2\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\phamn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pnthuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

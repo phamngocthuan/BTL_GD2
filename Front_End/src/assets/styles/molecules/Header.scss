@@ -1,0 +1,21 @@
+.header-container {
+    height: 50px;
+    width: 100%;
+    background-color: #0083ff;
+    display: flex;
+    align-items: center;
+}
+.header-left {
+    width: 224px;
+    display: flex;
+    padding-left: 12px;
+}
+.header-right {
+    width: calc(100% - 224px);
+}
+.name-logo{
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 12px;
+}
