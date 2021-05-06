@@ -17,22 +17,14 @@
 .body-content {
     height: calc(100vh - 50px);
     width: calc(100% - 224px);
-    padding: 4px;
 
 }
-.body-content-detail{
-    height: calc(100% - 30px);
-}
 .content-table {
-    height: calc(100% - 80px);
+
 }
 .t-detail {
-    min-height: calc(100% - 300px);
-    position: relative;
+    min-height: 400px;
 }
 .p-detail {
-    min-height: 300px;
-}
-.ant-table-pagination.ant-pagination {
- 
+    min-height: 200px;
 }

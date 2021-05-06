@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import '../../assets/styles/molecules/Manipulation.scss'
+import React, {  } from 'react';
+import '../../assets/styles/molecules/Manipolation.scss'
 import ItemOption from '../atomics/ItemOption'
-import Modal from '../molecules/Modal'
-import BodyModal from '../atomics/BodyModal'
-Manipulation.propTypes = {
+
+
+Manipolation.propTypes = {
 
 };
 const action = [
-    {title: "Thêm", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
-    {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
-    {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
-    {title: "Nạp", nameIcon: "IconDownload", state : "", content : "Nạp"},
+    'Thêm', 'Sửa', 'Xóa', 'Nạp'
 ]
 const status = [
     {status : 'Chưa gửi', color : '#007b00'},
@@ -19,27 +16,10 @@ const status = [
     {status : 'Đã duyệt', color : '#0000ff'},
 ]
 
-
-
-function Manipulation(props) {
-
-    const [hideModal, setShowModal] = useState(false);
-    const [titleModal, setTitleModal] = useState('Thêm yêu cầu')
-
-    const showModal = (title) => {
-        setShowModal(!hideModal);
-        setTitleModal(title)
-    }
-
+function Manipolation(props) {
     const elemtAction = action.map((item,index) => {
         return (
-            <ItemOption 
-            key={index}
-            item={item} 
-            content={item.title}
-             nameIcon={item.nameIcon}
-             showModal={showModal}
-            >
+            <ItemOption key={index} content={item} nameIcon={'abc'}>
 
             </ItemOption>
         )
@@ -61,11 +41,9 @@ function Manipulation(props) {
             <div style={{ alignItems : 'center'}}>
                 {elemtStatus}
             </div>
-            <Modal visible={hideModal} setVisible={setShowModal}
-                title = {titleModal} bodyModal = {<BodyModal />}
-            />
+            
         </div>
     );
 }
 
-export default Manipulation;
+export default Manipolation;
