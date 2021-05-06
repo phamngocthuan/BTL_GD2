@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MISA.IMS.Data.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,32 @@ using System.Threading.Tasks;
 
 namespace MISA.IMS.Service.Controllers
 {
-    [Route("api/v{version:apiVersion}/records")]
-    [ApiVersion("1")]
+    [Route("api/requests")]
+    //[ApiVersion("1")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class RequestController : ControllerBase
     {
         // GET: api/<RecordController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public APIResult Get()
         {
-            return new string[] { "value1", "value2" };
+            APIResult result = new APIResult();
+            try
+            {
+                // đọc clientParams
+
+                // validate ClientParams
+
+                // xu ly du lieu
+
+                // response
+                result.Data = new string[] { "value1", "value2" };
+            }
+            catch (Exception ex)
+            {
+                result.MessageCode = 500;
+            }
+            return result;
         }
 
         // GET api/<RecordController>/5

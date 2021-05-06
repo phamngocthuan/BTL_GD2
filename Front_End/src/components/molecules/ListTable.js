@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Input } from 'antd';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
@@ -10,6 +10,10 @@ const Flexbox = styled.div`
   display: flex;
   flex-direction: column;
 `;
+ListTable.defaultProps = {
+  
+}
+
 
 const columns = [
   {
@@ -85,7 +89,6 @@ const rowSelection = {
 };
 
 const initial = {
-    
     id : 'initial',
     CodeRequired : 'initial',
     CodeSale : 'initial',
@@ -97,42 +100,17 @@ const initial = {
     ProductCode : 'initial',
 };
 
-const data = [
-  {
-    key : '1',
-    id : '1',
-    CodeRequired : 'ABC!DDF',
-    CodeSale : 'MSAIVD',
-    NameSale : 'Dự án bán lẻ',
-    NumberContract : '123123qqerqewrqBAC',
-    ContactSigningDate : '11/11/1111',
-    OrderNumber : 123,
-    DayRequest : '12/12/1212',
-    ProductCode : 'ADKBDI123',
 
-  },
-  {
-    key : '2',
-    id : '2',
-    CodeRequired : 'ADFADSDFF',
-    CodeSale : 'MSAIVD212',
-    NameSale : 'Dự án bán lẻ ABC',
-    NumberContract : '12312dfsd3BAC',
-    ContactSigningDate : '11/11/1111',
-    OrderNumber : 123,
-    DayRequest : '12/12/1212',
-    ProductCode : 'ADKBDI123',
-
-  }
-]
 
 function ListTable(props) {
-  // const [dataSource, setDataSource] = useState([makeRow(0)]);
   const [counter, setCounter] = useState(1);
 
-
+  // const {data } = props;
+  // useEffect(() => {
+  //   setDataSource(data)
+  // })
+  const { data , status , rowIndex, setRowIndex} = props;
   
-const [rowId, setRowId] = useState('')
 const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
 }
@@ -141,17 +119,21 @@ const setRowClassName = (record) => {
       
       <Table
         size="small"
-        // rowSelection={rowSelection}
         columns={columns}
         dataSource={[initial, ...data]}
+        rowClassName={(record, index) => index == rowIndex  ? `table-row-select color-${status} ` :  `color-${status}` }
         pagination={
           { position: ['bottom'],
             total : 85
           }
         }
-        onRow={(record, rowIndex) => {
+        onRow={(record, index) => {
           return {
             onClick: event => {
+              if(rowIndex === index){
+                setRowIndex(-1)
+              }else 
+              setRowIndex(index);
               props.setDataShow(record);
             }, 
           };

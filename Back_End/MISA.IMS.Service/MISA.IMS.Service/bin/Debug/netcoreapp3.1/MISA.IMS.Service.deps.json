@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "MISA.IMS.Service/1.0.0": {
         "dependencies": {
+          "MISA.IMS.Data": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Versioning": "5.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -324,6 +325,14 @@
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.Versioning.dll": {}
+        }
+      },
+      "MISA.IMS.Data/1.0.0": {
+        "runtime": {
+          "MISA.IMS.Data.dll": {}
+        },
+        "compile": {
+          "MISA.IMS.Data.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -2032,6 +2041,11 @@
       "sha512": "sha512-mN9IARvNpHMBD2/oGmp5Bxp1Dg45Hfcp+LWaAyTtL2HisWLMOIcf0Ox1qW9IvCvdbHM+2A9dWEInhiqBsNxsJA==",
       "path": "microsoft.aspnetcore.mvc.versioning/5.0.0",
       "hashPath": "microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512"
+    },
+    "MISA.IMS.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",

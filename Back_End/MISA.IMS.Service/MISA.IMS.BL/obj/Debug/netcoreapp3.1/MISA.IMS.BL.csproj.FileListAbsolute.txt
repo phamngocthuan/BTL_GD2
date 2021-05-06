@@ -1,0 +1,9 @@
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\bin\Debug\netcoreapp3.1\MISA.IMS.BL.deps.json
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\bin\Debug\netcoreapp3.1\MISA.IMS.BL.dll
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\bin\Debug\netcoreapp3.1\MISA.IMS.BL.pdb
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.csprojAssemblyReference.cache
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.AssemblyInfoInputs.cache
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.AssemblyInfo.cs
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.csproj.CoreCompileInputs.cache
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.dll
+C:\Users\pnthuan\Desktop\New folder\BTL_GD2\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.BL\obj\Debug\netcoreapp3.1\MISA.IMS.BL.pdb

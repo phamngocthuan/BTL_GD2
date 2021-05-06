@@ -3,7 +3,7 @@ html, body {
   height: 100%;
 }
 .App {
-  text-align: center;
+
 }
 
 .App-logo {
@@ -42,4 +42,7 @@ html, body {
 }
 li {
   list-style: none;
+}
+tr {
+  cursor: pointer!important;
 }

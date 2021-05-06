@@ -10,31 +10,33 @@ import InputDate from '../atomics/InputTypeDate'
 FilterBody.propTypes = {
 
 };
-const status = [
-    {status : 'Chưa gửi', color : '#007b00'},
-    {status : 'Chờ duyệt', color : '#000000'},
-    {status : 'Từ chối', color : '#ff0000'},
-    {status : 'Đã duyệt', color : '#0000ff'},
+const statusArray = [
+    {status : 'Chưa gửi', color : '#007b00', value : 0},
+    {status : 'Chờ duyệt', color : '#000000', value : 1},
+    {status : 'Từ chối', color : '#ff0000', value : 2},
+    {status : 'Đã duyệt', color : '#0000ff', value : 3},
 ]
 function FilterBody(props) {
 
-    const [value, setValue] = useState(status[0].status)
-    const elemtStatus = status.map((item,index) => {
+    const {status, setStatus} = props;
+    // const [value, setValue] = useState(status[0].value)
+    const elemtStatus = statusArray.map((item,index) => {
         return (
-            <Radio value={item.status}>
+            <Radio value={item.value}>
                 {item.status}
             </Radio>
         )
     })
     const onChange = e => {
-        setValue(e.target.value);
+        setStatus(e.target.value);
+        
     };
     return (
         <div className='filter-body-content'>
             <div className='filter-top'>
                
-                <Radio.Group onChange={onChange} value={value}>
-                {elemtStatus}
+                <Radio.Group onChange={onChange} value={status}>
+                    {elemtStatus}
                 </Radio.Group>
 
             </div>
