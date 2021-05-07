@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {}
+    "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {}
   },
   "projects": {
-    "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
+    "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
+        "projectUniqueName": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
         "projectName": "MISA.IMS.Data",
-        "projectPath": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
+        "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
         "packagesPath": "C:\\Users\\phamn\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\obj\\",
+        "outputPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\phamn\\AppData\\Roaming\\NuGet\\NuGet.Config",

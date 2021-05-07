@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1zM/pzjwhf/nxwlMeSnVxlXL8vJ26IRHVi+WHQgbLqdIjly1PoYw54W9kpIlmoQiF26SPeIE8uaABj9Jp+Keog==",
+  "dgSpecHash": "xdFf8OplF1Z6Gx/+s63CLZhhaMMSY2BVz46L6qWvoT6I6A4O3SupKR7bgLSFlzXLZPO0EHR3JrwqA32gZgUMlA==",
   "success": true,
-  "projectFilePath": "D:\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Service\\MISA.IMS.Service.csproj",
+  "projectFilePath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Service\\MISA.IMS.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\phamn\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512"
   ],

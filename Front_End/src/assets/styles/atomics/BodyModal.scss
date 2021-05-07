@@ -1,0 +1,28 @@
+.body-modal-top {
+    display: flex;
+    justify-content: space-between;
+}
+.body-modal-bottom{
+    margin-top: 20px;
+}
+.form-body {
+
+}
+.item-form-body {
+    height: 40px;
+    display: flex;
+    padding : 5px 0 5px 0;
+
+}
+.fb-left {
+    width: 25%;
+}
+.fb-right {
+    width: 75%;
+}
+.fb-right input {
+    width: 100%;
+}
+.body-modal {
+    padding: 8px;
+}
