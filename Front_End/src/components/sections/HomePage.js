@@ -34,7 +34,7 @@ function HomePage(props) {
     const [indexRowSelected, setIndexRowSelected] = useState(-1)
 
     useEffect(() => {
-        if(indexRowSelected == -1){
+        if(indexRowSelected == '-1'){
             setDataShow({
                 CodeRequired : '',
                 CodeSale : '',
@@ -92,6 +92,7 @@ function HomePage(props) {
                            data = {dataShowTabPane}
                            setData = {setDataShow}
                            rowSelected ={indexRowSelected}
+                           setIndexRowSelected={setIndexRowSelected}
                         ></Manipulation>
                         <div className="body-content-detail">
                             <FilterBody  

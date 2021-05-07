@@ -109,7 +109,7 @@ function ListTable(props) {
   // useEffect(() => {
   //   setDataSource(data)
   // })
-  const { data , status , rowIndex, setRowIndex} = props;
+  const { data , status , rowIndex, setRowIndex, setDataShow} = props;
   
 const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
@@ -132,6 +132,7 @@ const setRowClassName = (record) => {
             onClick: event => {
               if(rowIndex === index){
                 setRowIndex(-1)
+                setDataShow({})
               }else 
               setRowIndex(index);
               props.setDataShow(record);

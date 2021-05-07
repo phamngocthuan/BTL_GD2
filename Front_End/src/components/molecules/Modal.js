@@ -7,7 +7,7 @@ import '../../assets/styles/molecules/Modal.scss'
 
 export default function ModalDraggable(props)  {
 
-  const {visible, setVisible, title, method, bodyModal, handleSubmit, setMethod} = props;
+  const {visible, setVisible, title, method, bodyModal, handleSubmit, setMethod, handleCancel} = props;
   const [disabled, setDisable] = useState(false);
   const [bounds, setBounds] = useState(
     { left: 0, top: 0, bottom: 0, right: 0 }
@@ -25,10 +25,11 @@ export default function ModalDraggable(props)  {
     handleSubmit();
   };
 
-  const handleCancel = e => {
+  const clickCancel = e => {
     setVisible(false);
     setBounds( { left: 0, top: 0, bottom: 0, right: 0 })
-    setMethod('-1')
+    handleCancel();
+
   };
 
   const onStart = (event, uiData) => {
@@ -77,7 +78,7 @@ export default function ModalDraggable(props)  {
           onOk={ () => {handleOk()}}
           cancelText={"Hủy bỏ"}
           okText = {"Lưu"}
-          onCancel={ () => {handleCancel()}}
+          onCancel={ () => {clickCancel()}}
           modalRender={modal => (
             <Draggable
               bounds={bounds}

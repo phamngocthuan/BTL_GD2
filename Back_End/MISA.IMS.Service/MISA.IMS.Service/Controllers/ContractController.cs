@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using MISA.IMS.BL.Interfaces;
 using MISA.IMS.Common.Constants;
 using MISA.IMS.Data.DTOs;
+using MISA.IMS.Data.Entities;
 using MISA.IMS.DL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ using System.Threading.Tasks;
 namespace MISA.IMS.Service.Controllers
 {
 
-   
-    
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/contracts")]
+    [ApiVersion("1")]
+    [ApiVersion("1")]
     [ApiController]
     public class ContractController : ControllerBase
     {
@@ -39,6 +40,20 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
+                
+                var res = _contractService.GetAllEntity();
+                if(res == null)
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                    {
+                        DevMsg = DevMsg.No_Content,
+                        ErrorCode = ErrorCode.No_Content,
+                        MoreInfo = MoreInfo.Help,
+                        UserMsg = UserMsg.Help,
+                        TraceId = "1211239b@dfj"
+                    });
+                }
+
                 return Ok(_contractService.GetAllEntity());
             }
             catch (Exception ex)

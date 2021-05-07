@@ -100,17 +100,19 @@ namespace MISA.IMS.DL.Repositories
             return res;
         }
 
-        public async  Task<IEnumerable<T>> GetAllEntity()
+        public  virtual async  Task<IEnumerable<T>> GetAllEntity()
         {
             /*var sql = "";
 
             sql = $"SELECT * FROM {_tableName};";*/
+            /*List<T> res = new List<T>();
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
-               var res = _dbContext.QueryProc("Proc_GetContracts");
+               res = _dbContext.QueryProc("Proc_GetContracts");
                 return null;
-            }
+            }*/
             /*return await GetEntitiesAsync(sql);*/
+            throw new NotImplementedException();
         }
 
         public Task<int> InsertEntity()

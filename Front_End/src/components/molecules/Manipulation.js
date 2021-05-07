@@ -24,15 +24,22 @@ const status = [
 
 function Manipulation(props) {
 
-    const {data, setData, rowSelected} = props;
+    const {data, setData, rowSelected, setIndexRowSelected} = props;
     const [hideModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState('Thêm yêu cầu')
     const [method , setMethod] = useState('Add');
 
     const showModal = (title, state) => {
-        setMethod(state)  
-        if(rowSelected > 0 || method ==='Add'){
-            console.log(rowSelected)
+        setMethod(state)
+        if(rowSelected != '-1' && state === 'Add'){
+            setData({})
+        }  
+        if(state === 'Add'){
+            setMethod('-1')
+            setData({})
+            setIndexRowSelected(-1)
+        }
+        if(rowSelected > 0 || state ==='Add'){
             setShowModal(!hideModal);
             setTitleModal(title)
         }
@@ -81,7 +88,9 @@ function Manipulation(props) {
         console.log(data);
     }
     const handleCancel = () => {
-
+        console.log('close')
+        setMethod('-1')
+        setData({})
     }
     return (
         <div className="manipulation">
@@ -97,6 +106,7 @@ function Manipulation(props) {
                 title = {titleModal} 
                 handleSubmit = {handleSubmit}
                 setMethod={setMethod}
+                handleCancel={handleCancel}
                 bodyModal = {
                     method == "Add" ?
                      <BodyModal data={{}} handleOnchange={handleOnchange} handleOnchangeSelect={handleOnchangeSelect}/>
