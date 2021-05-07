@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xw8PC0XhunPeM6tvjOvyBjVQG+oalu2jVAjIHMaT+hUtsd93aqIhBaJgOpJBwOf7AGcc3wD+lwAHeqGZtg41ng==",
+  "dgSpecHash": "5FWeFEbmTkQUg+MGCsT4/mEx4CYp5yWnWGRyJlRIni6l6Z83dcObsQTamVDT5Juor0My0rkDTe2aWbl3X/9jOw==",
   "success": true,
-  "projectFilePath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
+  "projectFilePath": "D:\\BTL_GD2\\back-end\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

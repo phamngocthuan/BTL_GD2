@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
+    <ProjectReference Include="..\MISA.IMS.Common\MISA.IMS.Common.csproj" />
   </ItemGroup>
 
 </Project>

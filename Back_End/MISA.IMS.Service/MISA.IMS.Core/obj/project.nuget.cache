@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "h8a29SxHuwWu389vl7riE0csbM613kUZQ/19QAtnnpg9N4bfknnMWavF6ht03spzVKDe9GxjqFMJuah6ft2jMQ==",
+  "dgSpecHash": "7RltN3q7yt29rXl41+dK+GNycYEYsEAKaJFITEGTgWipsdiJ4uh54AvMm22VcPEWfbYazUZ33wfaRRlJXoekIg==",
   "success": true,
-  "projectFilePath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\BTL_GD2\\back-end\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

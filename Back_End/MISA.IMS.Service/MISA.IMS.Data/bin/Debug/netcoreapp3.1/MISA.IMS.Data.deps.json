@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v3.1": {
       "MISA.IMS.Data/1.0.0": {
+        "dependencies": {
+          "MISA.IMS.Common": "1.0.0"
+        },
         "runtime": {
           "MISA.IMS.Data.dll": {}
+        }
+      },
+      "MISA.IMS.Common/1.0.0": {
+        "runtime": {
+          "MISA.IMS.Common.dll": {}
         }
       }
     }
   },
   "libraries": {
     "MISA.IMS.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MISA.IMS.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

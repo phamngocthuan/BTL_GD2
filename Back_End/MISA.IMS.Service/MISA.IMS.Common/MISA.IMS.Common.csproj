@@ -4,9 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Constants\" />
-    <Folder Include="Enumerations\" />
-  </ItemGroup>
-
 </Project>
