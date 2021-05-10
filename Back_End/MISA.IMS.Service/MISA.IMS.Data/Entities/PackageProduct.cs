@@ -4,7 +4,17 @@ using System.Text;
 
 namespace MISA.IMS.Data.Entities
 {
-    class PackageProduct
+    public class PackageProduct
     {
+        public Guid PackageProductID { get; set; }
+
+        public string PackageProductName { get; set; }
+        public string  ProductCode { get; set; }
+        public string  PackageProductCode { get; set; }
+
+        public PackageProduct()
+        {
+            PackageProductID = new Guid();
+        }
     }
 }

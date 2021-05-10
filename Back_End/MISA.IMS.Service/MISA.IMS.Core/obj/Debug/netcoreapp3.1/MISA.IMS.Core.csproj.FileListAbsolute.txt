@@ -16,3 +16,14 @@ C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IM
 C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.CoreCompileInputs.cache
 C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.dll
 C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.pdb
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.deps.json
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.dll
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.pdb
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csprojAssemblyReference.cache
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.AssemblyInfoInputs.cache
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.AssemblyInfo.cs
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.CoreCompileInputs.cache
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.dll
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.pdb
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.Properties.Resources.resources
+D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.GenerateResource.cache

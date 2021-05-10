@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,7 +14,6 @@
     <ProjectReference Include="..\MISA.IMS.Common\MISA.IMS.Common.csproj" />
     <ProjectReference Include="..\MISA.IMS.Core\MISA.IMS.Core.csproj" />
     <ProjectReference Include="..\MISA.IMS.Data\MISA.IMS.Data.csproj" />
-    <ProjectReference Include="..\MISA.IMS.DL\MISA.IMS.DL.csproj" />
   </ItemGroup>
 
 </Project>

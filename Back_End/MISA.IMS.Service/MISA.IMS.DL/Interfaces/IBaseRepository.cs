@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.IMS.Data.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,16 @@ namespace MISA.IMS.DL.Interfaces
         Task<T> GetByIdAsync(object id);
 
         Task<IEnumerable<T>> GetAllEntity();
+        Task<IEnumerable<T>> GetEntities(ListRequest listRequest, int status, long offset, long limit);
+        Task<long> CountEntities(ListRequest listRequest, int status);
 
-        Task<int> InsertEntity();
+        Task<int> InsertAsync(T entity);
 
-        Task<bool> UpdateEntity();
+        Task<int> DeleteAsync(IEnumerable<string> ids);
+
+        Task<int> UpdateAsync(T entity);
+        Task<int> UpdateStatus(string id, int status);
+
+        
     }
 }

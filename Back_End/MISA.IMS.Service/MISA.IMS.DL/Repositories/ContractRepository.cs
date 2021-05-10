@@ -18,10 +18,24 @@ namespace MISA.IMS.DL.Repositories
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
-                var res = _dbContext.QueryProc("Proc_GetContracts");
+                var res =  _dbContext.QueryProc("Proc_GetContracts");
                 return (IEnumerable<Contract>)res;
             }
 
         }
+
+        public async Task<string> GetCodeRequired()
+        {
+            using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
+            {
+                var sqlText = $"SELECT CodeRequired FROM {_tableName} ORDER BY CodeRequired DESC LIMIT 1";
+
+                var res = await _dbContext.ExecuteReaderAsync(sqlText, null);
+
+                res.Read();
+                return (string)res.GetValue(0);
+            }
+        }
+
     }
 }

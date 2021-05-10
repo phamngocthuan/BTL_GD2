@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MISA.IMS.Core;
 using MISA.IMS.Core.Configuration;
+using MISA.IMS.Data.DTOs;
 using MISA.IMS.Service.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +54,21 @@ namespace MISA.IMS.Service
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors(AllowedOrigins);
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+
+                var errorResult = new ErrorResult()
+                {
+                    DevMsg = exception.Message,
+                };
+                errorResult.UserMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được hỗ trợ.";
+                var result = JsonConvert.SerializeObject(errorResult);
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(result);
+            }));
 
             app.UseEndpoints(endpoints =>
             {

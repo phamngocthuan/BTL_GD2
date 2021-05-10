@@ -23,6 +23,20 @@
           "lib/netstandard2.0/Dapper.dll": {}
         }
       },
+      "Dapper.Contrib/2.0.78": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "2.0.78",
+          "Microsoft.CSharp": "4.7.0",
+          "System.Reflection.Emit": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Dapper.Contrib.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.Contrib.dll": {}
+        }
+      },
       "Google.Protobuf/3.14.0": {
         "type": "package",
         "dependencies": {
@@ -110,6 +124,15 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "Microsoft.CSharp/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
       "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -191,6 +214,15 @@
           "lib/netstandard2.1/Zstandard.Net.dll": {}
         }
       },
+      "MySqlConnector/1.3.8": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/MySqlConnector.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MySqlConnector.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -242,6 +274,15 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "System.Reflection.Emit/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
         }
       },
       "System.Reflection.Emit.Lightweight/4.7.0": {
@@ -419,9 +460,11 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Dapper": "2.0.90",
+          "Dapper.Contrib": "2.0.78",
           "MISA.IMS.Common": "1.0.0",
           "MISA.IMS.Data": "1.0.0",
-          "MySql.Data": "8.0.24"
+          "MySql.Data": "8.0.24",
+          "MySqlConnector": "1.3.8"
         },
         "compile": {
           "bin/placeholder/MISA.IMS.DL.dll": {}
@@ -474,6 +517,23 @@
         "lib/net5.0/Dapper.xml",
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Dapper.Contrib/2.0.78": {
+      "sha512": "sUfDVIf8LlHNiz3MfUFodeyRiemfN1JFkPxYjCxFWlwNPg1iQ49mB+0E89TkywWs4X8fiRWOVDQgtH5FtzK5Kw==",
+      "type": "package",
+      "path": "dapper.contrib/2.0.78",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.contrib.2.0.78.nupkg.sha512",
+        "dapper.contrib.nuspec",
+        "lib/net461/Dapper.Contrib.dll",
+        "lib/net461/Dapper.Contrib.xml",
+        "lib/net5.0/Dapper.Contrib.dll",
+        "lib/net5.0/Dapper.Contrib.xml",
+        "lib/netstandard2.0/Dapper.Contrib.dll",
+        "lib/netstandard2.0/Dapper.Contrib.xml"
       ]
     },
     "Google.Protobuf/3.14.0": {
@@ -596,6 +656,75 @@
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.Versioning.xml",
         "microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
         "microsoft.aspnetcore.mvc.versioning.nuspec"
+      ]
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "type": "package",
+      "path": "microsoft.csharp/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/Microsoft.CSharp.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.3/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
+        "lib/portable-net45+win8+wp8+wpa81/_._",
+        "lib/uap10.0.16299/_._",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
+        "microsoft.csharp.nuspec",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcore50/Microsoft.CSharp.dll",
+        "ref/netcore50/Microsoft.CSharp.xml",
+        "ref/netcore50/de/Microsoft.CSharp.xml",
+        "ref/netcore50/es/Microsoft.CSharp.xml",
+        "ref/netcore50/fr/Microsoft.CSharp.xml",
+        "ref/netcore50/it/Microsoft.CSharp.xml",
+        "ref/netcore50/ja/Microsoft.CSharp.xml",
+        "ref/netcore50/ko/Microsoft.CSharp.xml",
+        "ref/netcore50/ru/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hans/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hant/Microsoft.CSharp.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/Microsoft.CSharp.dll",
+        "ref/netstandard1.0/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/de/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/es/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/fr/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/it/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ja/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ko/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ru/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hans/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hant/Microsoft.CSharp.xml",
+        "ref/netstandard2.0/Microsoft.CSharp.dll",
+        "ref/netstandard2.0/Microsoft.CSharp.xml",
+        "ref/portable-net45+win8+wp8+wpa81/_._",
+        "ref/uap10.0.16299/_._",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
@@ -737,6 +866,37 @@
         "mysql.data.nuspec"
       ]
     },
+    "MySqlConnector/1.3.8": {
+      "sha512": "zxE+MDrpfPLEUvkUR73brSLiWwDtp5yoNmEk5vEj0vzoVJmR2lBJcOPowigbkR305lM2IKgCL8TP1iIC9xSi7A==",
+      "type": "package",
+      "path": "mysqlconnector/1.3.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net45/MySqlConnector.dll",
+        "lib/net45/MySqlConnector.xml",
+        "lib/net461/MySqlConnector.dll",
+        "lib/net461/MySqlConnector.xml",
+        "lib/net471/MySqlConnector.dll",
+        "lib/net471/MySqlConnector.xml",
+        "lib/net5.0/MySqlConnector.dll",
+        "lib/net5.0/MySqlConnector.xml",
+        "lib/netcoreapp2.1/MySqlConnector.dll",
+        "lib/netcoreapp2.1/MySqlConnector.xml",
+        "lib/netcoreapp3.1/MySqlConnector.dll",
+        "lib/netcoreapp3.1/MySqlConnector.xml",
+        "lib/netstandard1.3/MySqlConnector.dll",
+        "lib/netstandard1.3/MySqlConnector.xml",
+        "lib/netstandard2.0/MySqlConnector.dll",
+        "lib/netstandard2.0/MySqlConnector.xml",
+        "lib/netstandard2.1/MySqlConnector.dll",
+        "lib/netstandard2.1/MySqlConnector.xml",
+        "logo.png",
+        "mysqlconnector.1.3.8.nupkg.sha512",
+        "mysqlconnector.nuspec"
+      ]
+    },
     "System.Buffers/4.5.1": {
       "sha512": "Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
       "type": "package",
@@ -845,6 +1005,60 @@
         "ref/netcoreapp2.1/_._",
         "system.memory.4.5.3.nupkg.sha512",
         "system.memory.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Reflection.Emit/4.7.0": {
+      "sha512": "VR4kk8XLKebQ4MZuKuIni/7oh+QGFmZW3qORd1GvBq/8026OpW501SzT/oypwiQl4TvT8ErnReh/NzY9u+C6wQ==",
+      "type": "package",
+      "path": "system.reflection.emit/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Reflection.Emit.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.1/System.Reflection.Emit.dll",
+        "lib/netstandard1.1/System.Reflection.Emit.xml",
+        "lib/netstandard1.3/System.Reflection.Emit.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.xml",
+        "lib/netstandard2.1/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.1/System.Reflection.Emit.dll",
+        "ref/netstandard1.1/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/de/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/es/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/fr/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/it/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ja/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ko/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ru/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/zh-hans/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/zh-hant/System.Reflection.Emit.xml",
+        "ref/netstandard2.0/System.Reflection.Emit.dll",
+        "ref/netstandard2.0/System.Reflection.Emit.xml",
+        "ref/netstandard2.1/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.dll",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.xml",
+        "system.reflection.emit.4.7.0.nupkg.sha512",
+        "system.reflection.emit.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
@@ -1220,19 +1434,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pnthuan.RD\\.nuget\\packages\\": {}
+    "C:\\Users\\phamn\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
+      "projectUniqueName": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
       "projectName": "MISA.IMS.BL",
-      "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
-      "packagesPath": "C:\\Users\\pnthuan.RD\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\obj\\",
+      "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
+      "packagesPath": "C:\\Users\\phamn\\.nuget\\packages\\",
+      "outputPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pnthuan.RD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\phamn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1246,17 +1460,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj"
             }
           }
         }
@@ -1298,7 +1512,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

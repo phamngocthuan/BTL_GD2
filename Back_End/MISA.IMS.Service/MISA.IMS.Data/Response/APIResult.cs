@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.IMS.Common.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace MISA.IMS.Data.Response
     {
         public bool Success { get; set; } = true;
 
-        public int MessageCode { get; set; } = 200;
+        public MessageCode MessageCode { get; set; } = MessageCode.Success;
 
         public string Message { get; set; }
 
