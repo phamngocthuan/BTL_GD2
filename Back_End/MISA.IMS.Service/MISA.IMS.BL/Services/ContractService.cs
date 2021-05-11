@@ -121,7 +121,7 @@ namespace MISA.IMS.BL.Services
             //validate data
 
             var res = await _contractRepository.InsertAsync(contract);
-            if ((int)res > 0)
+            if ((int)res == 0)
             {
                 apiResult.Success = false;
                 apiResult.Message = "Thêm dữ liệu thất bại";
@@ -226,5 +226,44 @@ namespace MISA.IMS.BL.Services
             return apiResult;
         }
 
+        public async Task<APIResult> UpdateAsync(string id, Contract contract)
+        {
+            var apiResult = new APIResult();
+            // Kiểm tra xem bản ghi đó có tồn tại không
+            var res = _contractRepository.GetByIdAsync(id).Result;
+
+            if (res == null)
+            {
+                apiResult.Success = false;
+                apiResult.Message = "Bản ghi không tồn tại";
+                apiResult.MessageCode = MessageCode.Validate;
+                apiResult.Data = new ErrorResult
+                {
+                    DevMsg = DevMsg.No_Content,
+                    ErrorCode = ErrorCode.No_Content,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.Help,
+                    TraceId = "1211239b3423|"
+                };
+            }
+            else
+            {
+                // validate 1 số trường : Email, PhoneNumber
+
+                // Không update status  : chỉ update thông tin
+
+                // validate thành công
+                int result = await _contractRepository.UpdateAsync(contract);
+                if (result > 0)
+                {
+                    apiResult.Success = true;
+                    apiResult.Message = "Gửi yêu cầu thành công";
+                    apiResult.Data = result;
+                    apiResult.MessageCode = MessageCode.Success;
+                }
+            }
+            return apiResult;
+
+        }
     }
 }

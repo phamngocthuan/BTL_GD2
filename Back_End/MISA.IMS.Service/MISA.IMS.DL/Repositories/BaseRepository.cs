@@ -202,8 +202,9 @@ namespace MISA.IMS.DL.Repositories
                             }
                             sqlText.Append(" AND ");
                         }
+                        sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
                     }
-                    sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
+                    
                     sqlText.Append("LIMIT @limit OFFSET @offset");
                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"limit", limit));
                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"offset", offset));
@@ -277,8 +278,9 @@ namespace MISA.IMS.DL.Repositories
                         }
                         sqlText.Append(" AND ");
                     }
+                    sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
                 }
-                sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
+                
 
                 _dbContext._sqlCommand.CommandType = CommandType.Text;
                 _dbContext._sqlCommand.CommandText = sqlText.ToString();

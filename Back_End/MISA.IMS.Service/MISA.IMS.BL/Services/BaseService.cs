@@ -50,6 +50,9 @@ namespace MISA.IMS.BL.Services
             throw new NotImplementedException();
         }
 
-        
+        public Task<APIResult> UpdateAsync(string id, T entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

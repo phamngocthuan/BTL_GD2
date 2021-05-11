@@ -22,7 +22,7 @@ function FilterBody(props) {
     // const [value, setValue] = useState(status[0].value)
     const elemtStatus = statusArray.map((item,index) => {
         return (
-            <Radio value={item.value}>
+            <Radio value={item.value} key={index    }>
                 {item.status}
             </Radio>
         )

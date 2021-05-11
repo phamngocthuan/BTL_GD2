@@ -9,7 +9,7 @@ ItemOption.propTypes = {
 function ItemOption(props) {
     const {content, nameIcon, squareShape, showModal, item, setMethod} = props;
     return (
-        <div class='item-option' onClick={() => 
+        <div className='item-option' onClick={() => 
             {
                 setMethod(item.state)
                 showModal(item.content,item.state)

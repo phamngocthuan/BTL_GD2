@@ -35,7 +35,7 @@ namespace MISA.IMS.Data.DTOs
         [Phone]
         public string ContactPhoneNumber { get; set; }
 
-        public Contract ConvertContract(string createdBy,int status)
+        public Contract ConvertInsertContract(string createdBy,int status)
         {
             var contract = Activator.CreateInstance<Contract>(); ;
             var properties = this.GetType().GetProperties();
@@ -59,6 +59,31 @@ namespace MISA.IMS.Data.DTOs
             contract.ModifiedDate = DateTime.UtcNow;
             contract.ModifiedBy = createdBy;
             contract.ContractID = new Guid();
+
+            return contract;
+        }
+
+        public Contract ConvertUpdateContract(string modifiedBy, string id)
+        {
+            var contract = Activator.CreateInstance<Contract>(); ;
+            var properties = this.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+
+                var value = property.GetValue(this, null);
+                if (value != null)
+                {
+                    var prop = contract.GetType().GetProperty(property.Name, BindingFlags.Public | BindingFlags.Instance);
+                    if (null != prop && prop.CanWrite)
+                    {
+                        prop.SetValue(contract, value, null);
+                    }
+                }
+
+            }
+            contract.ContractID = Guid.Parse(id);
+            contract.ModifiedDate = DateTime.UtcNow;
+            contract.ModifiedBy = modifiedBy;
 
             return contract;
         }

@@ -43,9 +43,9 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
-                
+
                 var apiResult = await _contractService.GetAllEntity();
-                if(apiResult.Success == true)
+                if (apiResult.Success == true)
                 {
                     return Ok(apiResult.Data);
                 }
@@ -107,8 +107,8 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
-                Contract contract = contractDTO.ConvertContract(createdBy,status);
-                APIResult aPIResult =  await _contractService.InsertAsync(contract);
+                Contract contract = contractDTO.ConvertInsertContract(createdBy, status);
+                APIResult aPIResult = await _contractService.InsertAsync(contract);
                 if (aPIResult.Success)
                 {
                     return Ok(aPIResult);
@@ -117,7 +117,7 @@ namespace MISA.IMS.Service.Controllers
                 {
                     return BadRequest(aPIResult.Data);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -133,13 +133,19 @@ namespace MISA.IMS.Service.Controllers
         }
 
         // PUT api/<ContractController>/5
-        [HttpPut()]
-        public async Task<IActionResult> Put([FromBody] Contract contract)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateContract(
+            [FromBody] ContractDTO contractDTO,
+            [FromHeader(Name = "ModifiedBy")][Required] string modifiedBy,
+            [FromRoute][Required] string  id
+         )
         {
             try
             {
+                // chỉ được update với bản nháp và chờ yêu cầu
+                Contract contract = contractDTO.ConvertUpdateContract(modifiedBy, id);
 
-                var apiResult = await _contractService.UpdateAsync(contract);
+                var apiResult = await _contractService.UpdateAsync(id,contract);
                 return Ok(apiResult.Message);
             }
             catch (Exception ex)

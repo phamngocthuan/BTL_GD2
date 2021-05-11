@@ -11,21 +11,20 @@ import { Contract} from '../../constants/FakeData'
 import {getColorStatus } from '../../constants/CommonFunction'
 import { useSetState } from 'react-use';
 import axios from 'axios';
-
+import ContractApi from '../api/ContractApi'
 HomePage.propTypes = {
 
 };
 
 function HomePage(props) {
     const [dataShowTabPane, setDataShow] = useState({
-        CodeRequired : '',
-        CodeSale : '',
-        NameSale : '',
-        NumberContract : '',
-        ContactSigningDate : '',
-        OrderNumber : '',
-        DayRequest : '',
-        ProductCode : '',
+        codeRequired : '',
+        codeProjectSales : '',
+        nameProjectSales : '',
+        numberContract : '',
+        productCode : '',
+        createdDate : '',
+        packageProductCode : '',
     });
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [colorRow , setColorRow] = useState(CONTRACTSTATUS.UNSENT.COLOR)
@@ -72,11 +71,32 @@ function HomePage(props) {
         })
         return () => {};
     },[status])
-
+    const body = {
+        "FieldNames" : ["ProductCode", "ContractName", "'CodeRequired", "CodeProjectSales", "NameProjectSales", 
+    "NumberContract", "CreatedDate", "PackageProductCode"],
+        "Requests"  : [
+           
+        ]
+    
+    }
     useEffect(()=> {
-        axios.get(`https://localhost:44388/api/Contract`)
-        .then(res => {
-            console.log(res.data);
+        // axios.get(`https://localhost:44388/api/v1/contracts/filter`)
+        // .then(res => {
+        //     console.log(res.data);
+        // })
+        
+        ContractApi.filter(
+            body,
+        {
+            status : 1,
+            offset : 0,
+            limit : 20
+        },
+        (res) => {
+            //setData(res.data);
+            console.log(res.data)
+        },(err) => {
+            console.log(err);
         })
     },[])
     return (

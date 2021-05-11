@@ -19,7 +19,7 @@ namespace MISA.IMS.BL.Interfaces
         Task<APIResult> InsertAsync(T entity);
 
         Task<APIResult> DeleteAsync(IEnumerable<string> id);
-        Task<APIResult> UpdateAsync(T entity);
+        Task<APIResult> UpdateAsync(string id , T entity);
 
         Task<APIResult> UpdateStatus(string id);
 

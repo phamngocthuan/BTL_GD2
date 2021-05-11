@@ -23,4 +23,24 @@ function getPackageProduct (productCode){
     return packageProduct[0].PackageProductName;
 
 }
-export { getColorStatus, getProductCode , getPackageProduct}
+
+function getQueryParam(obj){
+    if (obj) {
+        let keys = Object.keys(obj);
+        if (keys.length > 0) {
+            let query = '?';
+            for (let i = 0; i < keys.length; i++) {
+                if (obj[keys[i]] != null && obj[keys[i]] !== '') {
+                    if (query.length > 1) {
+                        query = query + '&';
+                    }
+                    query = query + keys[i] + '=' + obj[keys[i]];
+                }
+            }
+            if (query === '?') return '';
+            return query;
+        }
+    }
+    return '';
+}
+export { getColorStatus, getProductCode , getPackageProduct, getQueryParam}

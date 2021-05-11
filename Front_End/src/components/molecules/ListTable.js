@@ -18,51 +18,44 @@ ListTable.defaultProps = {
 const columns = [
   {
     title: 'Mã yêu cầu',
-    dataIndex: 'CodeRequired',
+    dataIndex: 'codeRequired',
     render: value => (value === 'initial' ? <Input /> : value)
     
   },
   {
     title: 'Mã dự án bán hàng',
-    dataIndex: 'CodeSale',
+    dataIndex: 'codeProjectSales',
     render: value => (value === 'initial' ? <Input /> : value)
 
   },
   {
     title: 'Tên dự án bán hàng',
-    dataIndex: 'NameSale',
+    dataIndex: 'nameProjectSales',
     render: value => (value === 'initial' ? <Input /> : value)
 
   },
   {
     title: 'Số hợp đồng',
-    dataIndex: 'NumberContract',
-    render: value => (value === 'initial' ? <Input /> : value)
-
-  },
-  {
-    title: 'Ngày kí hợp đồng',
-    dataIndex: 'ContactSigningDate',
-    render: value => (value === 'initial' ? <Input /> : value)
-
-  },
-  {
-    title: 'Số đơn hàng',
-    dataIndex: 'OrderNumber',
+    dataIndex: 'numberContract',
     render: value => (value === 'initial' ? <Input /> : value)
 
   },
   {
     title: 'Ngày yêu cầu',
-    dataIndex: 'DayRequest',
+    dataIndex: 'createdDate',
     render: value => (value === 'initial' ? <Input /> : value)
 
   },
   {
     title: 'Mã sản phẩm',
-    dataIndex: 'ProductCode',
+    dataIndex: 'productCode',
     render: value => (value === 'initial' ? <Input /> : value)
 
+  },
+  {
+    title: 'Mã gói sản phẩm',
+    dataIndex: 'packageProductCode',
+    render: value => (value === 'initial' ? <Input /> : value)
   }
   // ,
   
@@ -89,26 +82,22 @@ const rowSelection = {
 };
 
 const initial = {
-    id : 'initial',
-    CodeRequired : 'initial',
-    CodeSale : 'initial',
-    NameSale : 'initial',
-    NumberContract : 'initial',
-    ContactSigningDate : 'initial',
-    OrderNumber : 'initial',
-    DayRequest : 'initial',
-    ProductCode : 'initial',
+  id : 'initial',
+  codeRequired : 'initial',
+  codeProjectSales : 'initial',
+  nameProjectSales : 'initial',
+  numberContract : 'initial',
+  productCode : 'initial',
+  createdDate : 'initial',
+  packageProductCode : 'initial',
 };
+
 
 
 
 function ListTable(props) {
   const [counter, setCounter] = useState(1);
 
-  // const {data } = props;
-  // useEffect(() => {
-  //   setDataSource(data)
-  // })
   const { data , status , rowIndex, setRowIndex, setDataShow} = props;
   
 const setRowClassName = (record) => {
