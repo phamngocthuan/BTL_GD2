@@ -4,7 +4,7 @@ import { addArticle } from "../action/index";
 
 
 const store = createStore(rootReducer);
-store.subscribe(() => console.log('Look ma, Redux!!', store.getState()));
+// store.subscribe(() => console.log('Look ma, Redux!!', store.getState()));
 
 store.dispatch( addArticle({ title: 'React Redux Tutorial for Beginners', id: 1 }) );
 

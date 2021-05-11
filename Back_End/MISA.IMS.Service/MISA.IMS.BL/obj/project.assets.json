@@ -437,7 +437,10 @@
         },
         "runtime": {
           "bin/placeholder/MISA.IMS.Core.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "MISA.IMS.Data/1.0.0": {
         "type": "project",
@@ -1431,19 +1434,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pnthuan.RD\\.nuget\\packages\\": {}
+    "C:\\Users\\phamn\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
+      "projectUniqueName": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
       "projectName": "MISA.IMS.BL",
-      "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
-      "packagesPath": "C:\\Users\\pnthuan.RD\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\obj\\",
+      "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\MISA.IMS.BL.csproj",
+      "packagesPath": "C:\\Users\\phamn\\.nuget\\packages\\",
+      "outputPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.BL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pnthuan.RD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\phamn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1457,17 +1460,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Core\\MISA.IMS.Core.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder\\BTL_GD2\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj"
             }
           }
         }
@@ -1502,11 +1505,14 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

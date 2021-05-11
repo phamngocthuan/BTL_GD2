@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 
 function TabPanes(props) {
-  const dataShow = useSelector(state => state.dataShow)
+  const {data} = props;
   return (
     <Tabs defaultActiveKey="1" onChange={() => {}}>
       <TabPane tab="Thông tin chung" key="1">
@@ -25,10 +25,10 @@ function TabPanes(props) {
               <div>Số hợp đồng : </div>
           </div>
           <div className="tab-p-right">
-              <div> {dataShow.CodeRequired ?  dataShow.CodeRequired : ""}</div>
-              <div> {dataShow.CodeSale ? dataShow.CodeSale : ""}</div>
-              <div> {dataShow.NameSale ? dataShow.NameSale :  ""}</div>
-              <div>{dataShow.NumberContract ?dataShow.NumberContract:  ""}</div>
+              <div> {data.codeRequired ?  data.codeRequired : ""}</div>
+              <div> {data.codeProjectSales ? data.codeProjectSales : ""}</div>
+              <div> {data.nameProjectSales ? data.nameProjectSales :  ""}</div>
+              <div>{data.numberContract ?data.numberContract:  ""}</div>
           </div>
       </div>
         

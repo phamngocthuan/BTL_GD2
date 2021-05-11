@@ -7,11 +7,10 @@ ItemOption.propTypes = {
 };
 
 function ItemOption(props) {
-    const {content, nameIcon, squareShape, showModal, item, setMethod} = props;
+    const {content, nameIcon, squareShape, showModal, item} = props;
     return (
         <div className='item-option' onClick={() => 
             {
-                setMethod(item.state)
                 showModal(item.content,item.state)
             }
         

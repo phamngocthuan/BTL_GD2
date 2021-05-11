@@ -3,12 +3,13 @@ import '../../assets/styles/molecules/Manipulation.scss'
 import ItemOption from '../atomics/ItemOption'
 import Modal from '../molecules/Modal'
 import BodyModal from '../atomics/BodyModal'
-import { useSetState } from 'react-use';
+import { useSelector, useDispatch } from 'react-redux'
+import {setDataShow , setTitleModal, setMethodModal, setShowModal} from '../../redux/action/index'
 Manipulation.propTypes = {
 
 };
 const action = [
-    {title: "Thêm", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
+    {title: "Thêm yêu cầu", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
     {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
     {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
     {title: "Nạp", nameIcon: "IconDownload", state : "Download", content : "Nạp"},
@@ -24,26 +25,25 @@ const status = [
 
 function Manipulation(props) {
 
-    const {data, setData, rowSelected, setIndexRowSelected} = props;
-    const [hideModal, setShowModal] = useState(false);
-    const [titleModal, setTitleModal] = useState('Thêm yêu cầu')
-    const [method , setMethod] = useState('Add');
+    const dataShow = useSelector(state => state.homepage.dataShow);
+
+    const titleModal = useSelector(state => state.modal.title);
+    const isShowModal = useSelector(state => state.modal.isShow);
+    const methodModal = useSelector(state => state.modal.method);
+
+
+    const dispatch = useDispatch(); 
 
     const showModal = (title, state) => {
-        setMethod(state)
-        if(rowSelected != '-1' && state === 'Add'){
-            setData({})
-        }  
-        if(state === 'Add'){
-            setMethod('-1')
-            setData({})
-            setIndexRowSelected(-1)
+        const obj = {
+            isShow : !isShowModal,
+            title : isShowModal ? "" : title,
+            method : isShowModal ? "" : state
         }
-        if(rowSelected > 0 || state ==='Add'){
-            setShowModal(!hideModal);
-            setTitleModal(title)
-        }
-        
+        dispatch(setTitleModal({title : obj.title}))
+        dispatch(setMethodModal({method : obj.method}))
+        dispatch(setShowModal({isShowModal : obj.isShow}))
+
         
     }
 
@@ -53,14 +53,14 @@ function Manipulation(props) {
             key={index}
             item={item} 
             content={item.title}
-             nameIcon={item.nameIcon}
-             showModal={showModal}
-             setMethod={setMethod}
+            nameIcon={item.nameIcon}
+            showModal={isShowModal}
             >
 
             </ItemOption>
         )
     })
+    // Hiển thị màu
     const elemtStatus = status.map((item,index) => {
         return (
             <ItemOption key={index} content={item.status} squareShape={item.color}>
@@ -68,29 +68,35 @@ function Manipulation(props) {
             </ItemOption>
         )
     })
-    const handleOnchange = (e) => {
-            const value = e.target.value;
-            setData({
-              ...data,
-              [e.target.name]: value
-            });
-          
-    }
-
-    const handleOnchangeSelect = (name, value) => {
-        setData({
-            ...data,
-            [name]: value
-          });
-    }
+   
 
     const handleSubmit = () => {
-        console.log(data);
+        dispatch(setTitleModal({title : ""}))
+        dispatch(setMethodModal({method : "Add"}))
+        dispatch(setShowModal({isShowModal : false}))
+        dispatch(setDataShow({
+            codeRequired : '',
+            codeProjectSales : '',
+            nameProjectSales : '',
+            numberContract : '',
+            productCode : '',
+            createdDate : '',
+            packageProductCode : '',
+        }));
     }
     const handleCancel = () => {
-        console.log('close')
-        setMethod('-1')
-        setData({})
+        dispatch(setDataShow({
+            codeRequired : '',
+            codeProjectSales : '',
+            nameProjectSales : '',
+            numberContract : '',
+            productCode : '',
+            createdDate : '',
+            packageProductCode : '',
+        }));
+        dispatch(setTitleModal({title : ""}))
+        dispatch(setMethodModal({method : "Add"}))
+        dispatch(setShowModal({isShowModal : false}))
     }
     return (
         <div className="manipulation">
@@ -101,23 +107,12 @@ function Manipulation(props) {
                 {elemtStatus}
             </div>
             <Modal 
-                visible={hideModal} 
-                setVisible={setShowModal}
+                visible={isShowModal} 
                 title = {titleModal} 
                 handleSubmit = {handleSubmit}
-                setMethod={setMethod}
                 handleCancel={handleCancel}
                 bodyModal = {
-                    method == "Add" ?
-                     <BodyModal data={{}} handleOnchange={handleOnchange} handleOnchangeSelect={handleOnchangeSelect}/>
-                     : 
-                     method == "Modified" 
-                     ?
-                     <BodyModal data={data} handleOnchange={handleOnchange} handleOnchangeSelect={handleOnchangeSelect}/> 
-                     :
-                     <BodyModal data={data} handleOnchange={handleOnchange} handleOnchangeSelect={handleOnchangeSelect}/>
-                
-                
+                    <BodyModal  />
             }
 
             />

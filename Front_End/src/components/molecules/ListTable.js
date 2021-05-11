@@ -3,8 +3,9 @@ import { Table, Button, Input } from 'antd';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import '../../assets/styles/molecules/ListTable.scss'
-import Paging from '../atomics/Paging'
-
+import { useSelector, useDispatch } from 'react-redux'
+import TabPane from '../molecules/TabPane'
+import {setIndexSelectedTable} from '../../redux/action/index'
 const Flexbox = styled.div`
   font-family: sans-serif;
   display: flex;
@@ -57,21 +58,6 @@ const columns = [
     dataIndex: 'packageProductCode',
     render: value => (value === 'initial' ? <Input /> : value)
   }
-  // ,
-  
-  // {
-  //   title: '',
-  //   dataIndex: 'action',
-  //   width: '50px',
-  //   render: (_, record) => (
-  //     <>
-  //       {record.name === 'initial' && <Button icon="plus" shape="circle" />}
-  //       {record.name !== 'initial' && (
-  //         <Button icon="delete" shape="circle" type="danger" />
-  //       )}
-  //     </>
-  //   )
-  // }
 ];
 
 const rowSelection = {
@@ -93,44 +79,74 @@ const initial = {
 };
 
 
-
-
 function ListTable(props) {
-  const [counter, setCounter] = useState(1);
 
-  const { data , status , rowIndex, setRowIndex, setDataShow} = props;
-  
+  const dispatch = useDispatch();
+  const totals = useSelector(state => state.table.totals) 
+  const indexSelected = useSelector(state => state.table.indexSelected)
+  const [current, setCurrent] = useState(1)
+  const { data , status , setLimit , offset, setOffset } = props;
+  const [dataTabPane,setDataTabPane] = useState({
+    codeRequired : '',
+    codeProjectSales : '',
+    nameProjectSales : '',
+    numberContract : '',
+    productCode : '',
+    createdDate : '',
+    packageProductCode : '',
+})
 const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
 }
   return (
-    <Flexbox>
-      
-      <Table
-        size="small"
-        columns={columns}
-        dataSource={[initial, ...data]}
-        rowClassName={(record, index) => index == rowIndex  ? `table-row-select color-${status} ` :  `color-${status}` }
-        pagination={
-          { position: ['bottom'],
-            total : 85
+    <>
+      <Flexbox>
+        <Table
+          size="small"
+          columns={columns}
+          dataSource={[initial, ...data]}
+          rowClassName={(record, index) => index == indexSelected  ? `table-row-select color-${status} ` :  `color-${status}` }
+          pagination={
+            { position: ['bottom'],
+              total : 60,
+              defaultPageSize : 10,
+              showTotal : () => `Tổng số bản ghi: ${totals}`,
+              pageSizeOptions : [5, 10, 15, 20],
+              onChange : (page, pageSize) => {
+                if(page != current){
+                  setCurrent(page)
+                  setOffset( (page - 1) * pageSize);
+                }
+                else
+                setLimit(pageSize);
+              },
+              current : current
+            }
           }
-        }
-        onRow={(record, index) => {
-          return {
-            onClick: event => {
-              if(rowIndex === index){
-                setRowIndex(-1)
-                setDataShow({})
-              }else 
-              setRowIndex(index);
-              props.setDataShow(record);
-            }, 
-          };
-        }}
-      />
+          scroll={{ x: 200, y : 200 }}
+          onRow={(record, index) => {
+            return {
+              onClick: event => {
+                dispatch(setIndexSelectedTable({indexSelected : index}))
+                setDataTabPane(record);
+              }
+            //     if(rowIndex === index){
 
-    </Flexbox>
+            //     }else {
+
+            //   }
+            // }
+              , 
+            };
+          }}
+        />
+      </Flexbox>
+      <div className="p-detail">
+          <TabPane data={dataTabPane}/>
+      </div>
+    
+    </>
+    
   );
 }
 
