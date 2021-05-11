@@ -37,6 +37,14 @@ namespace MISA.IMS.Service.Controllers
         }
         #endregion
 
+
+
+
+        /// <summary>
+        /// Hàm lấy tất cả bản ghi
+        /// </summary>
+        /// <returns>Tất cả bản ghi</returns>
+        /// Created by : PNTHUAN(11/5/2021)
         #region Method 
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -67,13 +75,30 @@ namespace MISA.IMS.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm lấy bản ghi theo id
+        /// </summary>
+        /// <param name="id">id của bản ghi truyền vào<aram>
+        /// <returns>Bản ghi cần lấy</returns>
+        /// <returns>Error : Lỗi hoặc Exception</returns>
+        /// Created by : PNTHUAN (11/5/2021)
         // GET api/<ContractController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get([FromRoute][Required]string id)
         {
             try
             {
-
+                if (!ModelState.IsValid)
+                {
+                    var apiRes = new APIResult()
+                    {
+                        Success = false,
+                        Message = Resources.ErrorValidate_NotValid,
+                        MessageCode = MessageCode.ValidateEntity,
+                        Data = ModelState
+                    };
+                    return BadRequest(apiRes);
+                }
                 var apiResult = await _contractService.GetByIdAsync(id);
                 if (apiResult.Success == true)
                 {
@@ -97,6 +122,15 @@ namespace MISA.IMS.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm thêm mới bản ghi
+        /// </summary>
+        /// <param name="contractDTO">Bản ghi dưới dạng json</param>
+        /// <param name="createdBy">Người tạo</param>
+        /// <param name="status">Trạng thái bản ghi : 0 : UNSENT , 1 : PENDING , 2 : REFUSE, 3 : APPROVED</param>
+        /// <returns>Thông tin khi thêm mới bản ghi</returns>
+        /// <returns>Error : Lỗi  hoặc exception trong quá trình thêm mới</returns>
+        /// Creted by  : PNTHUAN ( 11/5/2021)
         // POST api/<ContractController>
         [HttpPost]
         public async Task<IActionResult> InsertContract(
@@ -107,6 +141,19 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
+
+                if(!ModelState.IsValid)
+                {
+                    var apiRes = new APIResult()
+                    {
+                        Success = false,
+                        Message = Resources.ErrorValidate_NotValid,
+                        MessageCode = MessageCode.ValidateEntity,
+                        Data = ModelState
+                    };
+                    return BadRequest(apiRes);
+                }
+                // convert sang đối tượng thêm vào và khởi tạo một số thuộc tính cần có
                 Contract contract = contractDTO.ConvertInsertContract(createdBy, status);
                 APIResult aPIResult = await _contractService.InsertAsync(contract);
                 if (aPIResult.Success)
@@ -132,6 +179,15 @@ namespace MISA.IMS.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm cập nhật bản ghi theo id
+        /// </summary>
+        /// <param name="contractDTO">Bản ghi dưới dạng jsong</param>
+        /// <param name="modifiedBy">Người chỉnh sửa</param>
+        /// <param name="id">ID của bản ghi </param>
+        /// <returns>Thông tin khi thực hiện update</returns>
+        /// Error : return lỗi hoặc exception 
+        /// Created by : PNTHUAN(11/5/2021)
         // PUT api/<ContractController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateContract(
@@ -142,11 +198,29 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var apiRes = new APIResult()
+                    {
+                        Success = false,
+                        Message = Resources.ErrorValidate_NotValid,
+                        MessageCode = MessageCode.ValidateEntity,
+                        Data = ModelState
+                    };
+                    return BadRequest(apiRes);
+                }
                 // chỉ được update với bản nháp và chờ yêu cầu
                 Contract contract = contractDTO.ConvertUpdateContract(modifiedBy, id);
 
                 var apiResult = await _contractService.UpdateAsync(id,contract);
-                return Ok(apiResult.Message);
+                if (apiResult.Success == true)
+                {
+                    return Ok(apiResult);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                }
             }
             catch (Exception ex)
             {
@@ -161,6 +235,13 @@ namespace MISA.IMS.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm xóa một hoặc nhiều hợp đồng
+        /// </summary>
+        /// <param name="ids">Mảng id hợp đồng cần xóa</param>
+        /// <returns> Trả về thông tin khi xóa thành công</returns>
+        /// Error : Trả về lỗi khi gặp ngoại lệ hoặc trong quá trình xóa không tìm thấy bản ghi
+        /// Created by : PNTHUAN( 11/5/2021)
         // DELETE api/<ContractController>/5
         [HttpDelete()]
         public async Task<IActionResult> DeleteContract([FromBody][Required] IEnumerable<string> ids)
@@ -197,6 +278,15 @@ namespace MISA.IMS.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm lấy dữ liệu theo yêu cầu
+        /// </summary>
+        /// <param name="listRequest">truy vấn bao gồm : các trường cần lấy, trường cần lấy với điều kiện</param>
+        /// <param name="status">Trạng thái hợp đồng</param>
+        /// <param name="offset">Vị trí</param>
+        /// <param name="limit">Số lượng bản ghi</param>
+        /// <returns>Danh sách bản ghi theo yêu cầu</returns>
+        /// Created by : PNTHUAN( 11/5/2021)
         [HttpPost("filter")]
         public async Task<IActionResult> GetContracts(
             [FromBody][Required] ListRequest listRequest,
@@ -248,12 +338,51 @@ namespace MISA.IMS.Service.Controllers
             
         }
 
-
+        /// <summary>
+        /// Hàm thay đổi trạng thái bản ghi khi gửi yêu cầu
+        /// </summary>
+        /// <param name="id">Id của bản ghi </param>
+        /// <returns></returns>
+        /// Chỉ gửi yêu cầu với bản nháp
+        /// Created by : PNTHUAN (11/5/2021)
         [HttpPut("status")]
         public async Task<IActionResult> RequestChangeStatusContract([FromBody][Required] string id)
         {
-            await _contractService.UpdateStatus(id);
-            return Ok();
+            try
+            {
+                // Kiểm tra valid request gửi lên
+                if (!ModelState.IsValid)
+                {
+                    var apiRes = new APIResult()
+                    {
+                        Success = false,
+                        Message = Resources.ErrorValidate_NotValid,
+                        MessageCode = MessageCode.ValidateEntity,
+                        Data = ModelState
+                    };
+                    return BadRequest(apiRes);
+                }
+                APIResult apiResult = await _contractService.UpdateStatus(id);
+                if (apiResult.Success == true)
+                {
+                    return Ok(apiResult);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                {
+                    DevMsg = DevMsg.Error,
+                    ErrorCode = ErrorCode.Exception,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.Help,
+                    TraceId = "1211239b@dfj"
+                });
+            }
         }
         #endregion
     }

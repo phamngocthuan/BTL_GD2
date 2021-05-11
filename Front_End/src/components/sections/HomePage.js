@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect, useCallback } from 'react';
 import Header from '../molecules/Header'
 import '../../assets/styles/sections/HomePage.scss'
 import Manipulation from '../molecules/Manipulation'
@@ -12,20 +12,19 @@ import {getColorStatus } from '../../constants/CommonFunction'
 import { useSetState } from 'react-use';
 import axios from 'axios';
 import ContractApi from '../api/ContractApi'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { addArticle , setDataShow} from '../../redux/action/index'
+
 HomePage.propTypes = {
 
 };
 
 function HomePage(props) {
-    const [dataShowTabPane, setDataShow] = useState({
-        codeRequired : '',
-        codeProjectSales : '',
-        nameProjectSales : '',
-        numberContract : '',
-        productCode : '',
-        createdDate : '',
-        packageProductCode : '',
-    });
+
+    const dataShow = useSelector(state => state.dataShow)
+    const dispatch = useDispatch();  
+
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [colorRow , setColorRow] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [nameStatus, setNameStatus] = useState('UNSENT')
@@ -99,9 +98,15 @@ function HomePage(props) {
             console.log(err);
         })
     },[])
+
+
+    const setDataABC  = (data) => dispatch(addArticle(data))
+        
+      ;
     return (
         <>
             <div>
+                <button onClick={() => setDataABC({title : "Hello World"})}>Click me!!!</button>   
                 <Header></Header>
                 <div className="page-content">
                     <nav className="menu show">
@@ -109,7 +114,7 @@ function HomePage(props) {
                     </nav>
                     <div className="body-content">
                         <Manipulation 
-                           data = {dataShowTabPane}
+                           data = {dataShow}
                            setData = {setDataShow}
                            rowSelected ={indexRowSelected}
                            setIndexRowSelected={setIndexRowSelected}
@@ -130,7 +135,7 @@ function HomePage(props) {
                                      />
                                 </div>
                                 <div className="p-detail">
-                                    <TabPane dataShowTabPane={dataShowTabPane}/>
+                                    <TabPane />
                                 </div>
                             </div>
                         </div>

@@ -3,7 +3,9 @@ import {Switch , Route, Redirect} from 'react-router-dom'
 
 import HomePageManger from './components/pages/HomePageManager'
 
+
 function App() {
+
   return (
     <div className="App">
       <Switch>

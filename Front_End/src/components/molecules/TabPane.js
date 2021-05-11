@@ -2,11 +2,11 @@ import { Tabs } from 'antd';
 import { List} from 'antd';
 import '../../assets/styles/molecules/TabPane.scss'
 const { TabPane } = Tabs;
-
+import { useSelector } from 'react-redux'
 
 
 function TabPanes(props) {
-  const {dataShowTabPane}  = props;
+  const dataShow = useSelector(state => state.dataShow)
   return (
     <Tabs defaultActiveKey="1" onChange={() => {}}>
       <TabPane tab="Thông tin chung" key="1">
@@ -25,10 +25,10 @@ function TabPanes(props) {
               <div>Số hợp đồng : </div>
           </div>
           <div className="tab-p-right">
-              <div> {dataShowTabPane.CodeRequired ?  dataShowTabPane.CodeRequired : ""}</div>
-              <div> {dataShowTabPane.CodeSale ?dataShowTabPane.CodeSale : ""}</div>
-              <div> {dataShowTabPane.NameSale ? dataShowTabPane.NameSale :  ""}</div>
-              <div>{dataShowTabPane.NumberContract ?dataShowTabPane.NumberContract:  ""}</div>
+              <div> {dataShow.CodeRequired ?  dataShow.CodeRequired : ""}</div>
+              <div> {dataShow.CodeSale ? dataShow.CodeSale : ""}</div>
+              <div> {dataShow.NameSale ? dataShow.NameSale :  ""}</div>
+              <div>{dataShow.NumberContract ?dataShow.NumberContract:  ""}</div>
           </div>
       </div>
         

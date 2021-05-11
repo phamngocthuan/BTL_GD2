@@ -1,0 +1,7 @@
+
+
+
+const ADD_ARTICLE = "ADD_ARTICLE";
+const DATASHOW = "DATASHOW"
+
+export {ADD_ARTICLE, DATASHOW}

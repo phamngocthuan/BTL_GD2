@@ -34,3 +34,15 @@ D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3
 D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.csproj.CopyComplete
 D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.dll
 D:\BTL_GD2\new btl\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.pdb
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\bin\Debug\netcoreapp3.1\MISA.IMS.Data.deps.json
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\bin\Debug\netcoreapp3.1\MISA.IMS.Data.dll
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\bin\Debug\netcoreapp3.1\MISA.IMS.Data.pdb
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\bin\Debug\netcoreapp3.1\MISA.IMS.Common.dll
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\bin\Debug\netcoreapp3.1\MISA.IMS.Common.pdb
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.csprojAssemblyReference.cache
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.AssemblyInfoInputs.cache
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.AssemblyInfo.cs
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.csproj.CoreCompileInputs.cache
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.csproj.CopyComplete
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.dll
+C:\Users\pnthuan.RD\Desktop\New folder\BTL_GD2\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Data\obj\Debug\netcoreapp3.1\MISA.IMS.Data.pdb

@@ -5,11 +5,16 @@ import App from './App';
 
 import { BrowserRouter} from 'react-router-dom'
 import {createStore} from 'redux';
+import { Provider } from "react-redux";
+import store from "./redux/store/index"
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter >
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
+      
     </BrowserRouter>
     
   </React.StrictMode>,
