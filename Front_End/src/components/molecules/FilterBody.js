@@ -91,7 +91,6 @@ function FilterBody(props) {
             limit : limit
         },
         (res) => {
-            //setData(res.data);
             console.log(res.data.data)
             setData(res.data.data);
             dispatch(setTotalTable({status : "", totals : res.data.totals}))

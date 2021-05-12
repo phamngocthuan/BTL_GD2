@@ -12,9 +12,34 @@ const ContractApi = {
         }
 
     },
-    post : "",
-    update : "",
-    delete : "",
+    post : async (data, success, failure) =>  {
+        try {
+            const res = await callApi.post(`api/v1/contracts`,data)
+            if(success) success(res)
+        }
+        catch (ex){
+            if(failure) failure();
+        }
+    },
+    update : async (contractID, data, success, failure) =>  {
+        try {
+            const res = await callApi.put(`api/v1/contracts/${contractID}`,data)
+            if(success) success(res)
+        }
+        catch (ex){
+            if(failure) failure();
+        }
+    },
+    delete :  async (contractID, success, failure) =>  {
+        try {
+            const ids = [contractID]
+            const res = await callApi.delete(`api/v1/contracts`,ids)
+            if(success) success(res)
+        }
+        catch (ex){
+            if(failure) failure();
+        }
+    },
     filter :  async(body, headerParem, success, failure) => {
         var url = "api/v1/contracts/filter" + getQueryParam(headerParem);
         console.log(getQueryParam(headerParem));
@@ -30,3 +55,4 @@ const ContractApi = {
     }
 }
 export default ContractApi;
+

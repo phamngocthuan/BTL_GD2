@@ -4,11 +4,15 @@ import { Modal, Button } from 'antd';
 import Draggable from 'react-draggable';
 import React, {useRef, useState} from 'react'
 import '../../assets/styles/molecules/Modal.scss'
-
+import ValidateForm from '../molecules/Form'
+import { Form } from 'antd'
+import ButtonIcon from '../atomics/Button'
 export default function ModalDraggable(props)  {
+  const [form] = Form.useForm();
 
   const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel} = props;
   const [disabled, setDisable] = useState(false);
+  const inputRef = useRef(null)
   const [bounds, setBounds] = useState(
     { left: 0, top: 0, bottom: 0, right: 0 }
   )
@@ -19,15 +23,14 @@ export default function ModalDraggable(props)  {
   };
 
   const handleOk = e => {
-
     setBounds( { left: 0, top: 0, bottom: 0, right: 0 })
     handleSubmit();
   };
 
   const clickCancel = e => {
+    form.resetFields();
     setBounds( { left: 0, top: 0, bottom: 0, right: 0 })
     handleCancel();
-
   };
 
   const onStart = (event, uiData) => {
@@ -41,8 +44,14 @@ export default function ModalDraggable(props)  {
       }
     );
   };
-  const handleOnchange = () => {
 
+  const onSubmit = (values) => {
+    console.log('Received values of form: ', values);
+    form.resetFields();
+    handleOk();
+  }
+  const onSubmitFailed = (values, errorFields, outOfDate) => {
+    console.log(values, " ", errorFields, " ",outOfDate )
   }
     return (
       <>
@@ -73,7 +82,9 @@ export default function ModalDraggable(props)  {
             </div>
           }
           visible={visible}
-          onOk={ () => {handleOk()}}
+          onOk={ () => {
+            inputRef.current.click();
+          }}
           cancelText={"Hủy bỏ"}
           okText = {"Lưu"}
           onCancel={ () => {clickCancel()}}
@@ -86,8 +97,29 @@ export default function ModalDraggable(props)  {
             </Draggable>
           )}
           maskClosable={false}
+          footer={[
+            <ButtonIcon 
+                type="btn-type-1"
+                // onClick={onCancel}
+                name={"IconCancel"}
+                key="cancel"
+            />
+            ,  
+            <ButtonIcon 
+                key="submit" 
+                type="primary" 
+                // onClick={btnSave} 
+                name={"IconDone"}
+                type="btn-type-4"
+            />
+        ]}
         >
-          {bodyModal}
+          {/* //{bodyModal} */}
+          <ValidateForm 
+            form={form}
+            onSubmit={onSubmit}
+            onSubmitFailed={onSubmitFailed}
+            inputRef={inputRef}/>
         </Modal>
       </>
     );

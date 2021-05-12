@@ -6,7 +6,7 @@ const initialState = {
     status : "",
     totals : 0,
     dataSelected : {},
-    indexSelected : 0
+    indexSelected : -1
     
 };
   

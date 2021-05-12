@@ -4,7 +4,9 @@ import ItemOption from '../atomics/ItemOption'
 import Modal from '../molecules/Modal'
 import BodyModal from '../atomics/BodyModal'
 import { useSelector, useDispatch } from 'react-redux'
-import {setDataShow , setTitleModal, setMethodModal, setShowModal} from '../../redux/action/index'
+import ContractApi from '../api/ContractApi'
+import Notification from '../atomics/Notification'
+import {setDataShow , setTitleModal, setMethodModal, setShowModal, setDataModal} from '../../redux/action/index'
 Manipulation.propTypes = {
 
 };
@@ -25,25 +27,42 @@ const status = [
 
 function Manipulation(props) {
 
-    const dataShow = useSelector(state => state.homepage.dataShow);
+    const indexSelected = useSelector(state => state.table.indexSelected);
 
     const titleModal = useSelector(state => state.modal.title);
     const isShowModal = useSelector(state => state.modal.isShow);
     const methodModal = useSelector(state => state.modal.method);
+    const dataModal = useSelector(state => state.modal.data);
 
 
     const dispatch = useDispatch(); 
 
     const showModal = (title, state) => {
-        const obj = {
-            isShow : !isShowModal,
-            title : isShowModal ? "" : title,
-            method : isShowModal ? "" : state
-        }
-        dispatch(setTitleModal({title : obj.title}))
-        dispatch(setMethodModal({method : obj.method}))
-        dispatch(setShowModal({isShowModal : obj.isShow}))
+        
+        if(indexSelected < 0){
+            Notification("error","Lỗi","Chưa chọn bản ghi")
+        }else {
+            const obj = {
+                isShow : !isShowModal,
+                title : isShowModal ? "" : title,
+                method : isShowModal ? "" : state
+            }
 
+            dispatch(setTitleModal({title : obj.title}))
+            dispatch(setMethodModal({method : obj.method}))
+            dispatch(setShowModal({isShow : obj.isShow}))
+            if(methodModal === "Add")
+                dispatch(setDataShow({
+                    codeRequired : '',
+                    codeProjectSales : '',
+                    nameProjectSales : '',
+                    numberContract : '',
+                    productCode : '',
+                    createdDate : '',
+                    packageProductCode : '',
+            }));
+            
+        }
         
     }
 
@@ -54,9 +73,8 @@ function Manipulation(props) {
             item={item} 
             content={item.title}
             nameIcon={item.nameIcon}
-            showModal={isShowModal}
+            showModal={showModal}
             >
-
             </ItemOption>
         )
     })
@@ -71,6 +89,19 @@ function Manipulation(props) {
    
 
     const handleSubmit = () => {
+        // ContractApi.post(
+        //     dataModal, 
+        //     (res) => {
+        //         Notification("success");
+
+        //     },(err) => {
+        //         Notification("error")
+        //     }
+            
+        //     )
+        Notification("success","Thành công", "Thêm thành công");
+
+
         dispatch(setTitleModal({title : ""}))
         dispatch(setMethodModal({method : "Add"}))
         dispatch(setShowModal({isShowModal : false}))
@@ -83,19 +114,20 @@ function Manipulation(props) {
             createdDate : '',
             packageProductCode : '',
         }));
+        
     }
     const handleCancel = () => {
-        dispatch(setDataShow({
-            codeRequired : '',
-            codeProjectSales : '',
-            nameProjectSales : '',
-            numberContract : '',
-            productCode : '',
-            createdDate : '',
-            packageProductCode : '',
-        }));
+        if(methodModal === "Add")
+            dispatch(setDataShow({
+                codeRequired : '',
+                codeProjectSales : '',
+                nameProjectSales : '',
+                numberContract : '',
+                productCode : '',
+                createdDate : '',
+                packageProductCode : '',
+            }));
         dispatch(setTitleModal({title : ""}))
-        dispatch(setMethodModal({method : "Add"}))
         dispatch(setShowModal({isShowModal : false}))
     }
     return (

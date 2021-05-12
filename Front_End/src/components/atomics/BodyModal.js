@@ -1,10 +1,11 @@
-import React, {  } from 'react';
+import React, {  useRef} from 'react';
 import '../../assets/styles/atomics/BodyModal.scss'
 import Select from '../atomics/Select'
 import {getProductCode, getPackageProduct} from '../../constants/CommonFunction'
 import {TYPEREQUEST} from '../../constants/Enum'
 import { useSelector, useDispatch } from 'react-redux'
-import {setDataShow} from '../../redux/action/index'
+import {setDataShow, setDataModal} from '../../redux/action/index'
+import ValidateForm from '../molecules/Form'
 BodyModal.propTypes = {
 
 };
@@ -13,29 +14,30 @@ BodyModal.defaultProps = {
 }
 function BodyModal(props) {
     
-   const data = useSelector(state => state.homepage.dataShow);
+   const data = useSelector(state => state.modal.data);
+   const inputRef = useRef(null)
    const dispatch = useDispatch(); 
 
    const handleOnchange = (e) => {
         const value = e.target.value;
         const obj = {...data, [e.target.name]: value};
 
-        dispatch(setDataShow(obj));
+        dispatch(setDataModal({data : obj}));
     
     }
 
     const handleOnchangeSelect = (name, value) => {
         const obj = {...data, [name]: value};
 
-        dispatch(setDataShow(obj));
+        dispatch(setDataModal({data : obj}));
     }
 
-   const packageProduct = getPackageProduct(data.ProductCode);
+//    const packageProduct = getPackageProduct(data.productCode);
 
     return (
-        <div class='body-modal' >
+        <div className='body-modal' >
             <div className="body-modal-top">
-                <div>
+                {/* <div>
                     <span style={{ paddingRight: '5px'}}>Sản phẩm</span>
                     <Select valueDefault={data.ProductCode}
                         data = {getProductCode()}
@@ -64,12 +66,13 @@ function BodyModal(props) {
                     </div>
 
                 }
-                
+                 */}
                 
             </div>
             <div className="body-modal-bottom">
-                <div class="form-body">
-                    <div className="item-form-body">
+                <div className="form-body">
+                    <ValidateForm inputRef={inputRef}/>
+                    {/* <div className="item-form-body">
                         <div className="fb-left"> Mã yêu cầu </div>
                         <div className="fb-right"><input name="codeRequired" value={data.codeRequired} onChange={handleOnchange}/></div>
                     </div>
@@ -86,7 +89,7 @@ function BodyModal(props) {
                         <div className="fb-right"><input name="numberContract" value={data.numberContract}
                             onChange={handleOnchange}
                         /></div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

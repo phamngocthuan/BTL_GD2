@@ -1,11 +1,20 @@
-import { ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL } from "../../constants/ActionType";
+import { ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL, DATA_MODAL } from "../../constants/ActionType";
 
 
 
 const initialState = {
     isShow : false,
     title : "",
-    method : "ADD"
+    method : "Add",
+    data : {
+        codeRequired : '',
+        codeProjectSales : '',
+        nameProjectSales : '',
+        numberContract : '',
+        productCode : '',
+        createdDate : '',
+        packageProductCode : '',
+    }
     
   };
   
@@ -22,10 +31,36 @@ function modalReducer(state = initialState, action) {
             ...state,
             title : action.payload.title, 
         }
-        case METHOD_MODAL : 
+        case METHOD_MODAL :
+            let emptyData = {
+                codeRequired : '',
+                codeProjectSales : '',
+                nameProjectSales : '',
+                numberContract : '',
+                productCode : '',
+                createdDate : '',
+                packageProductCode : '',
+            }
+            if(action.payload.method === "Add" ){
+                return {
+                    ...state, method : action.payload.method, data : {
+                        codeRequired : '',
+                        codeProjectSales : '',
+                        nameProjectSales : '',
+                        numberContract : '',
+                        productCode : '',
+                        createdDate : '',
+                        packageProductCode : '',
+                    }
+                }
+            } else 
+            return {
+                ...state, 
+                method : action.payload.method
+            }
+        case DATA_MODAL : 
         return {
-            ...state, 
-            method : action.payload.method
+            ...state, data : action.payload.data
         }
 
     }

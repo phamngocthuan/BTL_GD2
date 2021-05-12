@@ -5,7 +5,8 @@ import 'antd/dist/antd.css';
 import '../../assets/styles/molecules/ListTable.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import TabPane from '../molecules/TabPane'
-import {setIndexSelectedTable} from '../../redux/action/index'
+import {setIndexSelectedTable, setDataModal} from '../../redux/action/index'
+import {formatDate} from "../../constants/CommonFunction"
 const Flexbox = styled.div`
   font-family: sans-serif;
   display: flex;
@@ -44,7 +45,7 @@ const columns = [
   {
     title: 'Ngày yêu cầu',
     dataIndex: 'createdDate',
-    render: value => (value === 'initial' ? <Input /> : value)
+    render: value => (value === 'initial' ? <Input /> : <div style={{textAlign: "center"}}>{formatDate(value)}</div>)
 
   },
   {
@@ -123,11 +124,12 @@ const setRowClassName = (record) => {
               current : current
             }
           }
-          scroll={{ x: 200, y : 200 }}
+          scroll={{ x: 200, y : 400 }}
           onRow={(record, index) => {
             return {
               onClick: event => {
                 dispatch(setIndexSelectedTable({indexSelected : index}))
+                dispatch(setDataModal({data : record}))
                 setDataTabPane(record);
               }
             //     if(rowIndex === index){

@@ -43,4 +43,18 @@ function getQueryParam(obj){
     }
     return '';
 }
-export { getColorStatus, getProductCode , getPackageProduct, getQueryParam}
+function formatDate(date) {            
+    date = new Date(date);            
+    if (Number.isNaN(date.getTime())) {
+         return "";
+    } else {   
+            var day="",month="",year="";  
+            day = date.getDate();             
+            month = date.getMonth() + 1;             
+            year = date.getFullYear();             
+            day = day < 10 ? '0' + day : day;              
+            month = month < 10 ? '0' + month : month;           
+            return day + '/' + month + '/' + year;       
+    }          
+}
+export { getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate}

@@ -3,7 +3,7 @@ import { ADD_ARTICLE, DATASHOW ,  TOTAL_TABLE,
     STATUS_TABLE,
     DATA_SELECTED,
     INDEX_SELECTED,
-    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL
+    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL, DATA_MODAL
     
 
 }
@@ -38,8 +38,11 @@ function setDataSelectedTable(payload){
 function setIndexSelectedTable(payload){
     return {type : INDEX_SELECTED, payload }
 }
+function setDataModal(payload){
+    return {type : DATA_MODAL, payload }
+}
 
-export {addArticle, setDataShow, setModal, setTotalTable , setStatusTable ,
-    setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, setMethodModal
+export {addArticle, setDataShow,  setTotalTable , setStatusTable ,
+    setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, setMethodModal, setDataModal
 
 }

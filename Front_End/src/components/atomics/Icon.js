@@ -7,6 +7,8 @@ import IconHomePage from './Icons/IconHomePage'
 import IconDelete from './Icons/IconDelete'
 import IconDownload from './Icons/IconDownload'
 import IconModify from './Icons/IconModify'
+import IconCancel from './Icons/IconCancel'
+import IconDone from './Icons/IconDone'
 
 const Icon = (props) => {
     const {name} = props;
@@ -26,6 +28,10 @@ const Icon = (props) => {
             return <IconDownload {...props} />;
         case 'IconModify':
             return <IconModify {...props} />;
+        case 'IconCancel':
+            return <IconCancel {...props} />;
+        case 'IconDone':
+            return <IconDone {...props} />;
         default : 
             return <Pointer {...props} />;
     }
