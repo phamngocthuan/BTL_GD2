@@ -39,7 +39,7 @@ function Manipulation(props) {
 
     const showModal = (title, state) => {
         
-        if(indexSelected < 0){
+        if(indexSelected < 0 && state != "Add"){
             Notification("error","Lỗi","Chưa chọn bản ghi")
         }else {
             const obj = {

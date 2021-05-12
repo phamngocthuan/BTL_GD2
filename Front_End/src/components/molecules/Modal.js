@@ -53,6 +53,12 @@ export default function ModalDraggable(props)  {
   const onSubmitFailed = (values, errorFields, outOfDate) => {
     console.log(values, " ", errorFields, " ",outOfDate )
   }
+  const onOk = () => {
+    inputRef.current.click();
+  }
+  const onCancel = () => {
+    clickCancel();
+  }
     return (
       <>
         <Modal
@@ -82,12 +88,7 @@ export default function ModalDraggable(props)  {
             </div>
           }
           visible={visible}
-          onOk={ () => {
-            inputRef.current.click();
-          }}
-          cancelText={"Hủy bỏ"}
-          okText = {"Lưu"}
-          onCancel={ () => {clickCancel()}}
+          onCancel={ () => {onCancel()}}
           modalRender={modal => (
             <Draggable
               bounds={bounds}
@@ -99,19 +100,21 @@ export default function ModalDraggable(props)  {
           maskClosable={false}
           footer={[
             <ButtonIcon 
-                type="btn-type-1"
-                // onClick={onCancel}
+                key="submit" 
+                type="type-2" 
+                name={"IconDone"}
+                title="Lưu"
+                onClick={onOk}
+            />
+            ,
+            <ButtonIcon 
+                type="type-1"
                 name={"IconCancel"}
                 key="cancel"
+                title="Hủy"
+                onClick={onCancel}
             />
-            ,  
-            <ButtonIcon 
-                key="submit" 
-                type="primary" 
-                // onClick={btnSave} 
-                name={"IconDone"}
-                type="btn-type-4"
-            />
+            
         ]}
         >
           {/* //{bodyModal} */}

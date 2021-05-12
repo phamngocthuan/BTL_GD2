@@ -39,10 +39,22 @@ const formItemLayout = {
       },
       sm: {
         span: 18,
-        offset: 6,
+        offset: 0,
       },
     },
   };
+  const tailFromSelect = {
+    wrapperCol: {
+      xs: {
+        span: 4,
+        offset: 0,
+      },
+      sm: {
+        span: 12,
+        offset: 6,
+      },
+    },
+  }
 export default function ValidateForm (props){
     const {inputRef, onSubmit, onSubmitFailed, form} = props;
     const dataModal = useSelector(state => state.modal.data);
@@ -86,9 +98,9 @@ export default function ValidateForm (props){
                 <Form.Item
                   name="productCode"
                   label="Mã sản phẩm"
-
+                  {...tailFromSelect}
                 >
-                  <Select defaultValue={productCodeData[0]} style={{ width: 120 }} onChange={handleProductCodeChange}>
+                  <Select  style={{ width: 120 }} onChange={handleProductCodeChange}>
                     {productCodeData.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
@@ -97,6 +109,7 @@ export default function ValidateForm (props){
                 <Form.Item
                   name="packageProductCode"
                   label="Mã gói sản phẩm"
+                  {...tailFromSelect}
                 >
                   <Select style={{ width: 120 }} value={packageProductCode} onChange={onPackageProductCodeChange}>
                     {productCodes.map(item => (
@@ -121,7 +134,7 @@ export default function ValidateForm (props){
             },
           ]}
         >
-          <Input defaultValue={dataModal.contactEmailAddress ? dataModal.contactEmailAddress : ""}/>
+          <Input />
         </Form.Item>
         <Form.Item
           name="contactName"
@@ -144,7 +157,7 @@ export default function ValidateForm (props){
             // })
           ]}
         >
-          <Input defaultValue={dataModal.contactName ? dataModal.contactName : ""}/>
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -170,7 +183,7 @@ export default function ValidateForm (props){
           name="nameProjectSales"
           label="Tên dự án bán hàng"
         >
-          <Input defaultValue={dataModal.nameProjectSales ? dataModal.nameProjectSales : ""}/>
+          <Input />
         </Form.Item>
         <Form.Item
           name="numberContract"
@@ -185,7 +198,7 @@ export default function ValidateForm (props){
 
           ]}
         >
-          <Input defaultValue={dataModal.numberContract}/>
+          <Input />
         </Form.Item>
         <Form.Item
           name="money"
@@ -199,13 +212,13 @@ export default function ValidateForm (props){
           label="Tên hợp đồng"
           
         >
-          <Input defaultValue={dataModal.contractName ? dataModal.contractName : ""} />
+          <Input  />
         </Form.Item>
         <Form.Item
           name="codeProjectSales"
           label="Mã dự án bán hàng"
         >
-          <Input defaultValue={dataModal.codeProjectSales} />
+          <Input  />
         </Form.Item>
 
         <div style={{display : "none"}}>

@@ -5,15 +5,17 @@ import Icon from '../atomics/Icon'
 
 
 export default function ButtonIcon(props){
-    const {type, name, key} = props;
+    const {type, name, title, onClick} = props;
     return (
         <>
             <Button 
                 type={type} 
-                icon={<Icon name={name} />}
-                key={key}
+                icon={<Icon name={name}  style={{
+                    marginRight : "5px"
+                }}/>}
+                onClick={onClick}
             >
-            {name}
+            {title}
             </Button>
             
         </>
