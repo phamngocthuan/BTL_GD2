@@ -265,5 +265,30 @@ namespace MISA.IMS.BL.Services
             return apiResult;
 
         }
+
+        public async Task<APIResult> GetByCodeAsync(object codeRequired)
+        {
+            var apiResult = new APIResult();
+            var res = _contractRepository.GetByCodeAsync(codeRequired).Result;
+            if (res == null)
+            {
+                apiResult.Success = false;
+                apiResult.Data = new ErrorResult
+                {
+                    DevMsg = DevMsg.No_Content,
+                    ErrorCode = ErrorCode.No_Content,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.Help,
+                    TraceId = "1211239b@dfj"
+                };
+            }
+            else
+            {
+                apiResult.Data = res;
+                apiResult.Message = "Lấy data thành công ";
+                apiResult.MessageCode = MessageCode.Success;
+            }
+            return apiResult;
+        }
     }
 }

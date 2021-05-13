@@ -5,8 +5,10 @@ import 'antd/dist/antd.css';
 import '../../assets/styles/molecules/ListTable.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import TabPane from '../molecules/TabPane'
-import {setIndexSelectedTable, setDataModal} from '../../redux/action/index'
+import {setIndexSelectedTable, setDataModal, setDataSelectedTable} from '../../redux/action/index'
 import {formatDate} from "../../constants/CommonFunction"
+
+import ContractApi from "../api/ContractApi"
 const Flexbox = styled.div`
   font-family: sans-serif;
   display: flex;
@@ -99,6 +101,16 @@ function ListTable(props) {
 const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
 }
+  const bindData = async (record, index) => {
+    await ContractApi.getByCode(record.codeRequired,(res) => {
+      console.log(res.data.data);
+    },(err) => {})
+    dispatch(setIndexSelectedTable({indexSelected : index}))
+    setDataSelectedTable({data : record})
+    dispatch(setDataModal({data : record}))
+    setDataTabPane(record);
+  }
+
   return (
     <>
       <Flexbox>
@@ -128,16 +140,8 @@ const setRowClassName = (record) => {
           onRow={(record, index) => {
             return {
               onClick: event => {
-                dispatch(setIndexSelectedTable({indexSelected : index}))
-                dispatch(setDataModal({data : record}))
-                setDataTabPane(record);
+                bindData(record, index)
               }
-            //     if(rowIndex === index){
-
-            //     }else {
-
-            //   }
-            // }
               , 
             };
           }}

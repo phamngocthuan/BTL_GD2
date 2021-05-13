@@ -2,16 +2,23 @@ import 'antd/dist/antd.css';
 
 import { Modal, Button } from 'antd';
 import Draggable from 'react-draggable';
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import '../../assets/styles/molecules/Modal.scss'
 import ValidateForm from '../molecules/Form'
 import { Form } from 'antd'
 import ButtonIcon from '../atomics/Button'
+
+import ProductApi from '../api/ProductApi'
+
+
+
 export default function ModalDraggable(props)  {
   const [form] = Form.useForm();
 
   const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel} = props;
   const [disabled, setDisable] = useState(false);
+  const [productCodeData, setProductCodeData] = useState([])
+
   const inputRef = useRef(null)
   const [bounds, setBounds] = useState(
     { left: 0, top: 0, bottom: 0, right: 0 }
@@ -59,6 +66,21 @@ export default function ModalDraggable(props)  {
   const onCancel = () => {
     clickCancel();
   }
+  useEffect(()=> {
+    ProductApi.getCodes(
+      (res) => {
+        // console.log(res.data);
+        // let result = res.data.map(a => a.product);
+        // setProductCodes(result)
+        setProductCodeData(res.data);
+      },(err) => {
+          console.log(err);
+      }
+    )
+    return () => {}
+  },[])
+
+
     return (
       <>
         <Modal
@@ -117,15 +139,15 @@ export default function ModalDraggable(props)  {
             
         ]}
         >
-          {/* //{bodyModal} */}
           <ValidateForm 
             form={form}
             onSubmit={onSubmit}
             onSubmitFailed={onSubmitFailed}
-            inputRef={inputRef}/>
+            inputRef={inputRef}
+            productCodeData={productCodeData}
+          />
         </Modal>
       </>
     );
   
 }
-

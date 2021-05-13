@@ -9,5 +9,7 @@ namespace MISA.IMS.DL.Interfaces
     public interface IContractRepository : IBaseRepository<Contract>
     {
         Task<string> GetCodeRequired();
+
+        Task<Contract> GetByCodeAsync(object codeRequired);
     }
 }

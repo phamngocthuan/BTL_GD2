@@ -23,10 +23,14 @@ namespace MISA.IMS.Service.Extensions
             //Repositories
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IContractRepository, ContractRepository>();
+            services.AddScoped<IPackageProductRepository, PackageProductRepositoy>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             // Services
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddScoped<IContractService, ContractService>();
+            services.AddScoped<IPackageProductService, PackageProductService>();
+            services.AddScoped<IProductService, ProductService>();
 
         }
     }

@@ -42,10 +42,21 @@ const ContractApi = {
     },
     filter :  async(body, headerParem, success, failure) => {
         var url = "api/v1/contracts/filter" + getQueryParam(headerParem);
-        console.log(getQueryParam(headerParem));
         try {
             const res = await callApi.post(url ,
             body
+            )
+            if(success) success(res)
+        }
+        catch (ex){
+            if(failure) failure(ex?.response?.data);
+        }
+    }, 
+    getByCode : async (codeRequired, success, failure) => {
+        var url = `api/v1/contracts/code?codeRequired=${codeRequired}`;
+
+        try {
+            const res = await callApi.get(url 
             )
             if(success) success(res)
         }

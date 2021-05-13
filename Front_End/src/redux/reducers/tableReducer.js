@@ -5,7 +5,15 @@ import { TOTAL_TABLE,  INDEX_SELECTED, DATA_SELECTED} from "../../constants/Acti
 const initialState = {
     status : "",
     totals : 0,
-    dataSelected : {},
+    dataSelected :{
+        codeRequired : '',
+        codeProjectSales : '',
+        nameProjectSales : '',
+        numberContract : '',
+        productCode : '',
+        createdDate : '',
+        packageProductCode : '',
+    },
     indexSelected : -1
     
 };
@@ -21,7 +29,7 @@ const initialState = {
         case DATA_SELECTED : 
         return {
             ...state,
-            dataSelected : action.payload.dataSelected
+            dataSelected : action.payload.data
         };
         case INDEX_SELECTED : 
         return {
@@ -33,3 +41,6 @@ const initialState = {
 };
   
 export default tableReducer;
+
+// data modal : data submit data
+// data selected : data de binding data

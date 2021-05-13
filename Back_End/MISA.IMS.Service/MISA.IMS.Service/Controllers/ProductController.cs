@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MISA.IMS.BL.Interfaces;
+using MISA.IMS.Common.Constants;
+using MISA.IMS.Data.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,39 +13,50 @@ using System.Threading.Tasks;
 namespace MISA.IMS.Service.Controllers
 {
     [Route("api/v{version:apiVersion}/products")]
+    [ApiVersion("1")]
     [ApiController]
     public class ProductController : ControllerBase
     {
-        // GET: api/<ProductController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<ProductController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/<ProductController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        #region Fields
+        private readonly IProductService _productService;
+        #endregion
 
-        // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        #region Constructors
+        public ProductController(IProductService productService)
         {
+            _productService = productService;
         }
+        #endregion
 
-        // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("code")]
+       public async Task<IActionResult> GetProductCode()
         {
+            try
+            {
+
+                var apiResult = await _productService.GetProductCodes();
+                if (apiResult.Success == true)
+                {
+                    return Ok(apiResult.Data);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                {
+                    DevMsg = DevMsg.Error,
+                    ErrorCode = ErrorCode.Exception,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.Help,
+                    TraceId = "pnthuan@@@"
+                });
+            }
         }
     }
 }
