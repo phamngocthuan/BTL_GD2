@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { Form, Input, InputNumber,Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import '../../assets/styles/molecules/Form.scss'
 const { Option } = Select;
@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { data } from 'jquery';
 import { fromPairs } from 'lodash';
 
+import PackageApi from '../api/PackageApi'
+ValidateForm.defaultProps = {
+  productCodeData : ['GD', 'HCCS'],
+}
 
 
-const productCodeData = ['QLNS', 'HTNS'];
-const packageProductCodeData = {
-  QLNS: ['QLNS.A', 'QLNS.B', 'QLNS.C'],
-  HTNS: ['HTNS.D', 'HTNS.E', 'HTNS.F'],
-};
+
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -56,7 +56,7 @@ const formItemLayout = {
     },
   }
 export default function ValidateForm (props){
-    const {inputRef, onSubmit, onSubmitFailed, form} = props;
+    const {inputRef, onSubmit, onSubmitFailed, form, productCodeData} = props;
     const dataModal = useSelector(state => state.modal.data);
 
     const prefixSelector = (
@@ -71,17 +71,48 @@ export default function ValidateForm (props){
         </Select>
       </Form.Item>
     );
-    const [productCodes, setProductCodes] = useState(packageProductCodeData[productCodeData[0]]);
-    const [packageProductCode, setPackageProductCode] = useState(packageProductCodeData[productCodeData[0]][0]);
+    const [productCodes, setProductCodes] = useState([]);
+    const [packageProductCode, setPackageProductCode] = useState(productCodes[0]);
   
     const handleProductCodeChange = value => {
-      setProductCodes(packageProductCodeData[value]);
-      setPackageProductCode(packageProductCodeData[value][0]);
+      PackageApi.get(
+        value, 
+        (res) => {
+          let result = res.data.map(a => a.packageProductCode);
+          setProductCodes(result)
+          setPackageProductCode(result[0])
+          form.setFieldsValue({
+            packageProductCode : result[0],
+          })
+           
+        },(err) => {
+            console.log(err);
+        }
+        )
+
     };
   
     const onPackageProductCodeChange = value => {
       setPackageProductCode(value);
     };
+    // call api lấy danh sách mã gói sản phẩm
+    useEffect(() => {
+      PackageApi.get(
+        productCodeData[0], 
+        (res) => {
+          let result = res.data.map(a => a.packageProductCode);
+          setProductCodes(result)
+          form.setFieldsValue({
+            packageProductCode : result[0],
+          })
+          
+        },(err) => {
+            console.log(err);
+        }
+        )
+    },[])
+
+
     return (
       <Form
         {...formItemLayout}
@@ -89,7 +120,7 @@ export default function ValidateForm (props){
         name="register"
         onFinish={onSubmit}
         onFinishFailed={onSubmitFailed}
-        initialValues={{...dataModal}}
+        initialValues={{...dataModal ,productCode : productCodeData[0], packageProductCode : productCodes[0]}}
         scrollToFirstError
       >
         <div
@@ -100,18 +131,20 @@ export default function ValidateForm (props){
                   label="Mã sản phẩm"
                   {...tailFromSelect}
                 >
-                  <Select  style={{ width: 120 }} onChange={handleProductCodeChange}>
+                  <Select  style={{ width: 120 }} onChange={handleProductCodeChange} >
                     {productCodeData.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
                   </Select>
                 </Form.Item>
+                
                 <Form.Item
                   name="packageProductCode"
                   label="Mã gói sản phẩm"
                   {...tailFromSelect}
+                  initialValue={packageProductCode}
                 >
-                  <Select style={{ width: 120 }} value={packageProductCode} onChange={onPackageProductCodeChange}>
+                  <Select style={{ width: 120 }} defaultValue={packageProductCode} onChange={onPackageProductCodeChange}>
                     {productCodes.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}

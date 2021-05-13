@@ -102,11 +102,56 @@ namespace MISA.IMS.Service.Controllers
                 var apiResult = await _contractService.GetByIdAsync(id);
                 if (apiResult.Success == true)
                 {
-                    return Ok(apiResult.Data);
+                    return Ok(apiResult);
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                {
+                    DevMsg = DevMsg.Error,
+                    ErrorCode = ErrorCode.Exception,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.Help,
+                    TraceId = "1211239b@dfj"
+                });
+            }
+        }
+        
+        /// <summary>
+        /// Lấy bản ghi theo mã yêu cầu
+        /// </summary>
+        /// <param name="codeRequired">mã yêu cầu</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(13/5/2021)
+        [HttpGet("code")]
+        public async Task<IActionResult> GetContract([FromQuery(Name = "codeRequired")] string  codeRequired)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var apiRes = new APIResult()
+                    {
+                        Success = false,
+                        Message = Resources.ErrorValidate_NotValid,
+                        MessageCode = MessageCode.ValidateEntity,
+                        Data = ModelState
+                    };
+                    return BadRequest(apiRes);
+                }
+                var apiResult = await _contractService.GetByCodeAsync(codeRequired);
+                if (apiResult.Success == true)
+                {
+                    return Ok(apiResult);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
@@ -162,7 +207,7 @@ namespace MISA.IMS.Service.Controllers
                 }
                 else
                 {
-                    return BadRequest(aPIResult.Data);
+                    return BadRequest(aPIResult);
                 }
 
             }

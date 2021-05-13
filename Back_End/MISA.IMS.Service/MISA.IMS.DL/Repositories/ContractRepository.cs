@@ -1,7 +1,10 @@
-﻿using MISA.IMS.Data.Entities;
+﻿using Dapper;
+using MISA.IMS.Data.Entities;
 using MISA.IMS.DL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +25,27 @@ namespace MISA.IMS.DL.Repositories
                 return (IEnumerable<Contract>)res;
             }
 
+        }
+
+        public async Task<Contract> GetByCodeAsync(object codeRequired)
+        {
+            using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
+            {
+                /*var res = await  _dbContext._dbConnection.QueryAsync<Contract>("Proc_GetContractByCodeRequired", new { CodeRequired = codeRequired }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                if (res.Count() > 0)
+                {
+                    return res;
+                }
+                else return null;*/
+
+                var res = (await GetEntitiesAsync($"SELECT * FROM {_tableName} WHERE CodeRequired = @codeRequired", new { codeRequired = codeRequired.ToString() })).AsList();
+
+                if (res.Count > 0)
+                {
+                    return res[0];
+                }
+                return null;
+            }
         }
 
         public async Task<string> GetCodeRequired()

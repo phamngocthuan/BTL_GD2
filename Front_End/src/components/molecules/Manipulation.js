@@ -6,6 +6,7 @@ import BodyModal from '../atomics/BodyModal'
 import { useSelector, useDispatch } from 'react-redux'
 import ContractApi from '../api/ContractApi'
 import Notification from '../atomics/Notification'
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {setDataShow , setTitleModal, setMethodModal, setShowModal, setDataModal} from '../../redux/action/index'
 Manipulation.propTypes = {
 
@@ -22,8 +23,8 @@ const status = [
     {status : 'Từ chối', color : '#ff0000'},
     {status : 'Đã duyệt', color : '#0000ff'},
 ]
-
-
+import { Modal as modalAnt } from 'antd';
+const { confirm } = modalAnt;
 
 function Manipulation(props) {
 
@@ -33,12 +34,22 @@ function Manipulation(props) {
     const isShowModal = useSelector(state => state.modal.isShow);
     const methodModal = useSelector(state => state.modal.method);
     const dataModal = useSelector(state => state.modal.data);
+    const [instance,setInstance] = useState({
+        codeRequired : '',
+        codeProjectSales : '',
+        nameProjectSales : '',
+        numberContract : '',
+        productCode : '',
+        createdDate : '',
+        packageProductCode : '',
+    })
 
 
     const dispatch = useDispatch(); 
 
     const showModal = (title, state) => {
         
+
         if(indexSelected < 0 && state != "Add"){
             Notification("error","Lỗi","Chưa chọn bản ghi")
         }else {
@@ -66,14 +77,32 @@ function Manipulation(props) {
         
     }
 
+    function showPromiseConfirm() {
+        confirm({
+          title: 'Bạn có chắc chắn muốn xóa bản ghi có mã yêu cầu dưới đây hay không ?',
+          icon: <ExclamationCircleOutlined />,
+          content: `Mã yêu cầu : ${dataModal.codeRequired}`,
+          onOk() {
+            return new Promise((resolve, reject) => {
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+            }).catch(() => console.log('Oops errors!'));
+          },
+          onCancel() {},
+        });
+    }
+
     const elemtAction = action.map((item,index) => {
+        var func = showModal;
+        if(item.state === "Delete"){
+            func = showPromiseConfirm;
+        }
         return (
             <ItemOption 
             key={index}
             item={item} 
             content={item.title}
             nameIcon={item.nameIcon}
-            showModal={showModal}
+            onClick={func}
             >
             </ItemOption>
         )
@@ -134,6 +163,7 @@ function Manipulation(props) {
         <div className="manipulation">
             <div>
                 {elemtAction}
+
             </div>
             <div style={{ alignItems : 'center'}}>
                 {elemtStatus}

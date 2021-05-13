@@ -27,10 +27,10 @@ namespace MISA.IMS.Data.Entities
         public string  ContactEmailAddress { get; set; }
         public string  ContactPhoneNumber { get; set; }
       
-        public Contract()
+        /*public Contract()
         {
             ContractID = new Guid();
             Status = (int)StatusContract.UNSENT;
-        }
+        }*/
     }
 }
