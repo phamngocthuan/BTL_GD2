@@ -2,7 +2,7 @@
 import React, {  useState, useEffect} from 'react';
 import '../../assets/styles/molecules/FilterBody.scss'
 import ItemOption from '../atomics/ItemOption'
-import { Radio } from 'antd';
+import { Radio, Button } from 'antd';
 import Selects from '../atomics/Select'
 import InputDate from '../atomics/InputTypeDate'
 
@@ -14,17 +14,17 @@ import { getStatus } from '../../constants/CommonFunction';
 FilterBody.propTypes = {
 
 };
-const body = {
-    "FieldNames" : ["ProductCode", "ContractName", 
-    "CodeRequired", "CodeProjectSales", 
-    "NameProjectSales", 
-    "NumberContract", "CreatedDate", 
-    "PackageProductCode"],
-    "Requests"  : [
+// const body = {
+//     "FieldNames" : ["ProductCode", "ContractName", 
+//     "CodeRequired", "CodeProjectSales", 
+//     "NameProjectSales", 
+//     "NumberContract", "CreatedDate", 
+//     "PackageProductCode"],
+//     "Requests"  : [
        
-    ]
+//     ]
 
-}
+// }
 const statusArray = [
     {status : 'Chưa gửi', color : '#007b00', value : 0},
     {status : 'Chờ duyệt', color : '#000000', value : 1},
@@ -66,6 +66,20 @@ function FilterBody(props) {
     const [limit, setLimit] = useState(10);
     const [offset, setOffset] = useState(0);
     const nameStatus = useSelector(state => state.table.status)
+    const Requests = useSelector(state => state.filter.Requests)
+    const FieldNames = useSelector(state => state.filter.FieldNames)
+    const [body, setBody] = useState({
+        "FieldNames" : ["ProductCode", "ContractName", 
+        "CodeRequired", "CodeProjectSales", 
+        "NameProjectSales", 
+        "NumberContract", "CreatedDate", 
+        "PackageProductCode"],
+        "Requests"  : [
+           
+        ]
+    
+    })
+
 
     // Trạng thái bản ghi
     const elemtStatus = statusArray.map((item,index) => {
@@ -82,6 +96,28 @@ function FilterBody(props) {
         setStatus(e.target.value);
         
     };
+
+    useEffect(() => {
+        const newBody = {
+            FieldNames : FieldNames,
+            Requests : Requests
+        }
+        ContractApi.filter(
+            newBody,
+        {
+            status : status,
+            offset : offset,
+            limit : limit
+        },
+        (res) => {
+            setData(res.data.data);
+            dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+            dispatch(setIndexSelectedTable({indexSelected : -1}));
+        },(err) => {
+            console.log(err);
+        })
+    },[Requests])
+
     // status thay đổi , gọi sự kiện lấy bản ghi
     useEffect(()=> {
         ContractApi.filter(
@@ -120,20 +156,20 @@ function FilterBody(props) {
                             <span style={{paddingRight:'5px'}}>Đến</span>
                             <InputDate />
                         </div>
+                        <div>
+                            <Button type="primary">Lấy dữ liệu</Button>
+                        </div>
                 </div>
                 
             </div>
             <div className='content-table'>
                 <div className="t-detail">
                     <ListTable 
-                    // setDataShow={setDataShow} 
                     data={data} 
                     status={nameStatus}
                     setLimit={setLimit}
                     offset={offset}
                     setOffset={setOffset}
-                    // rowIndex={indexRowSelected}
-                    // setRowIndex={setIndexRowSelected}
                         />
                 </div>
                 

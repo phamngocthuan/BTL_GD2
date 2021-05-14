@@ -25,6 +25,16 @@ function getPackageProduct (productCode){
     return packageProduct[0].PackageProductName;
 
 }
+function getCondition(str){
+    switch(str){
+        case '*' : 
+            return 2;
+        case '=' : 
+            return 0;
+        default : 
+            return 1; 
+    }
+}
 
 function getQueryParam(obj){
     if (obj) {
@@ -59,4 +69,4 @@ function formatDate(date) {            
             return day + '/' + month + '/' + year;       
     }          
 }
-export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate}
+export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate, getCondition}

@@ -55,7 +55,7 @@ export default function ModalDraggable(props)  {
   const onSubmit = (obj) => {
     console.log('Received values of form: ', obj);
     form.resetFields();
-    const newObj = {...obj, ...instance};
+    const newObj = {...instance, ...obj};
     handleOk(newObj);
   }
   const onSubmitFailed = (values, errorFields, outOfDate) => {
@@ -77,7 +77,9 @@ export default function ModalDraggable(props)  {
     )
     return () => {}
   },[])
+////////////////////////
 
+///////////////////////
 
     return (
       <>

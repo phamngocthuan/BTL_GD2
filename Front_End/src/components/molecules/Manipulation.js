@@ -49,7 +49,7 @@ function Manipulation(props) {
 
     const dispatch = useDispatch(); 
 
-    const  showModal =  (title, state) => {
+    const  showModal =  async  (title, state) => {
         const obj = {
             isShow : !isShowModal,
             title : isShowModal ? "" : title,
@@ -66,7 +66,7 @@ function Manipulation(props) {
         }
         
         if(state === "Add"){
-            setTimeout(()=> {},500);
+            await form.resetFields();
             setInstance({})
             dispatch(setDataModal({data : a}))
             dispatch(setTitleModal({title : obj.title}))
@@ -77,8 +77,9 @@ function Manipulation(props) {
             if(indexSelected < 0){
                 Notification("error","Lỗi","Chưa chọn bản ghi")
             }else {
-                    ContractApi.getByCode(dataSelected.codeRequired,(res) => {
-                        setInstance(res.data.data)
+                    ContractApi.getByCode(dataSelected.codeRequired, async (res) => {
+                        await setInstance(res.data.data)
+                        form.setFieldsValue(res.data.data)
                         dispatch(setDataModal({data : res.data.data}))
                         dispatch(setTitleModal({title : obj.title}))
                         dispatch(setMethodModal({method : obj.method}))
@@ -112,22 +113,22 @@ function Manipulation(props) {
         }else 
 
             confirm({
-            title: 'Bạn có chắc chắn muốn xóa bản ghi có mã yêu cầu dưới đây hay không ?',
-            icon: <ExclamationCircleOutlined />,
-            content: `Mã yêu cầu : ${dataModal.codeRequired}`,
-            onOk() {
-                return new Promise((resolve, reject) => {
-                    handleDelete();
-                    dispatch(setIndexSelectedTable({indexSelected : -1}));
-                    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-                }).catch(() => console.log('Oops errors!'));
-                
-            },
-            onCancel() {
-                dispatch(setIndexSelectedTable({indexSelected : -1}))  
-            },
-            okText : "Xóa",
-            cancelText: "Hủy"
+                title: 'Bạn có chắc chắn muốn xóa bản ghi có mã yêu cầu dưới đây hay không ?',
+                icon: <ExclamationCircleOutlined />,
+                content: `Mã yêu cầu : ${dataModal.codeRequired}`,
+                onOk() {
+                    return new Promise((resolve, reject) => {
+                        handleDelete();
+                        dispatch(setIndexSelectedTable({indexSelected : -1}));
+                        setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+                    }).catch(() => console.log('Oops errors!'));
+                    
+                },
+                onCancel() {
+                    dispatch(setIndexSelectedTable({indexSelected : -1}))  
+                },
+                okText : "Xóa",
+                cancelText: "Hủy"
             });
     }
 
@@ -187,8 +188,8 @@ function Manipulation(props) {
         dispatch(setShowModal({isShowModal : false}))
         dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
-    const handleCancel = () => {
-        setInstance({
+    const  handleCancel = async  () => {
+        await setInstance({
             codeRequired : '',
             codeProjectSales : '',
             nameProjectSales : '',

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import homepageReducer from './homepageReducer'
 import tableReducer from './tableReducer'
 import modalReducer from './modalReducer'
+import filterReducer from './filterReducer'
 
 // const initialState = {
 //     articles: [], 
@@ -64,6 +65,7 @@ import modalReducer from './modalReducer'
   const rootReducer = combineReducers({
     homepage : homepageReducer,
     table : tableReducer,
-    modal : modalReducer
+    modal : modalReducer,
+    filter : filterReducer
   })
   export default rootReducer;

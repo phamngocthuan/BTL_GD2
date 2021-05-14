@@ -8,6 +8,7 @@ import TabPane from '../molecules/TabPane'
 import {setIndexSelectedTable, setDataModal, setDataSelectedTable} from '../../redux/action/index'
 import {formatDate} from "../../constants/CommonFunction"
 import InputOption from '../atomics/InputOption'
+import Popup from '../atomics/Popup'
 
 import ContractApi from "../api/ContractApi"
 const Flexbox = styled.div`
@@ -67,19 +68,19 @@ const columnInput = [
   {
     title: 'Mã yêu cầu',
     dataIndex: 'codeRequired',
-    render: value => <InputOption key={"codeRequired"} value={""} condition={""}/>
+    render: value => <InputOption name="CodeRequired" />
     
   },
   {
     title: 'Mã dự án bán hàng',
     dataIndex: 'codeProjectSales',
-    render: value =>  <Input /> 
+    render: value =>  <InputOption name="CodeProjectSales" /> 
 
   },
   {
     title: 'Tên dự án bán hàng',
     dataIndex: 'nameProjectSales',
-    render: value =>  <Input />
+    render: value =>  <InputOption name="NameProjectSales" />
 
   },
   {
@@ -131,7 +132,7 @@ function ListTable(props) {
   const dispatch = useDispatch();
   const totals = useSelector(state => state.table.totals) 
   const indexSelected = useSelector(state => state.table.indexSelected)
-
+  
   
   const [current, setCurrent] = useState(1)
   const { data , status , setLimit , offset, setOffset } = props;
@@ -161,7 +162,16 @@ const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
 }
 
+/////////////////////
+const [popup, setPopup] = useState( {
+  visible: false, 
+  x: 0, 
+  y: 0
+})
 
+
+
+////////////////////
   return (
     <>
       <Flexbox>
@@ -183,9 +193,9 @@ const setRowClassName = (record) => {
           pagination={
             { position: ['bottom'],
               total : 100,
-              defaultPageSize : 21,
+              defaultPageSize : 20,
               showTotal : () => `Tổng số bản ghi: ${totals}`,
-              pageSizeOptions : [11, 21, 31, 51],
+              pageSizeOptions : [10, 20, 30, 50],
               onChange : (page, pageSize) => {
                 if(page != current){
                   setCurrent(page)
@@ -207,9 +217,26 @@ const setRowClassName = (record) => {
                 setDataTabPane(record);
               }
               , 
+              onContextMenu : event => {
+                event.preventDefault();
+                if(!popup.visible){
+                    document.addEventListener(`click`,  onClickOutside = (event)=>  {
+                      this.setPopup( {...popup, visible : false})
+                      document.removeEventListener(`click`, onClickOutside)
+                  })
+                }
+                setPopup( {
+                    record : record,
+                    visible: true,
+                    x: event.clientX,
+                    y: event.clientY
+                  }
+                )
+              }
             };
           }}
         />
+        <Popup popup={popup}/>
       </Flexbox>
       <div className="p-detail">
           <TabPane data={dataTabPane}/>

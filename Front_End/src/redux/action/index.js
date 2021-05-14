@@ -3,7 +3,7 @@ import { ADD_ARTICLE, DATASHOW ,  TOTAL_TABLE,
     STATUS_TABLE,
     DATA_SELECTED,
     INDEX_SELECTED,
-    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL, DATA_MODAL
+    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL, DATA_MODAL, ADD_FILTER, UPDATE_FILTER, REMOVE_FILTER
     
 
 }
@@ -41,8 +41,18 @@ function setIndexSelectedTable(payload){
 function setDataModal(payload){
     return {type : DATA_MODAL, payload }
 }
+function setFilter(payload){
+    return {type : ADD_FILTER, payload }
+}
+function removeFilter(payload){
+    return {type : REMOVE_FILTER, payload }
+}
+function updateFilter(payload){
+    return {type : UPDATE_FILTER, payload }
+}
 
 export {addArticle, setDataShow,  setTotalTable , setStatusTable ,
-    setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, setMethodModal, setDataModal
+    setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, 
+    setMethodModal, setDataModal, setFilter, removeFilter, updateFilter
 
 }

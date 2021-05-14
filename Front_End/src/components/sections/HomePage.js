@@ -8,6 +8,8 @@ import Menu from '../molecules/Menu'
 import { CONTRACTSTATUS} from '../../constants/Enum'
 import { Contract} from '../../constants/FakeData'
 import {getColorStatus } from '../../constants/CommonFunction'
+import LocsApi from '../api/LocsApi'
+
 
 
 
@@ -25,6 +27,16 @@ function HomePage(props) {
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [colorRow , setColorRow] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [indexRowSelected, setIndexRowSelected] = useState(-1)
+    useEffect(() => {
+
+        LocsApi.getCity(1,
+            async (res) => {
+                let result = res.data.map(a => a.location);
+                console.log(result);
+            },
+            (err) => {}
+            )
+    },[])
 
     return (
         <>
