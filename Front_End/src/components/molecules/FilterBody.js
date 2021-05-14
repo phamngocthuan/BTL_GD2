@@ -9,7 +9,8 @@ import InputDate from '../atomics/InputTypeDate'
 import ListTable from '../molecules/ListTable'
 import { useSelector, useDispatch } from 'react-redux'
 import ContractApi from '../api/ContractApi'
-import {setTotalTable} from '../../redux/action/index'
+import {setTotalTable, setIndexSelectedTable} from '../../redux/action/index'
+import { getStatus } from '../../constants/CommonFunction';
 FilterBody.propTypes = {
 
 };
@@ -64,7 +65,7 @@ function FilterBody(props) {
     const [status, setStatus] = useState(0);
     const [limit, setLimit] = useState(10);
     const [offset, setOffset] = useState(0);
-    // const [value, setValue] = useState(status[0].value)
+    const nameStatus = useSelector(state => state.table.status)
 
     // Trạng thái bản ghi
     const elemtStatus = statusArray.map((item,index) => {
@@ -91,13 +92,15 @@ function FilterBody(props) {
             limit : limit
         },
         (res) => {
-            console.log(res.data.data)
             setData(res.data.data);
-            dispatch(setTotalTable({status : "", totals : res.data.totals}))
+            dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+            dispatch(setIndexSelectedTable({indexSelected : -1}));
         },(err) => {
             console.log(err);
         })
     },[status, limit, offset])
+
+
     return (
         <>
             <div className='filter-body-content'>
@@ -125,7 +128,7 @@ function FilterBody(props) {
                     <ListTable 
                     // setDataShow={setDataShow} 
                     data={data} 
-                    status={"UNSENT"}
+                    status={nameStatus}
                     setLimit={setLimit}
                     offset={offset}
                     setOffset={setOffset}

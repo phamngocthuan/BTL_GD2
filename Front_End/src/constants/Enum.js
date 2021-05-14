@@ -8,5 +8,5 @@ const CONTRACTSTATUS = {
 }
 const TYPEREQUEST = [{name : "Thêm yêu cầu" }, {name : "Sửa yêu cầu"}]
 
-
-export { CONTRACTSTATUS , TYPEREQUEST}
+const STATUS = ["UNSENT", "PENDING", "REFUSE", "APPROVED"]
+export { CONTRACTSTATUS , TYPEREQUEST, STATUS}

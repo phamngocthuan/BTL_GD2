@@ -10,12 +10,12 @@ import ButtonIcon from '../atomics/Button'
 
 import ProductApi from '../api/ProductApi'
 
-
+import _ from 'lodash';
 
 export default function ModalDraggable(props)  {
-  const [form] = Form.useForm();
+  
 
-  const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel} = props;
+  const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel, instance, form} = props;
   const [disabled, setDisable] = useState(false);
   const [productCodeData, setProductCodeData] = useState([])
 
@@ -29,9 +29,9 @@ export default function ModalDraggable(props)  {
     setVisible(true);
   };
 
-  const handleOk = e => {
+  const handleOk = (obj) => {
     setBounds( { left: 0, top: 0, bottom: 0, right: 0 })
-    handleSubmit();
+    handleSubmit(obj);
   };
 
   const clickCancel = e => {
@@ -52,10 +52,11 @@ export default function ModalDraggable(props)  {
     );
   };
 
-  const onSubmit = (values) => {
-    console.log('Received values of form: ', values);
+  const onSubmit = (obj) => {
+    console.log('Received values of form: ', obj);
     form.resetFields();
-    handleOk();
+    const newObj = {...obj, ...instance};
+    handleOk(newObj);
   }
   const onSubmitFailed = (values, errorFields, outOfDate) => {
     console.log(values, " ", errorFields, " ",outOfDate )
@@ -69,9 +70,6 @@ export default function ModalDraggable(props)  {
   useEffect(()=> {
     ProductApi.getCodes(
       (res) => {
-        // console.log(res.data);
-        // let result = res.data.map(a => a.product);
-        // setProductCodes(result)
         setProductCodeData(res.data);
       },(err) => {
           console.log(err);
@@ -145,6 +143,7 @@ export default function ModalDraggable(props)  {
             onSubmitFailed={onSubmitFailed}
             inputRef={inputRef}
             productCodeData={productCodeData}
+            dataModal={instance}
           />
         </Modal>
       </>

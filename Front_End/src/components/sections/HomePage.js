@@ -20,7 +20,6 @@ HomePage.propTypes = {
 
 function HomePage(props) {
 
-    const dataShow = useSelector(state => state.homepage.dataShow)
     const dispatch = useDispatch();  
 
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)

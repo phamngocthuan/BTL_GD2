@@ -9,6 +9,7 @@ import { fromPairs } from 'lodash';
 import PackageApi from '../api/PackageApi'
 ValidateForm.defaultProps = {
   productCodeData : ['GD', 'HCCS'],
+  productCode : ['GD']
 }
 
 
@@ -56,8 +57,10 @@ const formItemLayout = {
     },
   }
 export default function ValidateForm (props){
-    const {inputRef, onSubmit, onSubmitFailed, form, productCodeData} = props;
-    const dataModal = useSelector(state => state.modal.data);
+    const {inputRef, onSubmit, onSubmitFailed, form, productCodeData, dataModal} = props;
+    const indexSelected = useSelector(state => state.table.indexSelected)
+    const dataSelected = useSelector(state => state.table.dataSelected)
+    const [productCode,setProductcode] = useState("GD");
 
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>
@@ -74,6 +77,7 @@ export default function ValidateForm (props){
     const [productCodes, setProductCodes] = useState([]);
     const [packageProductCode, setPackageProductCode] = useState(productCodes[0]);
   
+
     const handleProductCodeChange = value => {
       PackageApi.get(
         value, 
@@ -97,11 +101,17 @@ export default function ValidateForm (props){
     };
     // call api lấy danh sách mã gói sản phẩm
     useEffect(() => {
+      let code = "GD";
+      if(dataModal.productCode){
+        code = dataModal.productCode.trim();
+      }
       PackageApi.get(
-        productCodeData[0], 
+        code, 
         (res) => {
           let result = res.data.map(a => a.packageProductCode);
-          setProductCodes(result)
+          debugger
+          setProductcode(code)
+          setPackageProductCode(result)
           form.setFieldsValue({
             packageProductCode : result[0],
           })
@@ -110,7 +120,7 @@ export default function ValidateForm (props){
             console.log(err);
         }
         )
-    },[])
+    })
 
 
     return (
@@ -120,7 +130,7 @@ export default function ValidateForm (props){
         name="register"
         onFinish={onSubmit}
         onFinishFailed={onSubmitFailed}
-        initialValues={{...dataModal ,productCode : productCodeData[0], packageProductCode : productCodes[0]}}
+        initialValues={{...dataModal, productCode : dataSelected.productCode, packageProductCode : packageProductCode }}
         scrollToFirstError
       >
         <div

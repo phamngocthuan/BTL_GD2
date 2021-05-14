@@ -11,6 +11,7 @@ function ItemOption(props) {
     return (
         <div className='item-option' onClick={() => 
             {
+                
                 onClick(item.content,item.state)
             }
         

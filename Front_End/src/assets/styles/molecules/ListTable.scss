@@ -1,7 +1,7 @@
 .selected-row {
     background-color: aqua;
 }
-.ant-table.ant-table-small{
+.antd-min  .ant-table.ant-table-small{
     min-height: 480px;
 }
 .color-red{
@@ -25,4 +25,7 @@
 thead .ant-table-cell {
     font-weight: bold!important;
 
+}
+.site-input-group-wrapper {
+    width: 160px;
 }

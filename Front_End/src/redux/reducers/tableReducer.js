@@ -23,8 +23,8 @@ const initialState = {
         case TOTAL_TABLE : 
         return {
             ...state,
-            totals : action.payload.totals
-            
+            totals : action.payload.totals,
+            status : action.payload.status
         }
         case DATA_SELECTED : 
         return {

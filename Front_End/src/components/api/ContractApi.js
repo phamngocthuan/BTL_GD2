@@ -33,7 +33,9 @@ const ContractApi = {
     delete :  async (contractID, success, failure) =>  {
         try {
             const ids = [contractID]
-            const res = await callApi.delete(`api/v1/contracts`,ids)
+            const res = await callApi.delete(`api/v1/contracts`,
+            {data : ids}
+            )
             if(success) success(res)
         }
         catch (ex){

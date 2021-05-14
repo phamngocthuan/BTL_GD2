@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import TabPane from '../molecules/TabPane'
 import {setIndexSelectedTable, setDataModal, setDataSelectedTable} from '../../redux/action/index'
 import {formatDate} from "../../constants/CommonFunction"
+import InputOption from '../atomics/InputOption'
 
 import ContractApi from "../api/ContractApi"
 const Flexbox = styled.div`
@@ -62,6 +63,49 @@ const columns = [
     render: value => (value === 'initial' ? <Input /> : value)
   }
 ];
+const columnInput = [
+  {
+    title: 'Mã yêu cầu',
+    dataIndex: 'codeRequired',
+    render: value => <InputOption key={"codeRequired"} value={""} condition={""}/>
+    
+  },
+  {
+    title: 'Mã dự án bán hàng',
+    dataIndex: 'codeProjectSales',
+    render: value =>  <Input /> 
+
+  },
+  {
+    title: 'Tên dự án bán hàng',
+    dataIndex: 'nameProjectSales',
+    render: value =>  <Input />
+
+  },
+  {
+    title: 'Số hợp đồng',
+    dataIndex: 'numberContract',
+    render: value =>  <Input /> 
+
+  },
+  {
+    title: 'Ngày yêu cầu',
+    dataIndex: 'createdDate',
+    render: value =>  <Input /> 
+
+  },
+  {
+    title: 'Mã sản phẩm',
+    dataIndex: 'productCode',
+    render: value =>  <Input /> 
+
+  },
+  {
+    title: 'Mã gói sản phẩm',
+    dataIndex: 'packageProductCode',
+    render: value =>  <Input /> 
+  }
+];
 
 const rowSelection = {
   getCheckboxProps: record => ({
@@ -87,6 +131,8 @@ function ListTable(props) {
   const dispatch = useDispatch();
   const totals = useSelector(state => state.table.totals) 
   const indexSelected = useSelector(state => state.table.indexSelected)
+
+  
   const [current, setCurrent] = useState(1)
   const { data , status , setLimit , offset, setOffset } = props;
   const [dataTabPane,setDataTabPane] = useState({
@@ -98,33 +144,48 @@ function ListTable(props) {
     createdDate : '',
     packageProductCode : '',
 })
+useEffect(() => {
+    if(indexSelected < 0)
+      setDataTabPane({
+        codeRequired : '',
+        codeProjectSales : '',
+        nameProjectSales : '',
+        numberContract : '',
+        productCode : '',
+        createdDate : '',
+        packageProductCode : '',
+      })
+}
+,[indexSelected])
 const setRowClassName = (record) => {
   return record.id === rowId ? 'selected-row' : '';
 }
-  const bindData = async (record, index) => {
-    await ContractApi.getByCode(record.codeRequired,(res) => {
-      console.log(res.data.data);
-    },(err) => {})
-    dispatch(setIndexSelectedTable({indexSelected : index}))
-    setDataSelectedTable({data : record})
-    dispatch(setDataModal({data : record}))
-    setDataTabPane(record);
-  }
+
 
   return (
     <>
       <Flexbox>
         <Table
+        
+          size="small"
+          columns={columnInput}
+          dataSource={[{}]}
+          pagination={false}
+
+        />
+        <Table
+        className="antd-min"
+        showHeader={false}
           size="small"
           columns={columns}
-          dataSource={[initial, ...data]}
+          dataSource={[ ...data]}
           rowClassName={(record, index) => index == indexSelected  ? `table-row-select color-${status} ` :  `color-${status}` }
           pagination={
             { position: ['bottom'],
-              total : 60,
-              defaultPageSize : 10,
+              total : 100,
+              defaultPageSize : 21,
               showTotal : () => `Tổng số bản ghi: ${totals}`,
-              pageSizeOptions : [5, 10, 15, 20],
+              pageSizeOptions : [11, 21, 31, 51],
               onChange : (page, pageSize) => {
                 if(page != current){
                   setCurrent(page)
@@ -140,7 +201,10 @@ const setRowClassName = (record) => {
           onRow={(record, index) => {
             return {
               onClick: event => {
-                bindData(record, index)
+                dispatch(setIndexSelectedTable({indexSelected : index}))
+                dispatch(setDataSelectedTable({data : record}))
+                dispatch(setDataModal({data : record}))
+                setDataTabPane(record);
               }
               , 
             };

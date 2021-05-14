@@ -1,6 +1,6 @@
 const _ = require('lodash');
 import $ from 'jquery'; 
-import {CONTRACTSTATUS} from './Enum'
+import {CONTRACTSTATUS,STATUS} from './Enum'
 import {PackageProduct, Product} from '../constants/FakeData'
 
 
@@ -9,7 +9,9 @@ function getColorStatus (status){
     const filteredObj = _.pick(CONTRACTSTATUS, b)
     return filteredObj[`${status}`]?.COLOR;
 }
-
+function getStatus (value){
+    return STATUS[value];
+}
 function getProductCode (){
     return Product;
 }
@@ -57,4 +59,4 @@ function formatDate(date) {            
             return day + '/' + month + '/' + year;       
     }          
 }
-export { getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate}
+export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate}
