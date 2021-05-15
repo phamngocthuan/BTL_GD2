@@ -1,4 +1,4 @@
-import {ADD_FILTER , REMOVE_FILTER, UPDATE_FILTER} from "../../constants/ActionType";
+import {ADD_FILTER , REMOVE_FILTER, UPDATE_FILTER, ADD_DATE_FILTER, REMOVE_DATE_FILTER} from "../../constants/ActionType";
 
 
 
@@ -31,6 +31,13 @@ function filterReducer(state = initialState, action) {
             var arr = state.Requests.map((item) => item.key === action.payload.data.key ? {...item, ...action.payload.data} : item );
             return {
                 ...state, Requests : [...arr]
+            }
+        case ADD_DATE_FILTER :
+            var reqDate = action.payload.data;
+            var arr = state.Requests.filter((item) => item.key !== "CreatedDate"  ) 
+            
+            return {
+                ...state, Requests : [...arr, ...reqDate]
             }
     }
     return state;

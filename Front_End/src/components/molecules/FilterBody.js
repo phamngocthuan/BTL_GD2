@@ -9,7 +9,7 @@ import InputDate from '../atomics/InputTypeDate'
 import ListTable from '../molecules/ListTable'
 import { useSelector, useDispatch } from 'react-redux'
 import ContractApi from '../api/ContractApi'
-import {setTotalTable, setIndexSelectedTable} from '../../redux/action/index'
+import {setTotalTable, setIndexSelectedTable, addDateFilter} from '../../redux/action/index'
 import { getStatus } from '../../constants/CommonFunction';
 FilterBody.propTypes = {
 
@@ -137,6 +137,23 @@ function FilterBody(props) {
     },[status, limit, offset])
 
 
+    const [reqDate,setReqDate]  = useState([]);
+
+    const addReqDate = (obj) => {
+        if(reqDate.length > 0)
+        {
+            var arr = reqDate.map((item) => item.condition === obj.condition ? {...item, ...obj} : item );
+            if(arr.length === 1){
+                setReqDate([...reqDate, obj])
+            }else
+                setReqDate([...arr]);
+        }
+        else setReqDate([...reqDate, obj])
+    }
+
+    const addFilter = () => {
+        dispatch(addDateFilter({data : [...reqDate]}))
+    }
     return (
         <>
             <div className='filter-body-content'>
@@ -150,14 +167,16 @@ function FilterBody(props) {
                 <div className='filter-bottom'>
                         <div className="pre-time">
                             <span style={{paddingRight:'5px'}}>Từ</span>
-                            <InputDate />
+                            <InputDate condition={3} name="CreatedDate" addReqDate={addReqDate}/>
                         </div>
                         <div className="bef-time">
                             <span style={{paddingRight:'5px'}}>Đến</span>
-                            <InputDate />
+                            <InputDate condition={4} name="CreatedDate" addReqDate={addReqDate}/>
                         </div>
                         <div>
-                            <Button type="primary">Lấy dữ liệu</Button>
+                            <Button type="primary"
+                                onClick={() => addFilter()}
+                            >Lấy dữ liệu</Button>
                         </div>
                 </div>
                 

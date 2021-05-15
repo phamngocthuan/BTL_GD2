@@ -3,8 +3,10 @@ import { ADD_ARTICLE, DATASHOW ,  TOTAL_TABLE,
     STATUS_TABLE,
     DATA_SELECTED,
     INDEX_SELECTED,
-    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL, DATA_MODAL, ADD_FILTER, UPDATE_FILTER, REMOVE_FILTER
-    
+    ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL,
+     DATA_MODAL, ADD_FILTER, UPDATE_FILTER, REMOVE_FILTER,
+     REMOVE_DATE_FILTER,
+     ADD_DATE_FILTER
 
 }
  from "../../constants/ActionType";
@@ -50,9 +52,16 @@ function removeFilter(payload){
 function updateFilter(payload){
     return {type : UPDATE_FILTER, payload }
 }
+function addDateFilter(payload){
+    return {type :ADD_DATE_FILTER, payload }
+}
+function removeDateFilter(payload){
+    return {type : REMOVE_DATE_FILTER, payload}
+}
 
 export {addArticle, setDataShow,  setTotalTable , setStatusTable ,
     setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, 
-    setMethodModal, setDataModal, setFilter, removeFilter, updateFilter
+    setMethodModal, setDataModal, setFilter, removeFilter, updateFilter,
+    addDateFilter, removeDateFilter
 
 }

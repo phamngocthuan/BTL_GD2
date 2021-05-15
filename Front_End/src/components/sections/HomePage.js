@@ -27,16 +27,15 @@ function HomePage(props) {
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [colorRow , setColorRow] = useState(CONTRACTSTATUS.UNSENT.COLOR)
     const [indexRowSelected, setIndexRowSelected] = useState(-1)
-    useEffect(() => {
+   // useEffect(() => {
 
-        LocsApi.getCity(1,
-            async (res) => {
-                let result = res.data.map(a => a.location);
-                console.log(result);
-            },
-            (err) => {}
-            )
-    },[])
+    //     LocsApi.getCity(1,
+    //         async (res) => {
+    //             let result = res.data.map(a => a.locationName);
+    //         },
+    //         (err) => {}
+    //         )
+    // },[])
 
     return (
         <>

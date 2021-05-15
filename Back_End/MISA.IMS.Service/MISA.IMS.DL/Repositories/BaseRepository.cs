@@ -199,6 +199,15 @@ namespace MISA.IMS.DL.Repositories
                                     sqlText.Append($"{request.Key}  != @{request.Key} ");
                                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"{request.Key}", request.Value));
                                     break;
+                                case Condition.GreaterThan: 
+                                    sqlText.Append($"{request.Key} >= @{request.Key} ");
+                                    _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"{request.Key}", request.Value));
+                                    break;
+                                case Condition.LessThan: 
+                                    sqlText.Append($"{request.Key} <= @{request.Key} ");
+                                    _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"{request.Key}", request.Value));
+                                    break;
+
                             }
                             sqlText.Append(" AND ");
                         }

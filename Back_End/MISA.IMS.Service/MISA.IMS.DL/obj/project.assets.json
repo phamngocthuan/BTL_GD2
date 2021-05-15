@@ -1186,19 +1186,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pnthuan.RD\\.nuget\\packages\\": {}
+    "C:\\Users\\phamn\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
+      "projectUniqueName": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
       "projectName": "MISA.IMS.DL",
-      "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
-      "packagesPath": "C:\\Users\\pnthuan.RD\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\obj\\",
+      "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\MISA.IMS.DL.csproj",
+      "packagesPath": "C:\\Users\\phamn\\.nuget\\packages\\",
+      "outputPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.DL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pnthuan.RD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\phamn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1212,11 +1212,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Common\\MISA.IMS.Common.csproj"
             },
-            "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
-              "projectPath": "C:\\Users\\pnthuan.RD\\Desktop\\New folder (2)\\BTL_GD2\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
+            "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj": {
+              "projectPath": "D:\\BTL_GD2\\new btl\\Back_End\\MISA.IMS.Service\\MISA.IMS.Data\\MISA.IMS.Data.csproj"
             }
           }
         }
@@ -1263,7 +1263,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

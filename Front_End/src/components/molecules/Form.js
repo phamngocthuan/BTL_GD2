@@ -85,7 +85,6 @@ export default function ValidateForm (props){
           form.setFieldsValue({
             packageProductCode : result[0],
           })
-           
         },(err) => {
             console.log(err);
         }

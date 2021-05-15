@@ -71,7 +71,16 @@ namespace MISA.IMS.Common.Enumerations
         /// <summary>
         /// Điều kiện chứa
         /// </summary>
-        Contain = 2
+        Contain = 2,
+        /// <summary>
+        /// Lớn hơn hoặc bằng
+        /// </summary>
+        GreaterThan = 3, 
+        /// <summary>
+        /// nhở hơn hoặc bằng
+        /// </summary>
+        LessThan= 4
+
     }
 
     public static class HeaderName

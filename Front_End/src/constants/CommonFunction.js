@@ -9,6 +9,10 @@ function getColorStatus (status){
     const filteredObj = _.pick(CONTRACTSTATUS, b)
     return filteredObj[`${status}`]?.COLOR;
 }
+function formatDateToYMD (date){
+    var newdate = date.split("/").reverse().join("/");
+    return newdate;
+}
 function getStatus (value){
     return STATUS[value];
 }
@@ -69,4 +73,4 @@ function formatDate(date) {            
             return day + '/' + month + '/' + year;       
     }          
 }
-export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate, getCondition}
+export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate, getCondition, formatDateToYMD}
