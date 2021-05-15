@@ -83,6 +83,25 @@ namespace MISA.IMS.Common.Enumerations
 
     }
 
+    public  static class  Message
+    {
+        public static string Success = "Lấy dữ liệu thành công";
+
+        public static string Error = "Lấy dữ liệu thất bại";
+
+        public static string Exception = "Có lỗi xảy ra. Vui lòng liên hệ MISA để được hỗ trợ";
+
+        public static string InstanceIsNull = "Bản ghi không tồn tại";
+
+        public static string ExcuteSuccess = "Thực thi yêu cầu thành công";
+
+        public static string ExcuteError = "Thực thi yêu cầu thất bại";
+
+    }
+    public static class TracerID
+    {
+        public static string Id = "c7e07b7719a7a3489617663753f985e4";
+    }
     public static class HeaderName
     {
         public static string CreatedBy = "CreatedBy";

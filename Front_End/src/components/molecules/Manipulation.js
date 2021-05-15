@@ -17,6 +17,7 @@ const action = [
     {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
     {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
     {title: "Nạp", nameIcon: "IconDownload", state : "Download", content : "Nạp"},
+    {title: "Gửi yêu cầu", nameIcon : "Poinert" , state : "Sending", content : "Gửi yêu cầu"}
 ]
 const status = [
     {status : 'Chưa gửi', color : '#007b00'},

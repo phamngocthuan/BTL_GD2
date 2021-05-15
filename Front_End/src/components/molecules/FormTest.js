@@ -5,9 +5,10 @@ const { Option } = Select;
 import { useSelector, useDispatch } from 'react-redux'
 import { data } from 'jquery';
 import { fromPairs } from 'lodash';
+import LocsApi from '../api/LocsApi'
 
 import PackageApi from '../api/PackageApi'
-ValidateForm.defaultProps = {
+FormTest.defaultProps = {
   productCodeData : ['GD', 'HCCS'],
   productCode : ['GD']
 }
@@ -56,7 +57,7 @@ const formItemLayout = {
       },
     },
   }
-export default function ValidateForm (props){
+export default function FormTest (props){
     const {inputRef, onSubmit, onSubmitFailed, form, productCodeData, dataModal} = props;
 
     const prefixSelector = (
@@ -76,19 +77,19 @@ export default function ValidateForm (props){
   
 
     const handleProductCodeChange = value => {
-      PackageApi.get(
-        value, 
-        (res) => {
-          let result = res.data.map(a => a.packageProductCode);
-          setProductCodes(result)
-          setPackageProductCode(result[0])
-          form.setFieldsValue({
-            packageProductCode : result[0],
-          })
-        },(err) => {
-            console.log(err);
-        }
-        )
+    //   PackageApi.get(
+    //     value, 
+    //     (res) => {
+    //       let result = res.data.map(a => a.packageProductCode);
+    //       setProductCodes(result)
+    //       setPackageProductCode(result[0])
+    //       form.setFieldsValue({
+    //         packageProductCode : result[0],
+    //       })
+    //     },(err) => {
+    //         console.log(err);
+    //     }
+    //     )
 
     };
   
@@ -96,23 +97,37 @@ export default function ValidateForm (props){
       setPackageProductCode(value);
     };
     // call api lấy danh sách mã gói sản phẩm
-    useEffect(() => {
-      PackageApi.get(
-        productCodeData[0], 
-        async (res) => {
-          let result = res.data.map(a => a.packageProductCode);
-          setProductCodes(result)
-          setPackageProductCode(result[0])
-          await form.setFieldsValue({
-            packageProductCode : result[0],
-          })
+    // useEffect(() => {
+    //   PackageApi.get(
+    //     productCodeData[0], 
+    //     async (res) => {
+    //       let result = res.data.map(a => a.packageProductCode);
+    //       setProductCodes(result)
+    //       setPackageProductCode(result[0])
+    //       await form.setFieldsValue({
+    //         packageProductCode : result[0],
+    //       })
           
-        },(err) => {
-            console.log(err);
-        }
-        )
+    //     },(err) => {
+    //         console.log(err);
+    //     }
+    //     )
+    // },[])
+/////////////////////
+    const [locationName, setLocationName] = useState("Việt Nam")
+    const [citys, setCity] = useState([])
+    useEffect(() => {
+        LocsApi.getCity(1,
+            async (res) => {
+                let result = res.data.map(a => a.locationName);
+                setCity(result)
+            },
+            (err) => {}
+            )
     },[])
 
+
+/////////////////////
 
     return (
       <Form
@@ -202,12 +217,6 @@ export default function ValidateForm (props){
               required: true,
               message: 'Trường này bắt buộc nhập!',
               whitespace: false
-            },
-            {
-              type : "string",
-              pattern : /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
-              message: 'Chỉ được phép nhập số, có 10 chữ số',
-              whitespace: false
             }
 
           ]}
@@ -261,6 +270,30 @@ export default function ValidateForm (props){
           <Input  />
         </Form.Item>
 
+        <Form.Item
+            name="locationName"
+            label="Quốc gia"
+
+        >
+            <Select   showSearch>
+            {productCodeData.map(item => (
+                <Option key={item}>{item}</Option>
+            ))}
+            </Select>
+        </Form.Item>
+        <Form.Item
+            name="city"
+            label="Thành phố"
+
+        >
+            <Select   showSearch>
+            {citys.map(item => (
+                <Option key={item}>{item}</Option>
+            ))}
+            </Select>
+        </Form.Item>
+                
+               
         <div style={{display : "none"}}>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit" ref={inputRef}>

@@ -2,20 +2,21 @@ import React from "react"
 
 
 
+const Popup = ({record, visible, x, y}) => {
 
-  
+  const handleOnclick = () => {
+    console.log(record);
+  }
 
-export default function Popup(props){
-  const {record, visible, x, y} = props;
   return (
-    <>
-      {
-        visible && <ul className="popup" style={{left: `${x}px`, top: `${y}px`}}>
-        <li>hello</li>
-        <li>Like it</li>
-        <li>Bookmark</li>
-      </ul>
-      }
-    </>
+    visible &&
+    <ul className="popup" style={{left: `${x - 224}px`, top: `${y - 140}px`}}>
+      <li onClick={handleOnclick}>Gửi yêu cầu</li>
+      <li>Like it</li>
+      <li>Bookmark</li>
+    </ul>
   )
+
 }
+
+export default Popup

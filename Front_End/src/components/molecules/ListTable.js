@@ -169,8 +169,24 @@ const [popup, setPopup] = useState( {
   y: 0
 })
 
+// useEffect(() => {
+//   function handleWindowMouseMove(e) {
+//     // "...state" để đảm bảo không "mất" giá trị width và height
+//     setState(state => ({ ...state, left: e.pageX, top: e.pageY }));
+//   }
+//   // Lưu ý: phần này viết đơn giản nhất có thể
+//   window.addEventListener('mousemove', handleWindowMouseMove);
+//   return () => window.removeEventListener('mousemove', handleWindowMouseMove);
+// }, []);
 
+useEffect(() => {
 
+    function onClickOutside(e){
+      setPopup( {...popup, visible : false})
+    }
+    window.addEventListener(`click`,onClickOutside);
+    return () => window.removeEventListener(`click`, onClickOutside);
+},[])
 ////////////////////
   return (
     <>
@@ -219,12 +235,6 @@ const [popup, setPopup] = useState( {
               , 
               onContextMenu : event => {
                 event.preventDefault();
-                if(!popup.visible){
-                    document.addEventListener(`click`,  onClickOutside = (event)=>  {
-                      this.setPopup( {...popup, visible : false})
-                      document.removeEventListener(`click`, onClickOutside)
-                  })
-                }
                 setPopup( {
                     record : record,
                     visible: true,
@@ -236,7 +246,7 @@ const [popup, setPopup] = useState( {
             };
           }}
         />
-        <Popup popup={popup}/>
+        <Popup {...popup}/>
       </Flexbox>
       <div className="p-detail">
           <TabPane data={dataTabPane}/>

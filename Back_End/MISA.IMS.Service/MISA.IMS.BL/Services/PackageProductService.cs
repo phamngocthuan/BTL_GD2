@@ -50,13 +50,13 @@ namespace MISA.IMS.BL.Services
                     ErrorCode = ErrorCode.No_Content,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 };
             }
             else
             {
                 apiResult.Data = res;
-                apiResult.Message = "Lấy data thành công ";
+                apiResult.Message.Add(Message.Success);
                 apiResult.MessageCode = MessageCode.Success;
             }
             return apiResult;

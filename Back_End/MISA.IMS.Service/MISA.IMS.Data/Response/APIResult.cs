@@ -11,7 +11,7 @@ namespace MISA.IMS.Data.Response
 
         public MessageCode MessageCode { get; set; } = MessageCode.Success;
 
-        public string Message { get; set; }
+        public List<string> Message { get; set; } = new List<string>();
 
         public object Data { get; set; }
     }

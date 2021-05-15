@@ -70,7 +70,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -93,7 +93,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
@@ -117,7 +117,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -138,7 +138,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
@@ -162,7 +162,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -192,7 +192,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
@@ -219,7 +219,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -248,7 +248,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
@@ -275,7 +275,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -299,7 +299,7 @@ namespace MISA.IMS.Service.Controllers
                         var apiRes = new APIResult()
                         {
                             Success = false,
-                            Message = Resources.ErrorValidate_NotValid,
+                            Message = new List<string> { Resources.ErrorValidate_NotValid },
                             MessageCode = MessageCode.ValidateEntity,
                             Data = ModelState
                         };
@@ -318,7 +318,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }
@@ -347,7 +347,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
@@ -401,7 +401,7 @@ namespace MISA.IMS.Service.Controllers
                     var apiRes = new APIResult()
                     {
                         Success = false,
-                        Message = Resources.ErrorValidate_NotValid,
+                        Message = new List<string> { Resources.ErrorValidate_NotValid },
                         MessageCode = MessageCode.ValidateEntity,
                         Data = ModelState
                     };
