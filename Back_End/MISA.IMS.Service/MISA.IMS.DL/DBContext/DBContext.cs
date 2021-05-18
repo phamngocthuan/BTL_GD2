@@ -11,6 +11,10 @@ using MISA.IMS.Data.Entities;
 namespace MISA.IMS.DL.DBContext
 {
 
+    /// <summary>
+    /// Đối tượng kết nối với Database 
+    /// </summary>
+    /// Created by : pnthuan(12/5/2021)
     public class DBContext : IDBContext, IDisposable
     {
         #region Properties
@@ -43,7 +47,12 @@ namespace MISA.IMS.DL.DBContext
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Lấy tham số khai báo trong strore
+        /// </summary>
+        /// <param name="commandText"></param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/05/2021)
         public MySqlParameterCollection GetParamFromStore(string commandText)
         {
             _sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -52,20 +61,46 @@ namespace MISA.IMS.DL.DBContext
             return _sqlCommand.Parameters;
         }
 
-
+        /// <summary>
+        /// Lấy bản ghi từ database  đồng bộ
+        /// </summary>
+        /// <param name="commandText">Lệnh Sql</param>
+        /// <param name="param">Tham số khai báo</param>
+        /// <param name="transaction">đối tượng Transaction</param>
+        /// <param name="commandTimeout">Thời gian cho request</param>
+        /// <param name="commandType">Kiểu comand( kiểu text hoặc storad proceduce)</param>
+        /// <returns>reader lưu thông tin về data lấy được</returns>
+        /// Created by : pnthuan(11/05/2021)
         public IDataReader ExecuteReader(string commandText, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             var reader = _dbConnection.ExecuteReader(commandText, param, transaction, commandTimeout, commandType);
             return reader;
         }
 
-
+        /// <summary>
+        /// Lấy bản ghi từ database bất đồng bộ
+        /// </summary>
+        /// <param name="commandText">Lệnh Sql</param>
+        /// <param name="param">Tham số khai báo</param>
+        /// <param name="transaction">đối tượng Transaction</param>
+        /// <param name="commandTimeout">Thời gian cho request</param>
+        /// <param name="commandType">Kiểu comand( kiểu text hoặc storad proceduce)</param>
+        /// <returns>reader lưu thông tin về data lấy được</returns>
+        /// Created by : pnthuan(11/05/2021)
         public async Task<IDataReader> ExecuteReaderAsync(string commandText, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             return await _dbConnection.ExecuteReaderAsync(commandText, param, transaction, commandTimeout, commandType);
         }
 
-
+        /// <summary>
+        /// Thực thi lệnh update, sửa đổi dữ liệu đồng bộ
+        /// </summary>
+        /// <param name="commandText">Lệnh Sql</param>
+        /// <param name="param">Tham số khai báo</param>
+        /// <param name="commandTimeout">Thời gian cho request</param>
+        /// <param name="commandType">Kiểu comand( kiểu text hoặc storad proceduce)</param>
+        /// <returns>Trả về số bản ghi bị ảnh hưởng</returns>
+        /// Created by : pnthuan(11/05/2021)
         public int Execute(string commandText, object param = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             using (var transac = _dbConnection.BeginTransaction())
@@ -76,7 +111,15 @@ namespace MISA.IMS.DL.DBContext
             }
         }
 
-
+        /// <summary>
+        /// Thực thi lệnh update, sửa đổi dữ liệu bất đồng bộ
+        /// </summary>
+        /// <param name="commandText">Lệnh Sql</param>
+        /// <param name="param">Tham số khai báo</param>
+        /// <param name="commandTimeout">Thời gian cho request</param>
+        /// <param name="commandType">Kiểu comand( kiểu text hoặc storad proceduce)</param>
+        /// <returns>Trả về số bản ghi bị ảnh hưởng</returns>
+        /// Created by : pnthuan(11/05/2021)
         public async Task<int> ExecuteAsync(string commandText, object param = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             using (var transac = _dbConnection.BeginTransaction())
@@ -87,7 +130,15 @@ namespace MISA.IMS.DL.DBContext
             }
         }
 
-
+        /// <summary>
+        /// Thực thi sửa dổi dữ liệu đồng bộ
+        /// </summary>
+        /// <param name="commandText"></param>
+        /// <param name="param"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns>Trả về object bị thay đổi</returns>
+        /// Created by : pnthuan(11/05/2021)
         public object ExecuteScalar(string commandText, object param = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             using (var transac = _dbConnection.BeginTransaction())
@@ -97,7 +148,15 @@ namespace MISA.IMS.DL.DBContext
                 return result;
             }
         }
-
+        /// <summary>
+        /// Thực thi sửa dổi dữ liệu bất  đồng bộ
+        /// </summary>
+        /// <param name="commandText"></param>
+        /// <param name="param"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns>Trả về object bị thay đổi</returns>
+        /// Created by : pnthuan(11/05/2021)
         public object QueryProc(string procText, object param = null, CommandType commandType = CommandType.StoredProcedure)
         {
             using (var transac = _dbConnection.BeginTransaction())
@@ -107,7 +166,14 @@ namespace MISA.IMS.DL.DBContext
                 return result;
             }
         }
-
+        /// <summary>
+        /// Thực hiện truy vấn bằng proc_procuduce
+        /// </summary>
+        /// <param name="procText"></param>
+        /// <param name="param"></param>
+        /// <param name="commandType"></param>
+        /// <returns>Trả về object bị thay đổi</returns>
+        /// Created by : pnthuan(11/05/2021)
         public async Task<object> ExecuteScalarAsync(string commandText, object param = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             using (var transac = _dbConnection.BeginTransaction())
@@ -118,7 +184,9 @@ namespace MISA.IMS.DL.DBContext
             }
         }
 
-
+        /// <summary>
+        /// Đóng kết nối với DB
+        /// </summary>
         public void Dispose()
         {
             _dbConnection.Close();

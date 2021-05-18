@@ -48,6 +48,7 @@ tr {
 }
 ::-webkit-scrollbar {
   width: 4px;
+  height: 6px;
 }
 
 /* Track */
@@ -62,7 +63,7 @@ tr {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(141, 140, 140);
 }
 .popup {
   animation-name: fadeIn;

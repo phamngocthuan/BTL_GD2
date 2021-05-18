@@ -9,6 +9,12 @@ namespace MISA.IMS.Core.Configuration
 {
     public static class ConfigureVersions
     {
+        /// <summary>
+        /// Map to version
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        /// Creatd by: pnthuan (9/5/2021)
         public static IServiceCollection AddVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(config =>
@@ -20,9 +26,6 @@ namespace MISA.IMS.Core.Configuration
                 // Advertise the API versions supported for the particular endpoint
                 config.ReportApiVersions = true;
 
-                // DEFAULT Version reader is QueryStringApiVersionReader();  
-                // clients request the specific version using the X-version header
-                //config.ApiVersionReader = new HeaderApiVersionReader("X-version");
 
                 // Supporting multiple versioning scheme
                 config.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("X-version"), new QueryStringApiVersionReader("api-version"));

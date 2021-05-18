@@ -8,13 +8,17 @@ using System.Text;
 
 namespace MISA.IMS.Data.DTOs
 {
+    /// <summary>
+    /// Class nhận dữ liệu từ client gửi lên
+    /// </summary>
+    /// Created by: pnthuan(10/5/2021)
     public class ContractDTO
     {
 
         public string ContractName { get; set; }
 
         
-        public string CodeRequired { get; set; }
+        public int CodeRequired { get; set; }
 
         public string CodeProjectSales { get; set; }
         public string NameProjectSales { get; set; }
@@ -34,7 +38,20 @@ namespace MISA.IMS.Data.DTOs
 
         [Phone]
         public string ContactPhoneNumber { get; set; }
+        public string Nation { get; set; }
 
+        public string Ward { get; set; }
+
+        public string District { get; set; }
+        public string City { get; set; }
+
+        /// <summary>
+        /// Hàm chuyển đổi sang đối tượng để đẩy lên database khi thêm 1 dối tượng
+        /// </summary>
+        /// <param name="createdBy">Người tạo</param>
+        /// <param name="status">Trạng thái bản ghi</param>
+        /// <returns>Trả về đối tượng đẩy lên database</returns>
+        /// Created by : pnthuan(11/5/2021)
         public Contract ConvertInsertContract(string createdBy,int status)
         {
             var contract = Activator.CreateInstance<Contract>(); ;
@@ -63,6 +80,12 @@ namespace MISA.IMS.Data.DTOs
             return contract;
         }
 
+        /// <summary>
+        /// Hàm chuyển đổi sang đối tượng để đẩy lên database khi update 1 đối tượng
+        /// </summary>
+        /// <param name="modifiedBy"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Contract ConvertUpdateContract(string modifiedBy, string id)
         {
             var contract = Activator.CreateInstance<Contract>(); ;

@@ -35,7 +35,13 @@ namespace MISA.IMS.BL.Services
 
         #endregion
 
-        #region method
+        #region Methods
+        /// <summary>
+        /// Hàm Lấy danh sách mã gói sản phẩm
+        /// </summary>
+        /// <param name="productCode">Mã sản phẩm</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(13/05/2021)
         public async Task<APIResult> GetPackageProductCode(string productCode)
         {
             var apiResult = new APIResult();

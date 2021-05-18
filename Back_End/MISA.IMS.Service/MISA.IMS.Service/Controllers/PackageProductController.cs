@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MISA.IMS.BL.Interfaces;
 using MISA.IMS.Common.Constants;
+using MISA.IMS.Common.Enumerations;
 using MISA.IMS.Data.DTOs;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,15 @@ namespace MISA.IMS.Service.Controllers
             _packageProductService = packageProductService;
         }
         #endregion
+
+
+        #region Methods
+        /// <summary>
+        /// Hàm lấy thông tin về Mã gói sản phẩm theo mã sản phẩm
+        /// </summary>
+        /// <param name="productCode">Mã sản phẩm</param>
+        /// <returns>Danh sách mã gói sản phẩm</returns>
+        /// Created by : PNTHUAN (11/5/2021)
         [HttpGet]
         public async Task<IActionResult> GetPackageProductCode([FromQuery] string productCode)
         {
@@ -51,9 +61,10 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "pnthuan@@@"
+                    TraceId = TracerID.Id
                 });
             }
         }
+        #endregion
     }
 }

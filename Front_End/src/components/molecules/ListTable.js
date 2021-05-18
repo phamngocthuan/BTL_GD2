@@ -5,8 +5,8 @@ import 'antd/dist/antd.css';
 import '../../assets/styles/molecules/ListTable.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import TabPane from '../molecules/TabPane'
-import {setIndexSelectedTable, setDataModal, setDataSelectedTable} from '../../redux/action/index'
-import {formatDate} from "../../constants/CommonFunction"
+import {setIndexSelectedTable, setDataModal, setDataSelectedTable, setDataTabPane} from '../../redux/action/index'
+import {formatDate, formatMoney} from "../../constants/CommonFunction"
 import InputOption from '../atomics/InputOption'
 import Popup from '../atomics/Popup'
 
@@ -25,19 +25,19 @@ const columns = [
   {
     title: 'Mã yêu cầu',
     dataIndex: 'codeRequired',
-    render: value => (value === 'initial' ? <Input /> : value)
+    render: value => (value === 'initial' ? <InputOption name="CodeRequired" /> : value)
     
   },
   {
     title: 'Mã dự án bán hàng',
     dataIndex: 'codeProjectSales',
-    render: value => (value === 'initial' ? <Input /> : value)
+    render: value => (value === 'initial' ? <InputOption name="CodeProjectSales" />  : value)
 
   },
   {
     title: 'Tên dự án bán hàng',
     dataIndex: 'nameProjectSales',
-    render: value => (value === 'initial' ? <Input /> : value)
+    render: value => (value === 'initial' ? <InputOption name="NameProjectSales" /> : value)
 
   },
   {
@@ -62,6 +62,10 @@ const columns = [
     title: 'Mã gói sản phẩm',
     dataIndex: 'packageProductCode',
     render: value => (value === 'initial' ? <Input /> : value)
+  },{
+    title : "Tiền hợp đồng",
+    dataIndex: 'money',
+    render : value => (value === 'initial' ? <Input /> : <div style={{textAlign: "right"}}>{formatMoney(value)}</div>)
   }
 ];
 const columnInput = [
@@ -124,6 +128,7 @@ const initial = {
   productCode : 'initial',
   createdDate : 'initial',
   packageProductCode : 'initial',
+  money : 'initial'
 };
 
 
@@ -132,19 +137,11 @@ function ListTable(props) {
   const dispatch = useDispatch();
   const totals = useSelector(state => state.table.totals) 
   const indexSelected = useSelector(state => state.table.indexSelected)
-  
-  
-  const [current, setCurrent] = useState(1)
-  const { data , status , setLimit , offset, setOffset } = props;
-  const [dataTabPane,setDataTabPane] = useState({
-    codeRequired : '',
-    codeProjectSales : '',
-    nameProjectSales : '',
-    numberContract : '',
-    productCode : '',
-    createdDate : '',
-    packageProductCode : '',
-})
+  const dataSelected = useSelector(state => state.table.dataSelected);
+  const loading = useSelector(state => state.table.loading)
+  const { data , status , setLimit , offset, setOffset, current, setCurrent } = props;
+
+const dataTabPane = useSelector(state => state.tabpane.dataTabPane)
 useEffect(() => {
     if(indexSelected < 0)
       setDataTabPane({
@@ -169,15 +166,7 @@ const [popup, setPopup] = useState( {
   y: 0
 })
 
-// useEffect(() => {
-//   function handleWindowMouseMove(e) {
-//     // "...state" để đảm bảo không "mất" giá trị width và height
-//     setState(state => ({ ...state, left: e.pageX, top: e.pageY }));
-//   }
-//   // Lưu ý: phần này viết đơn giản nhất có thể
-//   window.addEventListener('mousemove', handleWindowMouseMove);
-//   return () => window.removeEventListener('mousemove', handleWindowMouseMove);
-// }, []);
+
 
 useEffect(() => {
 
@@ -191,21 +180,26 @@ useEffect(() => {
   return (
     <>
       <Flexbox>
-        <Table
+        {/* <Table
         
           size="small"
           columns={columnInput}
           dataSource={[{}]}
           pagination={false}
 
-        />
+        /> */}
         <Table
         className="antd-min"
-        showHeader={false}
+        bordered
+        showHeader={true}
           size="small"
           columns={columns}
-          dataSource={[ ...data]}
-          rowClassName={(record, index) => index == indexSelected  ? `table-row-select color-${status} ` :  `color-${status}` }
+          dataSource={[initial, ...data]}
+          rowClassName={(record, index) => {
+            
+            var arr = dataSelected.filter((item) => item.codeRequired  === record.codeRequired);
+            return arr.length > 0 ? `table-row-select color-${status} ` : `color-${status}`;
+          } }
           pagination={
             { position: ['bottom'],
               total : 100,
@@ -223,14 +217,14 @@ useEffect(() => {
               current : current
             }
           }
-          scroll={{ x: 200, y : 400 }}
+          scroll={{ x: 1500, y : 220 }}
           onRow={(record, index) => {
             return {
               onClick: event => {
                 dispatch(setIndexSelectedTable({indexSelected : index}))
                 dispatch(setDataSelectedTable({data : record}))
                 dispatch(setDataModal({data : record}))
-                setDataTabPane(record);
+                dispatch(setDataTabPane({data : record}))
               }
               , 
               onContextMenu : event => {
@@ -245,6 +239,7 @@ useEffect(() => {
               }
             };
           }}
+          loading={loading}
         />
         <Popup {...popup}/>
       </Flexbox>

@@ -9,6 +9,7 @@ import { Form } from 'antd'
 import ButtonIcon from '../atomics/Button'
 
 import ProductApi from '../api/ProductApi'
+import LocsApi from '../api/LocsApi'
 
 import _ from 'lodash';
 
@@ -18,6 +19,7 @@ export default function ModalDraggable(props)  {
   const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel, instance, form} = props;
   const [disabled, setDisable] = useState(false);
   const [productCodeData, setProductCodeData] = useState([])
+  const [dataCity, setDataCity] = useState([])
 
   const inputRef = useRef(null)
   const [bounds, setBounds] = useState(
@@ -77,9 +79,16 @@ export default function ModalDraggable(props)  {
     )
     return () => {}
   },[])
-////////////////////////
 
-///////////////////////
+  useEffect(() => {
+    LocsApi.getCity(1,
+        async (res) => {
+            let result = res.data.map(a => a.locationName);
+            setDataCity(result)
+        },
+        (err) => {}
+        )
+},[])
 
     return (
       <>
@@ -146,6 +155,7 @@ export default function ModalDraggable(props)  {
             inputRef={inputRef}
             productCodeData={productCodeData}
             dataModal={instance}
+            dataCity={dataCity}
           />
         </Modal>
       </>

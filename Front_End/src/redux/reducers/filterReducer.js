@@ -8,7 +8,7 @@ const initialState = {
         "CodeRequired", "CodeProjectSales", 
         "NameProjectSales", 
         "NumberContract", "CreatedDate", 
-        "PackageProductCode"],
+        "PackageProductCode","Money"],
         Requests  : [
            
         ]
@@ -34,8 +34,8 @@ function filterReducer(state = initialState, action) {
             }
         case ADD_DATE_FILTER :
             var reqDate = action.payload.data;
-            var arr = state.Requests.filter((item) => item.key !== "CreatedDate"  ) 
-            
+            var arr = state.Requests.filter((item) => item.key !== "CreatedDate" && item.key !== "ModifiedDate"  ) 
+            console.log(arr)
             return {
                 ...state, Requests : [...arr, ...reqDate]
             }

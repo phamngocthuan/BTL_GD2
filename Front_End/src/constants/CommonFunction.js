@@ -73,4 +73,13 @@ function formatDate(date) {            
             return day + '/' + month + '/' + year;       
     }          
 }
-export { getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate, getCondition, formatDateToYMD}
+function formatMoney(money) {
+    if(money == null || money == ""){
+      return "";
+    }else {
+      money = parseFloat(money);
+      return money.toFixed(0).replace(/(.)(?=(\d{3})+$)/g, '$1.');
+    }
+    
+}
+export {formatMoney, getStatus, getColorStatus, getProductCode , getPackageProduct, getQueryParam, formatDate, getCondition, formatDateToYMD}

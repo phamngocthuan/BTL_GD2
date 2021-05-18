@@ -13,10 +13,13 @@ namespace MISA.IMS.Service.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
+
+
+        #region Methods
         /// <summary>
         /// Lấy thông tin về location
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">loại thông tin cần lấy</param>
         /// <param name="parentLocationName"></param>
         /// <param name="grandLocationName"></param>
         /// <returns></returns>
@@ -72,7 +75,7 @@ namespace MISA.IMS.Service.Controllers
                                     return Ok(responseData);
                                 }
                             }
-                        default: return Ok("lủng");
+                        default: return Ok("lủng"); 
                     }
                 }
             }
@@ -81,5 +84,6 @@ namespace MISA.IMS.Service.Controllers
                 throw;
             }
         }
+        #endregion
     }
 }

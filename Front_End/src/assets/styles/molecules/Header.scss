@@ -1,9 +1,10 @@
 .header-container {
     height: 50px;
     width: 100%;
-    background-color: #0083ff;
+    background-image: linear-gradient(to right, #0073ff , #0090ff, #00bdff);
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #fff;
 }
 .header-left {
     width: 224px;

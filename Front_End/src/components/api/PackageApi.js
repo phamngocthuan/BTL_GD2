@@ -1,7 +1,10 @@
 import { callApi} from './CallApi'
 
 
-
+/**
+ * Component Lấy thông tin về gói sản phẩm
+ * @author PNTHUAN(11/5/2021)
+ */
 const PackageApi = {
     get : async(productCode, success, failure) => {
         try {
@@ -10,7 +13,7 @@ const PackageApi = {
             if(success) success(res)
         }
         catch (ex){
-            if(failure) failure();
+            if(failure) failure(ex?.response?.data);
         }
 
     }

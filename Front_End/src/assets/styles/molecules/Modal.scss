@@ -12,3 +12,7 @@
     min-width: 100px;
     align-items: center;
 }
+.ant-modal-body {
+    max-height: 500px;
+    overflow-y: scroll;
+}

@@ -34,6 +34,13 @@ namespace MISA.IMS.BL.Services
         }
 
         #endregion
+
+        #region Methods
+        /// <summary>
+        /// Hàm lấy danh sách mã sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(13/05/2021)
         public async Task<APIResult> GetProductCodes()
         {
             var apiResult = new APIResult();
@@ -59,5 +66,6 @@ namespace MISA.IMS.BL.Services
             }
             return apiResult;
         }
+        #endregion
     }
 }

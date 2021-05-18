@@ -164,14 +164,24 @@ namespace MISA.IMS.BL.Services
             }
             //lấy mã trên hệ thống theo yêu cầu
 
-            string codeRequired = await _contractRepository.GetCodeRequired();
-            // lấy bản ghi vừa tạo và thực hiện update
+            /* string codeRequired = await _contractRepository.GetCodeRequired();
+             // lấy bản ghi vừa tạo và thực hiện update
 
-            codeRequired = Regex.Replace(codeRequired, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
-            contract.CodeRequired = codeRequired;
-            
-
-            var res = await _contractRepository.InsertAsync(contract);
+             codeRequired = Regex.Replace(codeRequired, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
+             contract.CodeRequired = codeRequired;*/
+            // Tạo bản ghi với ID, Mã yêu cầu ban đầu
+            Contract newContract = new Contract();
+            newContract.ContractID = Guid.NewGuid();
+            newContract.CreatedBy = contract.CreatedBy;
+            newContract.Status = contract.Status;
+            newContract.CreatedDate = contract.CreatedDate;
+            //
+            var res = await _contractRepository.InsertOriginalAsync(newContract);
+            if(res > 0)
+            {
+                contract.ContractID = newContract.ContractID;
+                res = await _contractRepository.UpdateAsync(contract);
+            }
             if ((int)res == 0)
             {
                 apiResult.Success = false;
@@ -228,7 +238,7 @@ namespace MISA.IMS.BL.Services
          ///   1234567899
         public  bool IsPhoneNumber(string number)
         {
-            return Regex.Match(number, @"^(\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4}))$").Success;
+            return !Regex.Match(number, @"^(\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4}))$").Success;
         }
 
         /// <summary>
@@ -237,11 +247,11 @@ namespace MISA.IMS.BL.Services
         /// <param name="ids">Danh sách ID</param>
         /// <returns></returns>
         /// Created by : PNTHUAN(11/5/2021)
-        public async Task<APIResult> DeleteAsync(IEnumerable<string> ids)
+        public async Task<APIResult> DeleteAsync(IEnumerable<string> codeRequireds)
         {
             var apiResult = new APIResult();
 
-            var res = await _contractRepository.DeleteAsync(ids);
+            var res = await _contractRepository.DeleteAsync(codeRequireds);
 
 
             if (res > 0)
@@ -292,11 +302,18 @@ namespace MISA.IMS.BL.Services
             return res;
         }
 
-        public async Task<APIResult> UpdateStatus(string id)
+        /// <summary>
+        /// Hàm thay đổi thông tin trang thái của bản ghi
+        /// </summary>
+        /// <param name="codeRequired">Danh sách mã yêu cầu</param>
+        /// <param name="status">Trạng thái ban đầu của bản ghi</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(12/05/2021)
+        public async Task<APIResult> UpdateStatus(IEnumerable<string> codeRequired, int status)
         {
             // Lấy thông tin bản ghi
             var apiResult = new APIResult();
-            var res = _contractRepository.GetByIdAsync(id).Result;
+            /*var res = _contractRepository.GetByIdAsync(id).Result;
             if (res == null)
             {
                 apiResult.Success = false;
@@ -311,17 +328,17 @@ namespace MISA.IMS.BL.Services
                     TraceId = TracerID.Id
                 };
             }
-            else
+            els*/
             {
-                var check = true;
-                var status = (int)res.Status;
-                switch ((int)res.Status)
+              /*  var check = true;
+                var status = (int)res.Status;*/
+                switch (status)
                 {
                     case (int)StatusContract.UNSENT:
                         status = (int)StatusContract.PENDING;
                         break;
                 }
-                int result = await _contractRepository.UpdateStatus(id, status);
+                int result = await _contractRepository.UpdateStatus(codeRequired, status);
                 if (result > 0)
                 {
                     apiResult.Success = true;
@@ -333,6 +350,13 @@ namespace MISA.IMS.BL.Services
             return apiResult;
         }
 
+        /// <summary>
+        /// Hàm thực hiện cập nhật bản ghi theo Id
+        /// </summary>
+        /// <param name="id">id của bản ghi</param>
+        /// <param name="contract">Đối tượng cần cập nhật</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(13/05/2021)
         public async Task<APIResult> UpdateAsync(string id, Contract contract)
         {
             var apiResult = new APIResult();
@@ -397,6 +421,13 @@ namespace MISA.IMS.BL.Services
 
         }
 
+        /// <summary>
+        /// Hàm validate bản ghi
+        /// </summary>
+        /// <param name="contract">Đối tượng validate</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(14/05/2021)
+
         public  APIResult validateEntity(Contract contract)
         {
             var apiResult = new APIResult();
@@ -406,7 +437,7 @@ namespace MISA.IMS.BL.Services
             {
                 if (!String.IsNullOrEmpty(contract.ContactEmailAddress))
                 {
-                    if (checkEmail(contract.ContactEmailAddress))
+                    if (!checkEmail(contract.ContactEmailAddress))
                     {
                         apiResult.Message.Add("Định dạng Email sai");
                         apiResult.Success = false;
@@ -439,6 +470,12 @@ namespace MISA.IMS.BL.Services
             return apiResult;
         }
 
+        /// <summary>
+        /// Hàm lấy thông tin đối tượng theo mã yêu cầu
+        /// </summary>
+        /// <param name="codeRequired">Mã yêu cầu</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(17/05/2021)
         public async Task<APIResult> GetByCodeAsync(object codeRequired)
         {
             

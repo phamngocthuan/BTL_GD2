@@ -11,48 +11,103 @@ namespace MISA.IMS.BL.Services
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
+        /// <summary>
+        /// Lấy tất cả bản ghi bất đồng bộ
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(11/5/2021)
         public virtual Task<APIResult> GetAllEntity()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Lấy bản ghi theo Id bất đồng bộ
+        /// </summary>
+        /// <param name="id">Id của bản ghi</param>
+        /// <returns></returns>
+        /// Created by PNTHUAN : (11/5/2021)
         public virtual async Task<APIResult> GetByIdAsync(object id)
         {
             throw new NotImplementedException();
         }
-        public virtual async Task<APIResult> DeleteAsync(IEnumerable<string> ids)
+        /// <summary>
+        /// Hàm Xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="codeRequired">Danh sách mã yêu cầu</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(17/05/2021)
+        public virtual async Task<APIResult> DeleteAsync(IEnumerable<string> codeRequireds)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Hàm thêm mới 1 bản ghi
+        /// </summary>
+        /// <param name="entity">Đối tượng cần thêm mới</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN (11/05/2021)
         public virtual async Task<APIResult> InsertAsync(T entity)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Hàm update bản ghi 
+        /// </summary>
+        /// <param name="id">Id của đối tượng</param>
+        /// <param name="entity">Đối tượng update</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN (11/05/2021)
         public virtual Task<APIResult> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Lấy bản ghi theo các trường yêu cầu
+        /// </summary>
+        /// <param name="listRequest">các trường yêu cầu, điều kiện kèm theo</param>
+        /// <param name="status">Trạng thái bản ghi</param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN(11/05/2021)
         public virtual Task<APIResult> GetEntities(ListRequest listRequest, int status, long offset, long limit)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Đếm số lượng bản ghi theo các trường yêu cầu với điều kiện truyền vào
+        /// </summary>
+        /// <param name="listRequest">các trường yêu cầu, điều kiện kèm theo</param>
+        /// <param name="status">Trạng thái bản ghi</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN (12/5/2021)
         public virtual Task<long> CountEntities(ListRequest listRequest, int status)
         {
             throw new NotImplementedException();
         }
-
-        public Task<APIResult> UpdateStatus(string id)
+        /// <summary>
+        /// Hàm thay đổi trạng thái của bản ghi
+        /// </summary>
+        /// <param name="code">danh sách mã yêu cầu của bản ghi</param>
+        /// <param name="status">Trạng thái của bản ghi</param>
+        /// Created by : PNTHUAN (11/05/2021)
+        /// <returns></returns>
+        public Task<APIResult> UpdateStatus(IEnumerable<string> codeRequired, int status)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Hàm update bản ghi 
+        /// </summary>
+        /// <param name="id">Id của đối tượng</param>
+        /// <param name="entity">Đối tượng update</param>
+        /// <returns></returns>
+        /// Created by : PNTHUAN (11/05/2021)
         public Task<APIResult> UpdateAsync(string id, T entity)
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

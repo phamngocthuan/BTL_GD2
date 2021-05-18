@@ -4,6 +4,10 @@ using System.Text;
 
 namespace MISA.IMS.Common.Constants
 {
+    /// <summary>
+    /// Mã code lỗi trả về
+    /// </summary>
+    /// Created by : pnthuan(10/5/2021)
     public static class ErrorCode
     {
         public static string Exception { get; set; } = "500";

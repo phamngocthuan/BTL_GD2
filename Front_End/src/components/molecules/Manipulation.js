@@ -8,7 +8,8 @@ import ContractApi from '../api/ContractApi'
 import Notification from '../atomics/Notification'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form } from 'antd'
-import {setDataShow , setTitleModal, setMethodModal, setShowModal, setDataModal, setIndexSelectedTable} from '../../redux/action/index'
+import { getStatus} from '../../constants/CommonFunction'
+import {setDataShow , setLoadData, setTitleModal, setMethodModal, setShowModal, setDataModal, setIndexSelectedTable} from '../../redux/action/index'
 Manipulation.propTypes = {
 
 };
@@ -16,7 +17,6 @@ const action = [
     {title: "Thêm yêu cầu", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
     {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
     {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
-    {title: "Nạp", nameIcon: "IconDownload", state : "Download", content : "Nạp"},
     {title: "Gửi yêu cầu", nameIcon : "Poinert" , state : "Sending", content : "Gửi yêu cầu"}
 ]
 const status = [
@@ -32,6 +32,7 @@ function Manipulation(props) {
     const [form] = Form.useForm();
     const indexSelected = useSelector(state => state.table.indexSelected);
     const dataSelected = useSelector(state => state.table.dataSelected);
+    const statusTable = useSelector(state => state.table.status)
 
     const titleModal = useSelector(state => state.modal.title);
     const isShowModal = useSelector(state => state.modal.isShow);
@@ -51,6 +52,7 @@ function Manipulation(props) {
     const dispatch = useDispatch(); 
 
     const  showModal =  async  (title, state) => {
+        
         const obj = {
             isShow : !isShowModal,
             title : isShowModal ? "" : title,
@@ -75,62 +77,146 @@ function Manipulation(props) {
             dispatch(setShowModal({isShow : obj.isShow}))
         }
         else {
-            if(indexSelected < 0){
-                Notification("error","Lỗi","Chưa chọn bản ghi")
-            }else {
-                    ContractApi.getByCode(dataSelected.codeRequired, async (res) => {
-                        await setInstance(res.data.data)
-                        form.setFieldsValue(res.data.data)
-                        dispatch(setDataModal({data : res.data.data}))
-                        dispatch(setTitleModal({title : obj.title}))
-                        dispatch(setMethodModal({method : obj.method}))
-                        dispatch(setShowModal({isShow : obj.isShow}))
-                    },(err) => {
-                        Notification("error","Lỗi","Lỗi mạng")
-                    })
+                if(dataSelected.length < 1){
+                    Notification("error","Lỗi","Chưa chọn bản ghi")
+                }else if(statusTable  === "UNSENT" && state === "Sending" && dataSelected.length > 0  ){
+                    var codes = dataSelected.map((item) => item.codeRequired.toString())
+                    ContractApi.sendRequest(codes,0,
+                        (res)=> {
+                            Notification("success")
+                            dispatch(setLoadData({loadData : true}))
+                        },
+                        (err) =>{
+                            Notification("error","Lỗi", err.moreInfo)
+                        }
+                    )
+                }
+                 else
+                if(dataSelected.length > 1){
+                    Notification("error", "Lỗi", "Chỉ được sửa một bản ghi")
+                }
+                else 
+                {
+                    /// PENDING
+                    if (statusTable === "PENDING"){
+                        if(state === "Sending" ){
+                            Notification('error',"Lỗi", "Bản ghi đã được gửi yêu cầu")
+                        }else{
+                           
+                            ///////////////////////
+                            ContractApi.getByCode(dataSelected[0].codeRequired, async (res) => {
+                                await setInstance(res.data.data)
+                                form.setFieldsValue(res.data.data)
+                                dispatch(setDataModal({data : res.data.data}))
+                                dispatch(setTitleModal({title : obj.title}))
+                                dispatch(setMethodModal({method : obj.method}))
+                                dispatch(setShowModal({isShow : obj.isShow}))
+                            },(err) => {
+                                Notification("error","Lỗi",err.moreInfo)
+                            })
+                        }
+                    }
+                    else
+                    // APPROVED
+                    if (statusTable === "APPROVED"){
+                        switch (state) {
+                            case "Sending":
+                                Notification('error',"Lỗi", "Bản ghi đã được ghi nhận")
+                                break;
+                            case "Modified":
+                                Notification('error',"Lỗi", "Bản ghi đã được ghi nhận")
+                                break;
+                        }
+                    }
+                    else
+                    //REFUSE
+                    if (statusTable === "REFUSE"){
+                        switch (state) {
+                            case "Sending":
+                                Notification('error',"Lỗi", "Bản ghi đã bị từ chối không được phép gửi tiếp")
+                                break;
+                            case "Modified":
+                                Notification('error',"Lỗi", "Bản ghi đã bị từ chối không được phép sửa")
+                                break;
+                        }
+                    }
+                    else
+                    // UNSENT
+                    if(statusTable  === "UNSENT"){
+                        switch(state) {
+
+                            case "Modified" : 
+                                ContractApi.getByCode(dataSelected[0].codeRequired, async (res) => {
+                                    await setInstance(res.data.data)
+                                    form.setFieldsValue(res.data.data)
+                                    dispatch(setDataModal({data : res.data.data}))
+                                    dispatch(setTitleModal({title : obj.title}))
+                                    dispatch(setMethodModal({method : obj.method}))
+                                    dispatch(setShowModal({isShow : obj.isShow}))
+                                },(err) => {
+                                    Notification("error","Lỗi",err.moreInfo)
+                                })
+                                break;
+                        }
+                        
+                    }
+
+                    
             }
+            
         }
         
     }
     const handleDelete = async () => {
-        await  ContractApi.getByCode(dataSelected.codeRequired,(res) => {
-             ContractApi.delete(res.data.data.contractID, 
+            var codes = dataSelected.map((item) => item.codeRequired.toString());
+            await ContractApi.delete(codes, 
                 (res) => {
                     Notification("success","Thành công", "Xóa thành công");
-    
+                    dispatch(setLoadData({loadData : true}))
                 },(err) => {
-                    Notification("error","Lỗi", "Xóa thất bại")
+                    
+                    Notification("error","Lỗi", err.moreInfo)
                 }
                 )
-        },(err) => {
-            Notification("error","Lỗi","Lỗi mạng")
-        })
+       
         
     }
     ///Hiên thị khi click vào xóa
-    function showPromiseConfirm() {
-        if(indexSelected < 0){
-            Notification("error","Lỗi","Chưa chọn bản ghi")
-        }else 
-
-            confirm({
-                title: 'Bạn có chắc chắn muốn xóa bản ghi có mã yêu cầu dưới đây hay không ?',
-                icon: <ExclamationCircleOutlined />,
-                content: `Mã yêu cầu : ${dataModal.codeRequired}`,
-                onOk() {
-                    return new Promise((resolve, reject) => {
-                        handleDelete();
-                        dispatch(setIndexSelectedTable({indexSelected : -1}));
-                        setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-                    }).catch(() => console.log('Oops errors!'));
-                    
-                },
-                onCancel() {
-                    dispatch(setIndexSelectedTable({indexSelected : -1}))  
-                },
-                okText : "Xóa",
-                cancelText: "Hủy"
-            });
+    function showPromiseConfirm(title, state) {
+        if (statusTable === "APPROVED"){
+            switch (state) {
+                case "Delete" : 
+                    Notification('error',"Lỗi", "Bản ghi đã được ghi nhận không được phép xóa");
+                    break;
+            }
+        }else {
+            if(indexSelected.length < 1){
+                Notification("error","Lỗi","Chưa chọn bản ghi")
+            }else {
+                let arr = dataSelected.map((item) => item.codeRequired);
+                confirm({
+                    title: 'Bạn có chắc chắn muốn xóa bản ghi có mã yêu cầu dưới đây hay không ?',
+                    icon: <ExclamationCircleOutlined />,
+                    content: `Mã yêu cầu : ${arr.toString()}`,
+                    onOk() {
+                        return new Promise((resolve, reject) => {
+                             handleDelete();
+                            // dispatch(setIndexSelectedTable({indexSelected : -1}));
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+                        }).catch(() => console.log('Oops errors!'));
+                        
+                    },
+                    onCancel() {
+                        
+                    },
+                    okText : "Xóa",
+                    cancelText: "Hủy"
+                });
+            }
+    
+                
+        }
+        
     }
 
     /// Hiển thị các action method
@@ -161,14 +247,17 @@ function Manipulation(props) {
    
 
     const handleSubmit = (obj) => {
+        console.log('hello')
         if(methodModal === "Add")
             ContractApi.post(
                 obj, 
                 (res) => {
                     Notification("success","Thành công", "Thêm thành công");
+                    dispatch(setLoadData({loadData : true}))  
 
                 },(err) => {
-                    Notification("error","Lỗi", "Thêm thất bại")
+                    
+                    Notification("error","Lỗi", err.moreInfo)
                 }
                 
                 )
@@ -178,16 +267,16 @@ function Manipulation(props) {
                 obj, 
                 (res) => {
                     Notification("success","Thành công", "Sửa thành công");
-
+                    dispatch(setLoadData({loadData : true}))
                 },(err) => {
-                    Notification("error","Lỗi", "Sửa thất bại")
+                    Notification("error","Lỗi", err.moreInfo)
                 }
                 
                 )
         dispatch(setTitleModal({title : ""}))
         dispatch(setMethodModal({method : "Add"}))
         dispatch(setShowModal({isShowModal : false}))
-        dispatch(setIndexSelectedTable({indexSelected : -1}))
+        // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
     const  handleCancel = async  () => {
         await setInstance({
@@ -202,7 +291,7 @@ function Manipulation(props) {
         //Reset lại Modal
         dispatch(setTitleModal({title : ""}))
         dispatch(setShowModal({isShowModal : false}))
-        dispatch(setIndexSelectedTable({indexSelected : -1}))
+        // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
     return (
         <div className="manipulation">

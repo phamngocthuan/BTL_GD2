@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MISA.IMS.Data.DTOs
 {
+    /// <summary>
+    /// class chứa các điều kiện mà client gửi lên
+    /// </summary>
     public class ListRequest
     {
         /// <summary>

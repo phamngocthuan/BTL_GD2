@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MISA.IMS.DL.Repositories
 {
+    /// <summary>
+    /// Class thực thi giao tiếp DB của thực thể  sản phẩm
+    /// </summary>
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         #region Constructor
@@ -20,6 +23,12 @@ namespace MISA.IMS.DL.Repositories
         #endregion
 
         #region Method
+
+        /// <summary>
+        /// Lấy danh sách Mã sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<IEnumerable<string>> GetProductCodes()
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))

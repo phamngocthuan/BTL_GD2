@@ -10,9 +10,9 @@ function ItemMenu(props) {
     const {} = props;
     return (
         <div className="item-menu">
-           <Icon name="IconHomePage" height={20} width={20}/>
+           <Icon name="IconHomePage" height={20} width={20} fill={"#fff"}/>
            <div className='item-menu-title'>
-               HomePage
+               Trang chủ
            </div>
         </ div>
     );

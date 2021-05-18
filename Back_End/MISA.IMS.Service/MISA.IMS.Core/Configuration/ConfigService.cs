@@ -9,6 +9,12 @@ namespace MISA.IMS.Core
 {
     public class ConfigService
     {
+        /// <summary>
+        /// Config service
+        /// </summary>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        /// Crreated by : pnthuan(9/5/2021)
         public static IConfiguration GetConfiguration(IWebHostEnvironment env)
         {
 

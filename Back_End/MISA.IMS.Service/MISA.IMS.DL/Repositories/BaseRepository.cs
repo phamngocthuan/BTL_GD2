@@ -13,10 +13,17 @@ using MISA.IMS.Common.Enumerations;
 
 namespace MISA.IMS.DL.Repositories
 {
+    /// <summary>
+    /// Tâng chung kết nối database
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// Created by : pnthuan(11/5/2021)
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
+        #region Fields
         protected readonly IDBContextFactory _dapperDBContextFactory;
          protected string _tableName;
+        #endregion
 
         #region Properties
 
@@ -32,7 +39,15 @@ namespace MISA.IMS.DL.Repositories
             _dapperDBContextFactory = dapperDatabaseContextFactory;
             _tableName = Utilities.GetEntityName<T>();
         }
+        #endregion
 
+        #region Methods
+        /// <summary>
+        /// Lấy bản ghi theo Id bất đồng bộ
+        /// </summary>
+        /// <param name="id">Id của bản ghi</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<T> GetByIdAsync(object id)
         {
             var res = new List<T>();
@@ -45,7 +60,11 @@ namespace MISA.IMS.DL.Repositories
             }
             return null;
         }
-
+        /// <summary>
+        /// Lấy tất cả bản ghi 
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public virtual async Task<IEnumerable<T>> GetEntitiesAsync(string commandText, object param = null)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -54,10 +73,23 @@ namespace MISA.IMS.DL.Repositories
                 return ReadData(sqlDataReader);
             }
         }
+        
+        /// <summary>
+        /// Khởi tạo kết dựa vào connectionString
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// Created by : pnthuan(11/5/2021)
         public void InitializeDatabaseContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
+
+        /// <summary>
+        /// Thực hiện đọc data từ DB trả về
+        /// </summary>
+        /// <param name="sqlDataReader"></param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/05/2021)
         protected IEnumerable<T> ReadData(IDataReader sqlDataReader)
         {
             var res = new List<T>();
@@ -88,7 +120,13 @@ namespace MISA.IMS.DL.Repositories
             return res;
         }
 
-        public  virtual async  Task<IEnumerable<T>> GetAllEntity()
+
+        /// <summary>
+        /// Lấy tất cả bản ghi 
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
+        public virtual async  Task<IEnumerable<T>> GetAllEntity()
         {
             /*var sql = "";
 
@@ -103,11 +141,14 @@ namespace MISA.IMS.DL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> InsertEntity()
-        {
-            throw new NotImplementedException();
-        }
 
+        /// <summary>
+        /// Cập nhật trạng thái bản ghi
+        /// </summary>
+        /// <param name="codeRequireds">Danh sách mã yêu cầu</param>
+        /// <param name="status">Trạng thái của tất cả bản ghi</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<int> UpdateAsync(T entity)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -116,7 +157,12 @@ namespace MISA.IMS.DL.Repositories
                 return res;
             }
         }
-
+        /// <summary>
+        /// Thêm mới bản ghi
+        /// </summary>
+        /// <param name="entity">Đối tượng thêm mới</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<int> InsertAsync(T entity)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -126,19 +172,47 @@ namespace MISA.IMS.DL.Repositories
             }
         }
 
-        public async Task<int> DeleteAsync(IEnumerable<string> ids)
+        /// <summary>
+        /// Hàm thực hiện thêm mới 1 bản nháp
+        /// </summary>
+        /// <param name="entity">Dối tượng nháp</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/05/2021)
+        public async Task<int>   InsertOriginalAsync(T entity)
+        {
+            using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
+            {
+                var res = await _dbContext.ExecuteAsync($"Proc_Insert{_tableName}Original", param: entity, commandType: CommandType.StoredProcedure);
+                return res;
+            }
+        }
+        /// <summary>
+        /// Xóa danh sách bản ghi
+        /// </summary>
+        /// <param name="codeRequireds">Danh sách mã yêu cầu</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
+        public async Task<int> DeleteAsync(IEnumerable<string> codeRequireds)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
                 /*var param = $"{_tableName}ID";
                 var res = await _dbContext.ExecuteAsync($"Proc_Delete{_tableName}", new { ContractID = id.ToString() }, commandType: CommandType.StoredProcedure);*/
 
-                var sqlText = new StringBuilder($"DELETE FROM {_tableName} WHERE {_tableName}ID IN @ids;");
-                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { ids });
+                var sqlText = new StringBuilder($"DELETE FROM {_tableName} WHERE CodeRequired IN @codeRequireds;");
+                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { codeRequireds });
                 return res;
             }
         }
-
+        /// <summary>
+        /// Thực hiện lấy 1 số trường của bản ghi, lọc bản ghi theo yêu cầu
+        /// </summary>
+        /// <param name="listRequest">Danh sách trường cần lấy, điều kiện lọc</param>
+        /// <param name="status">Trạng thái bản ghi</param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<IEnumerable<T>> GetEntities(ListRequest listRequest, int status, long offset, long limit)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -213,8 +287,9 @@ namespace MISA.IMS.DL.Repositories
                         }
                         sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
                     }
-                    
+                    sqlText.Append("ORDER BY CreatedDate DESC ");
                     sqlText.Append("LIMIT @limit OFFSET @offset");
+                    
                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"limit", limit));
                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"offset", offset));
                     _dbContext._sqlCommand.CommandType = CommandType.Text;
@@ -235,7 +310,13 @@ namespace MISA.IMS.DL.Repositories
 
             }
         }
-
+        /// <summary>
+        /// Thực hiện đếm số lượng bản ghi theo điều kiện lọc
+        /// </summary>
+        /// <param name="listRequest">Điều kiên lọc</param>
+        /// <param name="status">Trạng thái bản ghi</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<long> CountEntities(ListRequest listRequest, int status)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -320,17 +401,27 @@ namespace MISA.IMS.DL.Repositories
 
         }
 
-        public async Task<int> UpdateStatus(string id, int status)
+        /// <summary>
+        /// Cập nhật bản ghi 
+        /// </summary>
+        /// <param name="entity">Đối tượng cập nhật</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
+        public async Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
-            
-                    var proc = new StringBuilder($"Proc_UpdateStatus");
-                    var res = await _dbContext._dbConnection.ExecuteAsync(proc.ToString(), new { ContractID = id, Status = status }, commandType: CommandType.StoredProcedure);
-                    return res;
+
+                /*var proc = new StringBuilder($"Proc_UpdateStatus");
+                var res = await _dbContext._dbConnection.ExecuteAsync(proc.ToString(), new { ContractID = id, Status = status }, commandType: CommandType.StoredProcedure);
+                return res;*/
+                var sqlText = new StringBuilder($"UPDATE {_tableName}  c SET c.Status = @status WHERE CodeRequired IN @codeRequireds;");
+                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new {status,  codeRequireds });
+                return res;
             }
         }
-
+        
+        
         
 
 

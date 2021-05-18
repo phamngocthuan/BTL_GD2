@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MISA.IMS.BL.Interfaces;
 using MISA.IMS.Common.Constants;
+using MISA.IMS.Common.Enumerations;
 using MISA.IMS.Data.DTOs;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,12 @@ namespace MISA.IMS.Service.Controllers
         }
         #endregion
 
+        #region Method
+        /// <summary>
+        /// Hàm lấy thông tin về Mã sản phẩm
+        /// </summary>
+        /// <returns>Trả về danh sách mã sản phẩm</returns>
+        /// Created by : PNTHUAN(12/5/2021)
         [HttpGet("code")]
        public async Task<IActionResult> GetProductCode()
         {
@@ -54,9 +61,12 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "pnthuan@@@"
+                    TraceId = TracerID.Id
                 });
             }
         }
+        #endregion
     }
+
+
 }

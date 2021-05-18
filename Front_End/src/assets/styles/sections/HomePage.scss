@@ -12,7 +12,7 @@
     position: relative;
     display: inline-block;
     z-index: 10;
-    background-color: #01b0ff;
+    background-image: linear-gradient(to bottom, #0073ff , #0090ff, #00bdff);
 }
 .body-content {
     height: calc(100vh - 50px);
@@ -27,11 +27,18 @@
     height: calc(100% - 80px);
 }
 .t-detail {
-    min-height: calc(100% - 300px);
+    height: calc(100% + 20px);
     position: relative;
 }
+.t-detail .sc-bdvvaa{
+    height: 60%;
+}
 .p-detail {
-    min-height: 200px;
+    height: 40%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 .ant-table-pagination.ant-pagination {
  

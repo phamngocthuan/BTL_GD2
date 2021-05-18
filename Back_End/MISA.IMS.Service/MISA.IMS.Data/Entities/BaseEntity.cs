@@ -10,11 +10,24 @@ namespace MISA.IMS.Data.Entities
     /// Created by : PNTHUAN(5/5/2021)
     public class BaseEntity
     {
+        /// <summary>
+        /// Ngày tạo
+        /// </summary>
         public DateTime CreatedDate { get; set; }
+        /// <summary>
+        /// Người chỉnh sửa
+        /// </summary>
 
         public string ModifiedBy { get; set; }
 
+        /// <summary>
+        /// Ngày chỉnh sửa
+        /// </summary>
+
         public DateTime ModifiedDate { get; set; }
+        /// <summary>
+        /// Người tạo
+        /// </summary>
 
         public string CreatedBy { get; set; }
     }

@@ -2,11 +2,11 @@
     background-color: aqua;
 }
 .antd-min  .ant-table.ant-table-small{
-    min-height: 460px;
+    max-height: calc(80%);
 }
-.antd-min .ant-table-body{
-    max-height: 460px!important;
-}
+// .antd-min .ant-table-body{
+//     max-height: 460px!important;
+// }
 .color-red{
     color : red!important ; 
 }

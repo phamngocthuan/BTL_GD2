@@ -7,6 +7,7 @@ namespace MISA.IMS.Common.Enumerations
     /// <summary>
     /// Misacode để xác định trạng thái của dữ liệu:
     /// </summary>
+    /// Created by : pnthuan(10/5/2021)
     public enum MessageCode
     {
         /// <summary>
@@ -82,6 +83,9 @@ namespace MISA.IMS.Common.Enumerations
         LessThan= 4
 
     }
+    /// <summary>
+    /// Thông báo khi lấy dữ liệu
+    /// </summary>
 
     public  static class  Message
     {
@@ -98,10 +102,18 @@ namespace MISA.IMS.Common.Enumerations
         public static string ExcuteError = "Thực thi yêu cầu thất bại";
 
     }
+
+    /// <summary>
+    /// Fake tracerId
+    /// </summary>
     public static class TracerID
     {
         public static string Id = "c7e07b7719a7a3489617663753f985e4";
     }
+
+    /// <summary>
+    /// Header Name
+    /// </summary>
     public static class HeaderName
     {
         public static string CreatedBy = "CreatedBy";

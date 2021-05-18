@@ -15,6 +15,12 @@ namespace MISA.IMS.Service.Extensions
 
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Cài đặt service, Dependence injection service
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// Created by : pnthuan(10/5/2021)
         public static void AddLifeTimeServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<DBContextFactory>();

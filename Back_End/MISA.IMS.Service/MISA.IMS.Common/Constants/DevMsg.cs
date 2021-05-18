@@ -4,6 +4,10 @@ using System.Text;
 
 namespace MISA.IMS.Common.Constants
 {
+    /// <summary>
+    /// Lỗi trả về cho Dev
+    /// </summary>
+    /// Created by : pnthuan(10/5/2021)
     public static class DevMsg
     {
         public static string Error { set; get; } = "Lỗi";

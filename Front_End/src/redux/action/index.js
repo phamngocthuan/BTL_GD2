@@ -6,7 +6,11 @@ import { ADD_ARTICLE, DATASHOW ,  TOTAL_TABLE,
     ISSHOW_MODAL, TITLE_MODAL, METHOD_MODAL,
      DATA_MODAL, ADD_FILTER, UPDATE_FILTER, REMOVE_FILTER,
      REMOVE_DATE_FILTER,
-     ADD_DATE_FILTER
+     ADD_DATE_FILTER,
+     RESET_INDEX_SELECTED,
+     RESET_DATA_SELECTED,
+     LOAD_DATA,SET_DATA_TAB_PANE,
+     LOADING,REMOVE_RECORD_TABLE
 
 }
  from "../../constants/ActionType";
@@ -58,10 +62,29 @@ function addDateFilter(payload){
 function removeDateFilter(payload){
     return {type : REMOVE_DATE_FILTER, payload}
 }
+function resetDataSelected(payload){
+    return {type : RESET_DATA_SELECTED, payload}
+}
+function resetIndexSelected(payload){
+    return {type : RESET_INDEX_SELECTED, payload}
+}
+function setLoadData(payload){
+    return {type : LOAD_DATA, payload}
+}
+function setLoading(payload){
+    return {type : LOADING, payload}
+}
 
-export {addArticle, setDataShow,  setTotalTable , setStatusTable ,
+function  removeRecordTable(payload) {
+    return {type : REMOVE_RECORD_TABLE, payload}
+}
+function setDataTabPane(payload){
+    return {type: SET_DATA_TAB_PANE, payload}
+}
+export {addArticle, setDataShow,  setTotalTable , setStatusTable ,setLoadData,
     setDataSelectedTable, setIndexSelectedTable, setShowModal, setTitleModal, 
     setMethodModal, setDataModal, setFilter, removeFilter, updateFilter,
-    addDateFilter, removeDateFilter
+    addDateFilter, removeDateFilter, resetDataSelected, resetIndexSelected,setDataTabPane,
+    setLoading, removeRecordTable
 
 }

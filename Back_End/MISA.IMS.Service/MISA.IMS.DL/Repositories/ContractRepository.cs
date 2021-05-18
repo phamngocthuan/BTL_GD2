@@ -10,13 +10,28 @@ using System.Threading.Tasks;
 
 namespace MISA.IMS.DL.Repositories
 {
+
+
+    /// <summary>
+    /// Class thực thi giao tiếp db của thực thể contract
+    /// </summary>
     public class ContractRepository : BaseRepository<Contract>, IContractRepository
     {
+        #region Constructors
         public ContractRepository(IDBContextFactory dbContextFactory) : base(dbContextFactory)
         {
 
             
         }
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Lấy tất cả bản ghi 
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public override async Task<IEnumerable<Contract>> GetAllEntity()
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -27,6 +42,12 @@ namespace MISA.IMS.DL.Repositories
 
         }
 
+        /// <summary>
+        /// Lấy bản ghi theo mã yêu cầu
+        /// </summary>
+        /// <param name="codeRequired">Mã yêu cầu</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<Contract> GetByCodeAsync(object codeRequired)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -48,6 +69,11 @@ namespace MISA.IMS.DL.Repositories
             }
         }
 
+        /// <summary>
+        /// Lấy mã yêu cầu
+        /// </summary>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
         public async Task<string> GetCodeRequired()
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
@@ -60,6 +86,7 @@ namespace MISA.IMS.DL.Repositories
                 return (string)res.GetValue(0);
             }
         }
+        #endregion
 
     }
 }

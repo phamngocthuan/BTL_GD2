@@ -45,7 +45,7 @@ namespace MISA.IMS.Service.Controllers
         /// </summary>
         /// <returns>Tất cả bản ghi</returns>
         /// Created by : PNTHUAN(11/5/2021)
-        #region Method 
+        #region Methods
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -121,7 +121,10 @@ namespace MISA.IMS.Service.Controllers
                 });
             }
         }
+
+
         
+
         /// <summary>
         /// Lấy bản ghi theo mã yêu cầu
         /// </summary>
@@ -129,7 +132,9 @@ namespace MISA.IMS.Service.Controllers
         /// <returns></returns>
         /// Created by : PNTHUAN(13/5/2021)
         [HttpGet("code")]
-        public async Task<IActionResult> GetContract([FromQuery(Name = "codeRequired")] string  codeRequired)
+        public async Task<IActionResult> GetContract(
+            [FromQuery(Name = "codeRequired")] string  codeRequired
+        )
         {
             try
             {
@@ -200,6 +205,7 @@ namespace MISA.IMS.Service.Controllers
                 }
                 // convert sang đối tượng thêm vào và khởi tạo một số thuộc tính cần có
                 Contract contract = contractDTO.ConvertInsertContract(createdBy, status);
+
                 APIResult aPIResult = await _contractService.InsertAsync(contract);
                 if (aPIResult.Success)
                 {
@@ -283,13 +289,13 @@ namespace MISA.IMS.Service.Controllers
         /// <summary>
         /// Hàm xóa một hoặc nhiều hợp đồng
         /// </summary>
-        /// <param name="ids">Mảng id hợp đồng cần xóa</param>
+        /// <param name="codeRequireds">Mảng mã yêu cầu</param>
         /// <returns> Trả về thông tin khi xóa thành công</returns>
         /// Error : Trả về lỗi khi gặp ngoại lệ hoặc trong quá trình xóa không tìm thấy bản ghi
         /// Created by : PNTHUAN( 11/5/2021)
         // DELETE api/<ContractController>/5
         [HttpDelete()]
-        public async Task<IActionResult> DeleteContract([FromBody][Required] IEnumerable<string> ids)
+        public async Task<IActionResult> DeleteContract([FromBody][Required] IEnumerable<string> codeRequireds)
         {
             try
             {
@@ -307,7 +313,7 @@ namespace MISA.IMS.Service.Controllers
                     }
                 
                 
-                var apiResult = await _contractService.DeleteAsync(ids);
+                var apiResult = await _contractService.DeleteAsync(codeRequireds);
                 return Ok(apiResult.Message);
             }
             catch (Exception ex)
@@ -391,7 +397,10 @@ namespace MISA.IMS.Service.Controllers
         /// Chỉ gửi yêu cầu với bản nháp
         /// Created by : PNTHUAN (11/5/2021)
         [HttpPut("status")]
-        public async Task<IActionResult> RequestChangeStatusContract([FromBody][Required] string id)
+        public async Task<IActionResult> RequestChangeStatusContract(
+            [FromBody][Required] IEnumerable<string> codes,
+            [FromQuery][Required] int   status = (int)StatusContract.UNSENT
+        )
         {
             try
             {
@@ -407,7 +416,7 @@ namespace MISA.IMS.Service.Controllers
                     };
                     return BadRequest(apiRes);
                 }
-                APIResult apiResult = await _contractService.UpdateStatus(id);
+                APIResult apiResult = await _contractService.UpdateStatus(codes,status);
                 if (apiResult.Success == true)
                 {
                     return Ok(apiResult);
