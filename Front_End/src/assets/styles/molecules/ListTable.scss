@@ -30,7 +30,7 @@ thead .ant-table-cell {
 
 }
 .site-input-group-wrapper {
-    width: 160px;
+    width: 225px;
 }
 @keyframes fadeIn {
 	0% {
@@ -51,4 +51,33 @@ thead .ant-table-cell {
 	100% {
 		transform: translateY(0%);
 	}		
+}
+.ant-table-body {
+	min-height: 220px!important;
+	max-height: 470px!important;
+}
+.ant-table-wrapper {
+
+	height : 100%;
+}
+.ant-spin-nested-loading{
+	height : 100%;
+
+}
+.ant-spin-container {
+
+	height : 100%;
+}
+
+.ant-table-pagination.ant-pagination {
+	position : absolute;
+	bottom : -16px;
+}
+.ant-table-cell {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ant-table-thead  tr:first-child .ant-table-cell {
+	text-align: center;
 }

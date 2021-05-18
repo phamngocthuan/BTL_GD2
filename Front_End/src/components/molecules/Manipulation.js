@@ -83,7 +83,7 @@ function Manipulation(props) {
                     var codes = dataSelected.map((item) => item.codeRequired.toString())
                     ContractApi.sendRequest(codes,0,
                         (res)=> {
-                            Notification("success")
+                            Notification("success", "Thành công", "Gửi yêu cầu thành công")
                             dispatch(setLoadData({loadData : true}))
                         },
                         (err) =>{

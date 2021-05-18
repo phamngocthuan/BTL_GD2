@@ -79,7 +79,7 @@ function FilterBody(props) {
         "CodeRequired", "CodeProjectSales", 
         "NameProjectSales", 
         "NumberContract", "CreatedDate", 
-        "PackageProductCode","Money"],
+        "PackageProductCode","Money","ContactName", "ContactEmailAddress", "ContactPhoneNumber","ModifiedBy"],
         "Requests"  : [
            
         ]
@@ -106,14 +106,14 @@ function FilterBody(props) {
     useEffect(() => {
         const newBody = {
             FieldNames : FieldNames,
-            Requests : Requests
+            Requests : Requests,
+            status : status
         }
         setOffset(0);
         dispatch(setLoading({loading : true}));
         ContractApi.filter(
             newBody,
         {
-            status : status,
             offset : 0,
             limit : limit
         },
@@ -135,12 +135,12 @@ function FilterBody(props) {
         dispatch(setLoading({loading : true}));
         const newBody = {
             FieldNames : FieldNames,
-            Requests : Requests
+            Requests : Requests,
+            status : status
         }
         ContractApi.filter(
             newBody,
         {
-            status : status,
             offset : offset,
             limit : limit
         },
@@ -164,10 +164,10 @@ function FilterBody(props) {
     useEffect(() => {
         if(loadData == true){
             dispatch(setLoading({loading : true}));
+            body["status"] = status;
                 ContractApi.filter(
                     body,
                 {
-                    status : status,
                     offset : 0,
                     limit : limit
                 },

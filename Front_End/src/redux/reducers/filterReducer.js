@@ -8,7 +8,7 @@ const initialState = {
         "CodeRequired", "CodeProjectSales", 
         "NameProjectSales", 
         "NumberContract", "CreatedDate", 
-        "PackageProductCode","Money"],
+        "PackageProductCode","Money","ContactName", "ContactEmailAddress", "ContactPhoneNumber","ModifiedBy"],
         Requests  : [
            
         ]

@@ -234,6 +234,7 @@ namespace MISA.IMS.DL.Repositories
                         }
                     }
                 }
+
                 if( listRequest.Requests != null)
                 {
                     foreach ( var request in listRequest.Requests)

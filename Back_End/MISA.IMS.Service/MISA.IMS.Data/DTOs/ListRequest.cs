@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.IMS.Common.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,5 +19,7 @@ namespace MISA.IMS.Data.DTOs
         /// 
         /// </summary>
         public List<Request> Requests { get; set; }
+
+        public int status { set; get; } = (int)StatusContract.UNSENT;
     }
 }

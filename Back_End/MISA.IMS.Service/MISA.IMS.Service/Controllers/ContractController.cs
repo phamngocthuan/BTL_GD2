@@ -341,9 +341,10 @@ namespace MISA.IMS.Service.Controllers
         [HttpPost("filter")]
         public async Task<IActionResult> GetContracts(
             [FromBody][Required] ListRequest listRequest,
-            [FromQuery] int status = (int)StatusContract.UNSENT, 
+           /* [FromQuery] int status = (int)StatusContract.UNSENT, */
             [FromQuery] long offset = 0,
-            [FromQuery] long limit = 20 )
+            [FromQuery] long limit = 20 
+            )
         {
 
             try
@@ -359,11 +360,12 @@ namespace MISA.IMS.Service.Controllers
                     };
                     return BadRequest(apiRes);
                 }
-                var apiResult = await _contractService.GetEntities(listRequest, status, offset, limit);
+                
+                var apiResult = await _contractService.GetEntities(listRequest, listRequest.status, offset, limit);
                 if (apiResult.Success == true)
                 {
                     long totals = 0;
-                    totals = await _contractService.CountEntities(listRequest, status);
+                    totals = await _contractService.CountEntities(listRequest, listRequest.status);
                     return Ok(new { 
                         Data = apiResult.Data,
                         Totals = totals,

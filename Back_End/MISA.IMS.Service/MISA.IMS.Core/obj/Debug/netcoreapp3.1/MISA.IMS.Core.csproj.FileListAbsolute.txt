@@ -49,3 +49,14 @@ C:\Users\pnthuan.RD\Desktop\New folder (2)\BTL_GD2\Back_End\MISA.IMS.Service\MIS
 C:\Users\pnthuan.RD\Desktop\New folder (2)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.CoreCompileInputs.cache
 C:\Users\pnthuan.RD\Desktop\New folder (2)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.dll
 C:\Users\pnthuan.RD\Desktop\New folder (2)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.pdb
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.deps.json
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.dll
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\bin\Debug\netcoreapp3.1\MISA.IMS.Core.pdb
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csprojAssemblyReference.cache
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.Properties.Resources.resources
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.GenerateResource.cache
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.AssemblyInfoInputs.cache
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.AssemblyInfo.cs
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.csproj.CoreCompileInputs.cache
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.dll
+C:\Users\pnthuan.RD\Desktop\New folder (3)\BTL_GD2\Back_End\MISA.IMS.Service\MISA.IMS.Core\obj\Debug\netcoreapp3.1\MISA.IMS.Core.pdb

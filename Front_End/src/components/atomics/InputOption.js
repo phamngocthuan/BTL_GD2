@@ -30,7 +30,7 @@ export default function InputOption  (props) {
                 <Option value="=">= </Option>
             </Select>
             <Input 
-                style={{ width: '70%' }} 
+                style={{ width: '72%' }} 
                 defaultValue=""
                 name={name}
                 onPressEnter= {async (e) => {

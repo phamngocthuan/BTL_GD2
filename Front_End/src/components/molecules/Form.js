@@ -21,15 +21,15 @@ const formItemLayout = {
         span: 24,
       },
       sm: {
-        span: 6,
+        span: 5,
       },
     },
     wrapperCol: {
       xs: {
-        span: 24,
+        span: 28,
       },
       sm: {
-        span: 18,
+        span: 20,
       },
     },
   };
@@ -48,7 +48,7 @@ const formItemLayout = {
   const tailFromSelect = {
     wrapperCol: {
       xs: {
-        span: 6,
+        span: 12,
         offset: 6,
       },
       sm: {
@@ -58,7 +58,7 @@ const formItemLayout = {
     },
       labelCol: {
         xs: {
-          span: 6,
+          span: 12,
         },
         sm: {
           span: 6,
@@ -94,16 +94,57 @@ export default function ValidateForm (props){
     const [district, setDistrict] = useState("")
     const [city, setCity] = useState("")
     const [ward, setWard] = useState("")
-  
+    /// redux
+    const data = useSelector(state => state.modal.data);
+    const isShow = useSelector(state => state.modal.isShow);
 
+
+    useEffect(() => {
+      if(isShow){
+        if(data.city){
+          // TH1 : District null( ward có thể null , hoặc khác null) -> get data district, ward
+          // Lấy quận huyện
+          if(!data.district){
+            LocsApi.getDistrict(2, data.city ,async  (res) => {
+              let result = res.data.map(a => a.locationName)
+  
+              setDistrictData(result)
+              LocsApi.getWard(3, result[0],async (res) => {
+                let result1 = res.data.map(a => a.locationName)
+                setWardData(result1)
+                }, (err) => {
+                    console.log(err)
+                })
+            },
+            (err) => {
+              console.log(res);
+            }
+            )
+          }
+          else
+          // TH2 : District != null -> get data ward
+          if(!data.ward){
+            LocsApi.getWard(3, data.district ,async (res) => {
+              let result1 = res.data.map(a => a.locationName)
+              setWardData(result1)
+              }, (err) => {
+                  console.log(err)
+              })
+          }
+        }
+      }
+      return () => {}
+    },[isShow])
+    ///
+  
     const handleProductCodeChange = value => {
       PackageApi.get(
         value, 
-        (res) => {
+        async (res) => {
           let result = res.data.map(a => a.packageProductCode);
           setProductCodes(result)
           setPackageProductCode(result[0])
-          form.setFieldsValue({
+          await form.setFieldsValue({
             packageProductCode : result[0],
           })
         },(err) => {
@@ -122,6 +163,16 @@ export default function ValidateForm (props){
         await form.setFieldsValue({
           district : result[0],
         })
+        LocsApi.getWard(3, result[0],async (res) => {
+          let result1 = res.data.map(a => a.locationName)
+          setWard(result1[0])
+          setWardData(result1)
+          await form.setFieldsValue({
+            ward : result1[0],
+          })
+          }, (err) => {
+              console.log(err)
+          })
       },
       (err) => {
         console.log(res);
@@ -177,12 +228,16 @@ export default function ValidateForm (props){
         scrollToFirstError
       >
         <div
-          style={{display : "flex"}}
+          style={{
+            display : "flex", 
+            justifyContent : "space-between",
+            paddingBottom : "12px"
+          }}
           className="sel-flex"
         >
                 <Form.Item
                   name="productCode"
-                  label="Mã sản phẩm"
+                  label="Sản phẩm"
                   {...tailFromSelect}
                 >
                   <Select  style={{ width: 120 }} onChange={handleProductCodeChange} >
@@ -196,7 +251,7 @@ export default function ValidateForm (props){
                   label="Loại yêu cầu"
                   {...tailFromSelect}
                 >
-                  <Select  style={{ width: 120 }} onChange={() => {}} >
+                  <Select  style={{ width: 150 }} onChange={() => {}} >
                     {typeRequestData.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
@@ -208,7 +263,7 @@ export default function ValidateForm (props){
                   {...tailFromSelect}
                   initialValue={packageProductCode}
                 >
-                  <Select style={{ width: 120 }} defaultValue={packageProductCode} onChange={onPackageProductCodeChange}>
+                  <Select style={{ width: 120 }}  onChange={onPackageProductCodeChange}>
                     {productCodes.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
@@ -216,169 +271,184 @@ export default function ValidateForm (props){
                 </Form.Item>
         
         </div>
-        
-        <Form.Item
-          name="contactEmailAddress"
-          label="E-mail"
-          rules={[
-            {
-              type: 'email',
-              message: 'Email nhập sai định dạng!',
-            },
-            {
-              required: true,
-              message: 'Trường này bắt buộc nhập!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="contactName"
-          label="Tên người liên hệ"
-          rules={[
-            {
-              required: false,
-              message: 'Hãy nhập tên người liên hệ!',
-              whitespace: true,
-            }
-            // ,
-            // ({ getFieldValue }) => ({
-            //   validator(_, value) {
-            //     console.log("Value Email ", getFieldValue('email'))
-            //     if (!value || getFieldValue('email') === value) {
-            //       return Promise.resolve();
-            //     }
-            //     return Promise.reject(new Error('The two passwords that you entered do not match!'));
-            //   },
-            // })
-          ]}
-        >
-          <Input />
-        </Form.Item>
+       
+        <div className="body-modal">
+            <Form.Item
+                  name="money"
+                  label="Số tiền"
+                  
+                >
+              <InputNumber  min={0} max={10000000000000} />
+            </Form.Item>
+            <Form.Item
+              name="nameCustomer"
+              label="Tên khách hàng"
+              
+            >
+              <Input  />
+            </Form.Item>
+            <Form.Item
+              name="Nation"
+              label="Quốc gia"
+              initialValue={"Việt Nam"}
+            >
+              <Select  disabled showArrow={false}>
 
-        <Form.Item
-          name="contactPhoneNumber"
-          label="Số điện thoại"
-          rules={[
-            {
-              required: true,
-              message: 'Trường này bắt buộc nhập!',
-              whitespace: false
-            },
-            {
-              type : "string",
-              pattern : /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
-              message: 'Chỉ được phép nhập số, có 10 chữ số',
-              whitespace: false
-            }
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="city"
+              label="Thành phố"
+              // rules={
+              //   [
+              //     ({getFieldValue}) => ({
+              //       validator(_, value){
+              //         var arr = dataCity.map((item) => item === value)
+              //         console.log(value)
+              //         if(arr.length < 1){
+              //           return Promise.reject(new Error("Tên vị trí không tồn tai"));
+              //         }
+              //       }
+              //     })
+              //   ]
+              // }
+            >
+              <Select  showSearch
+                  onChange={handleCityChange}  
+              >
+              {dataCity.map(item => (
+                          <Option key={item}>{item}</Option>
+                        ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="district"
+              label="Quận/Huyện"
+            >
+              <Select  showSearch 
+                onChange={handleDistrictChange}
+              >
+              {districtData.map(item => (
+                          <Option key={item}>{item}</Option>
+                        ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="ward"
+              label="Xã/Phường"
+            >
+              <Select  showSearch>
+              {wardData.map(item => (
+                          <Option key={item}>{item}</Option>
+                        ))}
+              </Select>
+            </Form.Item>
 
-          ]}
-        >
-          <Input
-            addonBefore={prefixSelector}
-            style={{
-              width: '100%',
-            }}
-          />
-        </Form.Item>
-        <Form.Item
-          name="nameProjectSales"
-          label="Tên dự án bán hàng"
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="numberContract"
-          label="Số hợp đồng"
-          rules={[
-            {
-              type : "string",
-              pattern : /^[0-9]+$/,
-              message: 'Chỉ được phép nhập số',
-              whitespace: false
-            }
-
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="money"
-          label="Số tiền"
-          
-        >
-          <InputNumber  min={0} max={10000000000000} />
-        </Form.Item>
-        <Form.Item
-          name="contractName"
-          label="Tên hợp đồng"
-          
-        >
-          <Input  />
-        </Form.Item>
-        <Form.Item
-          name="codeProjectSales"
-          label="Mã dự án bán hàng"
-        >
-          <Input  />
-        </Form.Item>
-        <Form.Item
-          name="Nation"
-          label="Quốc gia"
-        >
-          <Select defaultValue={"Việt Nam"} disabled showArrow={false}>
-
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="city"
-          label="Thành phố"
-          rules={
-            [
-              ({getFieldValue}) => ({
-                validator(_, value){
-                  var arr = dataCity.map((item) => item === value)
-                  console.log(value)
-                  if(arr.length < 1){
-                    return Promise.reject(new Error("Tên vị trí không tồn tai"));
-                  }
+            <Form.Item
+              name="contactName"
+              label="Tên người liên hệ"
+              rules={[
+                {
+                  required: false,
+                  message: 'Hãy nhập tên người liên hệ!',
+                  whitespace: true,
                 }
-              })
-            ]
-          }
-        >
-          <Select defaultValue={""} showSearch
-              onChange={handleCityChange}  
-          >
-          {dataCity.map(item => (
-                      <Option key={item}>{item}</Option>
-                    ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="district"
-          label="Quận/Huyện"
-        >
-          <Select  showSearch 
-            onChange={handleDistrictChange}
-          >
-          {districtData.map(item => (
-                      <Option key={item}>{item}</Option>
-                    ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="ward"
-          label="Xã/Phường"
-        >
-          <Select  showSearch>
-          {wardData.map(item => (
-                      <Option key={item}>{item}</Option>
-                    ))}
-          </Select>
-        </Form.Item>
+                // ,
+                // ({ getFieldValue }) => ({
+                //   validator(_, value) {
+                //     console.log("Value Email ", getFieldValue('email'))
+                //     if (!value || getFieldValue('email') === value) {
+                //       return Promise.resolve();
+                //     }
+                //     return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                //   },
+                // })
+              ]}
+            >
+              <Input />
+            </Form.Item>
+           
+            <Form.Item
+              name="contactPhoneNumber"
+              label="Số điện thoại"
+              rules={[
+                {
+                  required: true,
+                  message: 'Số điện thoại không được phép để trống!',
+                  whitespace: false
+                },
+                {
+                  type : "string",
+                  pattern : /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
+                  message: 'Chỉ được phép nhập số, có 10 chữ số',
+                  whitespace: false
+                }
 
+              ]}
+            >
+              <Input
+                // addonBefore={prefixSelector}
+                style={{
+                  width: '100%',
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="contactEmailAddress"
+              label="E-mail"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'Email nhập sai định dạng!',
+                },
+                {
+                  required: true,
+                  message: 'Email không được phép để trống!',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="nameProjectSales"
+              label="Tên dự án bán hàng"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="codeProjectSales"
+              label="Mã dự án bán hàng"
+            >
+              <Input  />
+            </Form.Item>
+            
+            
+            <Form.Item
+              name="contractName"
+              label="Tên hợp đồng"
+              
+            >
+              <Input  />
+            </Form.Item>
+            <Form.Item
+              name="numberContract"
+              label="Số hợp đồng"
+              rules={[
+                {
+                  type : "string",
+                  pattern : /^[0-9]+$/,
+                  message: 'Chỉ được phép nhập số',
+                  whitespace: false
+                }
+
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            
+            
+        </div>
+        
 
 
 

@@ -25,47 +25,103 @@ const columns = [
   {
     title: 'Mã yêu cầu',
     dataIndex: 'codeRequired',
-    render: value => (value === 'initial' ? <InputOption name="CodeRequired" /> : value)
+    children : [
+      {
+        title : <InputOption name="CodeRequired"/>,
+        dataIndex : 'codeRequired',
+        render: value => (value === 'initial' ? <InputOption name="CodeRequired" /> : value)
+      }
+    ]
+    ,
+    
     
   },
   {
     title: 'Mã dự án bán hàng',
     dataIndex: 'codeProjectSales',
-    render: value => (value === 'initial' ? <InputOption name="CodeProjectSales" />  : value)
+    children : [
+      {
+      title : <InputOption name="CodeProjectSales"/>,
+      dataIndex : 'codeProjectSales',
+      render: value => (value === 'initial' ? <InputOption name="CodeProjectSales" />  : value)
+      }
+    ]
+    ,
+    
 
   },
   {
     title: 'Tên dự án bán hàng',
-    dataIndex: 'nameProjectSales',
-    render: value => (value === 'initial' ? <InputOption name="NameProjectSales" /> : value)
+    dataIndex: 'nameProjectSales'
+    ,
+    children : [
+      {
+      title : <InputOption name="NameProjectSales"/>,
+      dataIndex : 'nameProjectSales',
+      render: value => (value === 'initial' ? <InputOption name="NameProjectSales" /> : value)
+      }
+    ],
+    
 
   },
   {
     title: 'Số hợp đồng',
     dataIndex: 'numberContract',
-    render: value => (value === 'initial' ? <Input /> : value)
+    children : [
+      {
+      title : <InputOption name="NumberContract"/>,
+      dataIndex : 'numberContract',
+      render: value => (value === 'initial' ? <Input /> : value)
+      }
+    ]
 
   },
   {
     title: 'Ngày yêu cầu',
     dataIndex: 'createdDate',
-    render: value => (value === 'initial' ? <Input /> : <div style={{textAlign: "center"}}>{formatDate(value)}</div>)
+    children : [
+      {
+      title : <InputOption name="CreatedDate"/>,
+      dataIndex : 'createdDate',
+      render: value => (value === 'initial' ? <Input /> : <div style={{textAlign: "center"}}>{formatDate(value)}</div>)
+      }
+    ]
 
   },
   {
     title: 'Mã sản phẩm',
     dataIndex: 'productCode',
-    render: value => (value === 'initial' ? <Input /> : value)
+    children : [
+      {
+      title : <InputOption name="ProductCode"/>,
+      dataIndex : 'productCode',
+      render: value => (value === 'initial' ? <Input /> : value),
+      }
+    ]
 
   },
   {
     title: 'Mã gói sản phẩm',
     dataIndex: 'packageProductCode',
-    render: value => (value === 'initial' ? <Input /> : value)
+    
+    children : [
+      {
+      title : <InputOption name="PackageProductCode"/>,
+      dataIndex : 'packageProductCode',
+      render: value => (value === 'initial' ? <Input /> : value),
+      }
+    ]
   },{
     title : "Tiền hợp đồng",
     dataIndex: 'money',
-    render : value => (value === 'initial' ? <Input /> : <div style={{textAlign: "right"}}>{formatMoney(value)}</div>)
+    
+    children : [
+      {
+      title : <InputOption name="Money"/>,
+      dataIndex : 'money',
+      render : value => (value === 'initial' ? <Input /> : <div style={{textAlign: "right"}}>{formatMoney(value)}</div>),
+      }
+    ]
   }
 ];
 const columnInput = [
@@ -194,7 +250,7 @@ useEffect(() => {
         showHeader={true}
           size="small"
           columns={columns}
-          dataSource={[initial, ...data]}
+          dataSource={[ ...data]}
           rowClassName={(record, index) => {
             
             var arr = dataSelected.filter((item) => item.codeRequired  === record.codeRequired);

@@ -25,16 +25,17 @@
 }
 .content-table {
     height: calc(100% - 80px);
+    padding-top: 5px;
 }
 .t-detail {
     height: calc(100% + 20px);
     position: relative;
 }
 .t-detail .sc-bdvvaa{
-    height: 60%;
+    height: 72%;
 }
 .p-detail {
-    height: 40%;
+    height: 28%;
     position: absolute;
     left: 0;
     bottom: 0;

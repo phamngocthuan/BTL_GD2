@@ -10,12 +10,18 @@ export default function ButtonIcon(props){
         <>
             <Button 
                 type={type} 
-                icon={<Icon name={name}  style={{
-                    marginRight : "5px"
+                icon={<Icon name={name}  
+                style={{
+                    marginRight : "5px",
+                    marginTop : "3px",
+                    marginBottom : "-1px"
                 }}/>}
                 onClick={onClick}
             >
-            {title}
+                <span>
+                    {title}
+                </span>
+            
             </Button>
             
         </>

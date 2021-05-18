@@ -12,10 +12,10 @@ function TabPanes(props) {
       <TabPane tab="Thông tin chung" key="1">
         <div style={{ display : "flex"}}>
           <div className="t-left" >
-            <div style={{display: "flex"}} className="h-w">
+            {/* <div style={{display: "flex"}} className="h-w">
               <div className="dt-left">Mã số thuế/Mã địa bàn</div>
               <div className="dt-right"></div>
-            </div>
+            </div> */}
             <div style={{display: "flex"}} className="h-w">
               <div className="dt-left">Người liên hệ</div>
               <div className="dt-right">{data.contactName}</div>

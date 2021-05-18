@@ -17,10 +17,9 @@ export default function ModalDraggable(props)  {
   
 
   const {visible,  title, method, bodyModal, handleSubmit, setMethod, handleCancel, instance, form} = props;
-  const [disabled, setDisable] = useState(false);
+  const [disable, setDisable] = useState(true);
   const [productCodeData, setProductCodeData] = useState([])
   const [dataCity, setDataCity] = useState([])
-
   const inputRef = useRef(null)
   const [bounds, setBounds] = useState(
     { left: 0, top: 0, bottom: 0, right: 0 }
@@ -100,16 +99,12 @@ export default function ModalDraggable(props)  {
                 cursor: 'move',
               }}
               onMouseOver={() => {
-                if (disabled) {
-                    setDisable({
-                    disabled: false,
-                  });
+                if (disable) {
+                    setDisable(false);
                 }
               }}
               onMouseOut={() => {
-                setDisable({
-                  disabled: true,
-                });
+                setDisable(true);
               }}
                 onFocus={() => {}}
               onBlur={() => {}}
@@ -122,6 +117,7 @@ export default function ModalDraggable(props)  {
           onCancel={ () => {onCancel()}}
           modalRender={modal => (
             <Draggable
+              disabled={disable}
               bounds={bounds}
               onStart={(event, uiData) => onStart(event, uiData)}
             >
