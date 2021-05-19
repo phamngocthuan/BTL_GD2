@@ -168,12 +168,7 @@ const columnInput = [
   }
 ];
 
-const rowSelection = {
-  getCheckboxProps: record => ({
-    disabled: record.name === 'initial',
-    name: record.name
-  })
-};
+
 
 const initial = {
   id : 'initial',
@@ -186,7 +181,12 @@ const initial = {
   packageProductCode : 'initial',
   money : 'initial'
 };
-
+/**
+ * Component Hiển thị table và danh sách data
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 
 function ListTable(props) {
 
@@ -197,53 +197,51 @@ function ListTable(props) {
   const loading = useSelector(state => state.table.loading)
   const { data , status , setLimit , offset, setOffset, current, setCurrent } = props;
 
-const dataTabPane = useSelector(state => state.tabpane.dataTabPane)
-useEffect(() => {
-    if(indexSelected < 0)
-      setDataTabPane({
-        codeRequired : '',
-        codeProjectSales : '',
-        nameProjectSales : '',
-        numberContract : '',
-        productCode : '',
-        createdDate : '',
-        packageProductCode : '',
-      })
-}
-,[indexSelected])
-const setRowClassName = (record) => {
-  return record.id === rowId ? 'selected-row' : '';
-}
-
-/////////////////////
-const [popup, setPopup] = useState( {
-  visible: false, 
-  x: 0, 
-  y: 0
-})
+  const dataTabPane = useSelector(state => state.tabpane.dataTabPane)
 
 
-
-useEffect(() => {
-
-    function onClickOutside(e){
-      setPopup( {...popup, visible : false})
+    /**
+     * Nhận sự kiện chọn 1 hàng
+     * @author pnthuan(19/5/2021)
+     */
+    useEffect(() => {
+      if(indexSelected < 0)
+        setDataTabPane({
+          codeRequired : '',
+          codeProjectSales : '',
+          nameProjectSales : '',
+          numberContract : '',
+          productCode : '',
+          createdDate : '',
+          packageProductCode : '',
+        })
     }
-    window.addEventListener(`click`,onClickOutside);
-    return () => window.removeEventListener(`click`, onClickOutside);
-},[])
-////////////////////
+    ,[indexSelected])
+
+
+    /////////////////////
+    // Pop hiên thị vị trí pop up khi click chuột phải vào 1 cột của table
+    const [popup, setPopup] = useState( {
+      visible: false, 
+      x: 0, 
+      y: 0
+    })
+
+
+    //Hàm lắng nghe sự kiện khi click bên ngoài table
+    //@author pnthuan(19/5/2021)
+    useEffect(() => {
+
+        function onClickOutside(e){
+          setPopup( {...popup, visible : false})
+        }
+        window.addEventListener(`click`,onClickOutside);
+        return () => window.removeEventListener(`click`, onClickOutside);
+    },[])
+
   return (
     <>
       <Flexbox>
-        {/* <Table
-        
-          size="small"
-          columns={columnInput}
-          dataSource={[{}]}
-          pagination={false}
-
-        /> */}
         <Table
         className="antd-min"
         bordered
@@ -259,7 +257,7 @@ useEffect(() => {
           pagination={
             { position: ['bottom'],
               total : 100,
-              defaultPageSize : 20,
+              defaultPageSize : 10,
               showTotal : () => `Tổng số bản ghi: ${totals}`,
               pageSizeOptions : [10, 20, 30, 50],
               onChange : (page, pageSize) => {
@@ -273,7 +271,8 @@ useEffect(() => {
               current : current
             }
           }
-          scroll={{ x: 1500, y : 220 }}
+          scroll={{ x: 1500, y : 520 }}
+          // click 1 dòng
           onRow={(record, index) => {
             return {
               onClick: event => {

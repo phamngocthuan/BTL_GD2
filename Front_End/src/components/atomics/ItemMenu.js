@@ -5,7 +5,12 @@ import Icon from './Icon'
 ItemMenu.propTypes = {
 
 };
-
+/**
+ * Component Item của menu
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 function ItemMenu(props) {
     const {} = props;
     return (

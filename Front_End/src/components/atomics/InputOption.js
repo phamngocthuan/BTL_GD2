@@ -7,6 +7,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, {useState} from 'react'
 import {getCondition} from '../../constants/CommonFunction'
 const { Option } = Select;
+/**
+ * Component Hiển thị các option dưới dạng dropdown
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 
 export default function InputOption  (props) {
     const dispatch = useDispatch(); 
@@ -33,6 +39,8 @@ export default function InputOption  (props) {
                 style={{ width: '72%' }} 
                 defaultValue=""
                 name={name}
+                // Nhận sự kiện enter để kiểm tra xem
+                // giá trị đó đã có trong request chưa để thực hiện : update, thêm , hoặc remove khi nó là null || empty
                 onPressEnter= {async (e) => {
                     var obj = {
                         key : e.target.name,

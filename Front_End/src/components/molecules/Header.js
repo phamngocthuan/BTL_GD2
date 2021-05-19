@@ -4,7 +4,12 @@ import Icon from '../atomics/Icon'
 Header.propTypes = {
 
 };
-
+/**
+ * Component Header
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 function Header(props) {
     
     return (

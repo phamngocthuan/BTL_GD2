@@ -1,4 +1,4 @@
-
+//Các type action gửi lên redux
 
 
 const ADD_ARTICLE = "ADD_ARTICLE";

@@ -2,7 +2,10 @@
     background-color: aqua;
 }
 .antd-min  .ant-table.ant-table-small{
-    max-height: calc(80%);
+    overflow-y: hidden;
+    min-height: 90%;
+	max-height: 90%;
+	overflow-x: scroll;
 }
 // .antd-min .ant-table-body{
 //     max-height: 460px!important;
@@ -53,8 +56,8 @@ thead .ant-table-cell {
 	}		
 }
 .ant-table-body {
-	min-height: 220px!important;
-	max-height: 470px!important;
+
+
 }
 .ant-table-wrapper {
 
@@ -80,4 +83,10 @@ thead .ant-table-cell {
 }
 .ant-table-thead  tr:first-child .ant-table-cell {
 	text-align: center;
+}
+tbody.ant-table-tbody tr:nth-child(2n+1) {
+	background-color: #f9f9f9;
+}
+.ant-table-container{
+	height: 100%;
 }

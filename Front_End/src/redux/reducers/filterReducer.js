@@ -15,6 +15,13 @@ const initialState = {
     
     
   };
+/**
+ * Store Filter
+ * @param {*} state 
+ * @param {*} action 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
   
 function filterReducer(state = initialState, action) {
     switch(action.type){

@@ -5,7 +5,12 @@ import Icon from './Icon'
 ItemOption.propTypes = {
 
 };
-
+/**
+ * Component hiện thị : icon, title , và sự kiện truyền vào khi click 
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 function ItemOption(props) {
     const {content, nameIcon, squareShape, onClick, item} = props;
     return (

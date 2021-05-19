@@ -3,6 +3,12 @@ import React from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import { removeRecordTable, setDataTabPane} from '../../redux/action/index'
 
+/**
+ * component Popup
+ * @param {*} param0 
+ * @returns 
+ * onSubmitFailed
+ */
 const Popup = ({record, visible, x, y}) => {
   
   const dispatch = useDispatch(); 

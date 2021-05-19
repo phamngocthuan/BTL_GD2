@@ -5,7 +5,12 @@ import { Pagination } from 'antd';
 // function onShowSizeChange(current, pageSize) {
 //   console.log(current, pageSize);
 // }
-
+/**
+ * component paging
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 
 export default function Paging(props){
     return (

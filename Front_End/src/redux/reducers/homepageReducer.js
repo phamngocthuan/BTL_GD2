@@ -1,5 +1,8 @@
 import { ADD_ARTICLE, DATASHOW } from "../../constants/ActionType";
 
+/**
+ * Store trạng thái homepage
+ */
 
 
 const initialState = {

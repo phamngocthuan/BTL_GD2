@@ -11,28 +11,24 @@ import { useSelector, useDispatch } from 'react-redux'
 import ContractApi from '../api/ContractApi'
 import {setTotalTable, setLoadData, addDateFilter, 
     setLoading
-    ,setStatusTable, resetIndexSelected, resetDataSelected, setDataSelectedTable} from '../../redux/action/index'
+    ,setStatusTable, resetIndexSelected, resetDataSelected, setDataSelectedTable, setDataTabPane} from '../../redux/action/index'
 import { getStatus } from '../../constants/CommonFunction';
 FilterBody.propTypes = {
 
 };
-// const body = {
-//     "FieldNames" : ["ProductCode", "ContractName", 
-//     "CodeRequired", "CodeProjectSales", 
-//     "NameProjectSales", 
-//     "NumberContract", "CreatedDate", 
-//     "PackageProductCode"],
-//     "Requests"  : [
-       
-//     ]
 
-// }
 const statusArray = [
     {status : 'Chưa gửi', color : '#007b00', value : 0},
     {status : 'Chờ duyệt', color : '#000000', value : 1},
     {status : 'Từ chối', color : '#ff0000', value : 2},
     {status : 'Đã duyệt', color : '#0000ff', value : 3},
 ]
+/**
+ * Componet thực hiện filter trả về dữ liệu cho table
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(12/5/2021)
+ */
 function FilterBody(props) {
 
     const [data,setData] = useState([{
@@ -47,7 +43,6 @@ function FilterBody(props) {
         cayRequest : '12/12/1212',
         productCode : 'QLNS',
         productCodeA : null,
-    
     },
     {
         key : '2',
@@ -73,6 +68,7 @@ function FilterBody(props) {
     const FieldNames = useSelector(state => state.filter.FieldNames)
     const loadData = useSelector(state => state.table.loadData)
     const dataSelected = useSelector(state => state.table.dataSelected)
+    const [reqDate,setReqDate]  = useState([]);
     
     const [body, setBody] = useState({
         "FieldNames" : ["ProductCode", "ContractName", 
@@ -98,11 +94,14 @@ function FilterBody(props) {
             </Radio>
         )
     })
+    // Cập nhận trang thái bảng
     const onChange = e => {
         setStatus(e.target.value);
         dispatch(setStatusTable({status : e.target.value}))
     };
 
+    // Theo dõi các request fileter thay đổi để cập nhật lại data table
+    // cập nhật lại : reset lại số lượng bản ghi, bảng data selected
     useEffect(() => {
         const newBody = {
             FieldNames : FieldNames,
@@ -124,6 +123,7 @@ function FilterBody(props) {
             dispatch(resetIndexSelected({data : []}))
             dispatch(resetDataSelected({data : []}))
             dispatch(setLoading({loading : false}));
+            dispatch(setDataTabPane({data : []}))
         },(err) => {
             console.log(err);
             dispatch(setLoading({loading : false}));
@@ -148,25 +148,40 @@ function FilterBody(props) {
             setData(res.data.data);
             dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
             dispatch(setLoading({loading : false}));
+            dispatch(setDataTabPane({data : []}))
         },(err) => {
             console.log(err);
             dispatch(setLoading({loading : false}));
         })
     },[status, limit, offset])
 
+    /***
+     * Theo dõi trạng thái table cập nhật lại data, set index mặc định của table là index 1
+     * @author pnthuan
+     */
     useEffect(() => {
         SetCurrentRow(1)
         dispatch(resetIndexSelected({data : []}))
         dispatch(resetDataSelected({data : []}))
+        dispatch(setDataTabPane({data : []}))
         return () => {}
     },[status])
 
+
+    /**
+     * Thực hiện việc loading data : khi submit , hoặc sự kiện j cần load lại data
+     * @author pnthuan(12/5/2021)
+     */
     useEffect(() => {
         if(loadData == true){
             dispatch(setLoading({loading : true}));
-            body["status"] = status;
+            const newBody = {
+                FieldNames : FieldNames,
+                Requests : Requests,
+                status : status
+            }
                 ContractApi.filter(
-                    body,
+                    newBody,
                 {
                     offset : 0,
                     limit : limit
@@ -183,18 +198,23 @@ function FilterBody(props) {
             dispatch(resetIndexSelected({data : []}))
             dispatch(resetDataSelected({data : []}))
             dispatch(setLoadData({loadData : false}))
+            dispatch(setDataTabPane({data : []}))
         }
         return () => {}
     },
     [loadData])
 
-    const [reqDate,setReqDate]  = useState([]);
-
+    
+    /**
+     * Hàm thực hiện filter theo ngày, tháng dựa trên điều kiện
+     * @author pnthuan(12/5/2021)
+     * @param {*} obj 
+     */
     const addReqDate = (obj) => {
         if(reqDate.length > 0)
         {
             var arr = reqDate.map((item) => item.condition === obj.condition ? {...item, ...obj} : item );
-            if(arr.length === 1){
+            if(arr.length === 1 && arr[0].key != obj.key){
                 setReqDate([...reqDate, obj])
             }else
                 setReqDate([...arr]);
@@ -202,9 +222,12 @@ function FilterBody(props) {
         else setReqDate([...reqDate, obj])
     }
 
+    // Nhận sự kiện click lấy data
     const addFilter = () => {
         dispatch(addDateFilter({data : [...reqDate]}))
     }
+
+    // Bỏ chọn
     const removeSelected = () => {
         dispatch(resetIndexSelected({data : []}))
         dispatch(resetDataSelected({data : []}))

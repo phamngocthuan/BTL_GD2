@@ -18,6 +18,7 @@ const initialState = {
     
   };
   
+  
 function modalReducer(state = initialState, action) {
     switch(action.type){
 

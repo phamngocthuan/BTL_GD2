@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import { Form, Input, InputNumber,Select,  Button } from 'antd';
+import { Form, Input, InputNumber,Select,  Button , Tooltip} from 'antd';
 import '../../assets/styles/molecules/Form.scss'
 const { Option } = Select;
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,7 +13,10 @@ ValidateForm.defaultProps = {
   productCode : ['GD']
 }
 
-
+/**
+ * Layout của các item, trong form
+ * 
+ */
 
 const formItemLayout = {
     labelCol: {
@@ -65,12 +68,18 @@ const formItemLayout = {
         }
       }
   }
+// Dữ liệu giả cho trường chọn kiểu thông tin
   const typeRequestData = [
     "Thay đổi thông tin", "Chỉnh sửa thông tin"
   ]
-  const CityData = [
-    "Hà Nội", "Hải Phòng", "TP Hồ Chí Minh"
-  ]
+ /**
+  * Component Form validate
+  * @param {*} props 
+  * @returns 
+  * @author pnthuan(19/5/2021)
+  */
+
+
 export default function ValidateForm (props){
     const {inputRef, onSubmit, onSubmitFailed, form, productCodeData, dataModal, dataCity} = props;
 
@@ -98,9 +107,10 @@ export default function ValidateForm (props){
     const data = useSelector(state => state.modal.data);
     const isShow = useSelector(state => state.modal.isShow);
 
-
+    //Hàm lấy thông tin về local khi modal show 
     useEffect(() => {
       if(isShow){
+        debugger
         if(data.city){
           // TH1 : District null( ward có thể null , hoặc khác null) -> get data district, ward
           // Lấy quận huyện
@@ -131,12 +141,17 @@ export default function ValidateForm (props){
                   console.log(err)
               })
           }
+        }else {
+          setWardData([])
+          setDistrictData([])
         }
       }
       return () => {}
     },[isShow])
     ///
   
+
+    // Thực hiên lấy mã gói sản theo mã sản phẩm 
     const handleProductCodeChange = value => {
       PackageApi.get(
         value, 
@@ -154,6 +169,7 @@ export default function ValidateForm (props){
 
     };
     
+    // Lấy thông tin về , setup lại giá trị về quận , xã 
     const handleCityChange = value => {
       LocsApi.getDistrict(2, value,async  (res) => {
         let result = res.data.map(a => a.locationName)
@@ -180,6 +196,7 @@ export default function ValidateForm (props){
       )
     }
 
+    // hàm lấy thông tin về xã , phường theo quận huyện
     const handleDistrictChange = value => {
       LocsApi.getWard(3, value,async (res) => {
           let result = res.data.map(a => a.locationName)
@@ -194,7 +211,7 @@ export default function ValidateForm (props){
       })
     }
 
-
+    // xử lý khi mã gói snar phẩm thay đổi
     const onPackageProductCodeChange = value => {
       setPackageProductCode(value);
     };
@@ -399,7 +416,15 @@ export default function ValidateForm (props){
               rules={[
                 {
                   type: 'email',
-                  message: 'Email nhập sai định dạng!',
+                  message: (
+                      <Tooltip
+                        color={"#ff4d4f"}
+                        title="Email nhập sai định dạng!"
+                      >
+                        <div></div>
+                      </Tooltip>
+                  )
+                    
                 },
                 {
                   required: true,

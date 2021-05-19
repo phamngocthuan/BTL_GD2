@@ -5,7 +5,13 @@ import '../../assets/styles/pages/HomePageManager.scss'
 HomePageManger.propTypes = {
 
 };
-
+/**
+ * 
+ * Component nơi quản lý các trang của 1 web
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 function HomePageManger(props) {
     
     return (

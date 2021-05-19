@@ -3,7 +3,12 @@ import moment from 'moment';
 import {formatDateToYMD}from '../../constants/CommonFunction'
 
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-
+/**
+ * Component input type = date
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 export default function InputDate(props){
     const {name , condition, addReqDate} = props;
     return (
@@ -19,7 +24,6 @@ export default function InputDate(props){
                         value : obj,
                         condition : condition
                     }
-                    console.log(ob);
                     addReqDate(ob);
                 }
                 

@@ -14,7 +14,12 @@ const initialState = {
     loading : false
     
 };
-  
+  /**
+   * State Table
+   * @param {*} state 
+   * @param {*} action 
+   * @returns 
+   */
   function tableReducer(state = initialState, action) {
     switch(action.type){
         case TOTAL_TABLE : 

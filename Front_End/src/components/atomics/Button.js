@@ -3,7 +3,12 @@ import '../../assets/styles/atomics/ButtonIcon.scss'
 import { Button  } from 'antd';
 import Icon from '../atomics/Icon'
 
-
+/**
+ * Component Button
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 export default function ButtonIcon(props){
     const {type, name, title, onClick} = props;
     return (

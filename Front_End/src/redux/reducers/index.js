@@ -6,7 +6,7 @@ import modalReducer from './modalReducer'
 import filterReducer from './filterReducer'
 import tabPaneReducer from './tabPaneReducer'
 
-
+//Khai báo store dựa trên các state import
   
   const rootReducer = combineReducers({
     homepage : homepageReducer,

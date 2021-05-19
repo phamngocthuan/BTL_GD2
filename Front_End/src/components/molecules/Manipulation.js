@@ -51,6 +51,11 @@ function Manipulation(props) {
 
     const dispatch = useDispatch(); 
 
+    /**
+     * Hàm hiển thị Modal
+     * @param {*} title Tilte
+     * @param {*} state Trạng thái : thêm , sửa, xóa
+     */
     const  showModal =  async  (title, state) => {
         
         const obj = {
@@ -167,6 +172,11 @@ function Manipulation(props) {
         }
         
     }
+
+    /**
+     * Hàm click Xóa
+     * @author pnthuan(15/5/2021)
+     */
     const handleDelete = async () => {
             var codes = dataSelected.map((item) => item.codeRequired.toString());
             await ContractApi.delete(codes, 
@@ -246,6 +256,11 @@ function Manipulation(props) {
     })
    
 
+    /**
+     * Hàm submit form
+     * @param {*} obj 
+     * @author pnthuan(17/5/2021)
+     */
     const handleSubmit = (obj) => {
         console.log('hello')
         if(methodModal === "Add")
@@ -278,6 +293,11 @@ function Manipulation(props) {
         dispatch(setShowModal({isShowModal : false}))
         // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
+
+    /**
+     * Hàm click Hủy thao tác : thêm , sửa , xóa
+     * @author pnthuan(19/5/2021)
+     */
     const  handleCancel = async  () => {
         await setInstance({
             codeRequired : '',
@@ -293,6 +313,9 @@ function Manipulation(props) {
         dispatch(setShowModal({isShowModal : false}))
         // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
+
+
+    
     return (
         <div className="manipulation">
             <div>

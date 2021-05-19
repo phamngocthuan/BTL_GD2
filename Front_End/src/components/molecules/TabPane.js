@@ -5,6 +5,13 @@ const { TabPane } = Tabs;
 import { useSelector } from 'react-redux'
 import {formatDate} from '../../constants/CommonFunction'
 
+/**
+ * Component Hiển thị thông tin bản ghi
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
+
 function TabPanes(props) {
   const {data} = props;
   return (
@@ -12,10 +19,7 @@ function TabPanes(props) {
       <TabPane tab="Thông tin chung" key="1">
         <div style={{ display : "flex"}}>
           <div className="t-left" >
-            {/* <div style={{display: "flex"}} className="h-w">
-              <div className="dt-left">Mã số thuế/Mã địa bàn</div>
-              <div className="dt-right"></div>
-            </div> */}
+
             <div style={{display: "flex"}} className="h-w">
               <div className="dt-left">Người liên hệ</div>
               <div className="dt-right">{data.contactName}</div>

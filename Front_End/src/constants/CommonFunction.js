@@ -3,22 +3,36 @@ import $ from 'jquery';
 import {CONTRACTSTATUS,STATUS} from './Enum'
 import {PackageProduct, Product} from '../constants/FakeData'
 
-
+/**
+ * Lấy màu sắc theo trạng thái
+ * @param {*} status 
+ * @returns 
+ */
 function getColorStatus (status){
     var b = [status]
     const filteredObj = _.pick(CONTRACTSTATUS, b)
     return filteredObj[`${status}`]?.COLOR;
 }
+
+// Format datae thành : YYMMDD
 function formatDateToYMD (date){
     var newdate = date.split("/").reverse().join("/");
     return newdate;
 }
+
+// Lấy trạng thái theo index
 function getStatus (value){
     return STATUS[value];
 }
+
+// Lấy sản phẩm
+// datafake : không dùng tới nữa
 function getProductCode (){
     return Product;
 }
+
+// lấy mã sản phẩm
+// không dùng tới 
 function getPackageProduct (productCode){
     if(productCode == null || productCode == ""){
         productCode = 'QLNS'
@@ -29,6 +43,8 @@ function getPackageProduct (productCode){
     return packageProduct[0].PackageProductName;
 
 }
+
+// Lấy giá trị theo điều kiện
 function getCondition(str){
     switch(str){
         case '*' : 
@@ -39,7 +55,7 @@ function getCondition(str){
             return 1; 
     }
 }
-
+// format thành query gửi lên server
 function getQueryParam(obj){
     if (obj) {
         let keys = Object.keys(obj);
@@ -59,6 +75,8 @@ function getQueryParam(obj){
     }
     return '';
 }
+
+// format date hiển thị : ddmmyy
 function formatDate(date) {            
     date = new Date(date);            
     if (Number.isNaN(date.getTime())) {
@@ -73,6 +91,8 @@ function formatDate(date) {            
             return day + '/' + month + '/' + year;       
     }          
 }
+
+// format money
 function formatMoney(money) {
     if(money == null || money == ""){
       return "";

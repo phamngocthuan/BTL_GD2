@@ -9,7 +9,12 @@ import IconDownload from './Icons/IconDownload'
 import IconModify from './Icons/IconModify'
 import IconCancel from './Icons/IconCancel'
 import IconDone from './Icons/IconDone'
-
+/**
+ * Component Icon
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 const Icon = (props) => {
     const {name} = props;
 

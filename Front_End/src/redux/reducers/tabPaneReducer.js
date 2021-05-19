@@ -1,7 +1,9 @@
 import { 
     SET_DATA_TAB_PANE
 } from "../../constants/ActionType";
-
+/**
+ * State table
+ */
 
 
 const initialState = {

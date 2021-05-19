@@ -12,6 +12,11 @@ BodyModal.propTypes = {
 BodyModal.defaultProps = {
 
 }
+/**
+ * Component nội dung body của modal
+ * @param {*} props 
+ * @returns 
+ */
 function BodyModal(props) {
     
    const data = useSelector(state => state.modal.data);

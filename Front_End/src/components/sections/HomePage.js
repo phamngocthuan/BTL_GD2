@@ -6,29 +6,21 @@ import FilterBody from '../molecules/FilterBody'
 
 import Menu from '../molecules/Menu'
 import { CONTRACTSTATUS} from '../../constants/Enum'
-import { Contract} from '../../constants/FakeData'
-import {getColorStatus } from '../../constants/CommonFunction'
-import LocsApi from '../api/LocsApi'
 
 
-
-
-
-import { useSelector, useDispatch } from 'react-redux'
 
 
 HomePage.propTypes = {
 
 };
-
+/**
+ * Component hiển thị layout của 1 trang
+ * @param {*} props 
+ * @returns 
+ * @author pnthuan(19/5/2021)
+ */
 function HomePage(props) {
-
-    const dispatch = useDispatch();  
-
     const [status , setStatus] = useState(CONTRACTSTATUS.UNSENT.COLOR)
-    const [colorRow , setColorRow] = useState(CONTRACTSTATUS.UNSENT.COLOR)
-    const [indexRowSelected, setIndexRowSelected] = useState(-1)
- 
     return (
         <>
             <div>
