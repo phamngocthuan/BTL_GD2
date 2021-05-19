@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using MISA.IMS.Core.Properties;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -241,6 +242,7 @@ namespace MISA.IMS.Service.Controllers
         /// Error : return lỗi hoặc exception 
         /// Created by : PNTHUAN(11/5/2021)
         // PUT api/<ContractController>/5
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateContract(
             [FromBody] ContractDTO contractDTO,
@@ -250,6 +252,7 @@ namespace MISA.IMS.Service.Controllers
         {
             try
             {
+
                 if (!ModelState.IsValid)
                 {
                     var apiRes = new APIResult()
@@ -276,6 +279,7 @@ namespace MISA.IMS.Service.Controllers
             }
             catch (Exception ex)
             {
+                
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
                 {
                     DevMsg = DevMsg.Error,

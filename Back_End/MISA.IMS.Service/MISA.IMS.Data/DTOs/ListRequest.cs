@@ -20,6 +20,9 @@ namespace MISA.IMS.Data.DTOs
         /// </summary>
         public List<Request> Requests { get; set; }
 
+        /// <summary>
+        /// Trạng thái của bản ghi cần lấy
+        /// </summary>
         public int status { set; get; } = (int)StatusContract.UNSENT;
     }
 }

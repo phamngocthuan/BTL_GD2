@@ -120,7 +120,7 @@ namespace MISA.IMS.Common.Enumerations
 
         public static string ErrorValidateEmail = "Định dạng Email sai!";
 
-        public static string ErrorValidatePhone = "Định dạng số điện thoại sai!"
+        public static string ErrorValidatePhone = "Định dạng số điện thoại sai!";
 
     }
 

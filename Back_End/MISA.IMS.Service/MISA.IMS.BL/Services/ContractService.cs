@@ -100,7 +100,7 @@ namespace MISA.IMS.BL.Services
             }
             return apiResult;
         }
-        
+
         /// <summary>
         /// Hàm filter data theo nhiều trường, lấy các trường cần lấy
         /// </summary>
@@ -148,8 +148,8 @@ namespace MISA.IMS.BL.Services
             var apiResult = new APIResult();
             //  check Email
             //  validate data
-            apiResult = validateEntity(contract);
-            if( !apiResult.Success)
+            apiResult = ValidateEntity(contract);
+            if (!apiResult.Success)
             {
                 apiResult.Data = new ErrorResult
                 {
@@ -177,7 +177,7 @@ namespace MISA.IMS.BL.Services
             var res = await _contractRepository.InsertOriginalAsync(newContract);
 
             // Thêm mới thành công thì thực hiện việc update
-            if(res > 0)
+            if (res > 0)
             {
                 contract.ContractID = newContract.ContractID;
                 // thực hiện update bản ghi
@@ -213,11 +213,12 @@ namespace MISA.IMS.BL.Services
         /// Created by : PNTHUAN (15/5/2021)
         public bool checkEmail(string email)
         {
-            try {
+            try
+            {
                 var addr = new System.Net.Mail.MailAddress(email);
                 return addr.Address == email;
             }
-             catch
+            catch
             {
                 return false;
             }
@@ -235,9 +236,9 @@ namespace MISA.IMS.BL.Services
         ///    (123).456.7899
         ///    (123)-456-7899
         ///    123-456-7899
-         ///   123 456 7899
-         ///   1234567899
-        public  bool IsPhoneNumber(string number)
+        ///   123 456 7899
+        ///   1234567899
+        public bool IsPhoneNumber(string number)
         {
             return !Regex.Match(number, @"^(\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4}))$").Success;
         }
@@ -273,7 +274,7 @@ namespace MISA.IMS.BL.Services
 
             if (res > 0)
             {
-                
+
                 apiResult.Message.Add(Message.ExcuteSuccess);
                 apiResult.MessageCode = MessageCode.Success;
             }
@@ -370,7 +371,8 @@ namespace MISA.IMS.BL.Services
                         result = await _contractRepository.UpdateStatus(codeRequireds, status, modifiedBy);
                         break;
                 }
- 
+
+
                 if (result > 0)
                 {
                     apiResult.Success = true;
@@ -422,23 +424,37 @@ namespace MISA.IMS.BL.Services
                     UserMsg = Message.InstanceIsNull,
                     TraceId = TracerID.Id
                 };
-            }else
-            // Chỉ cho update bản ghi chưa gửi và đang chờ yêu cầu
-            if (res.Status == (int)StatusContract.APPROVED || res.Status == (int)StatusContract.REFUSE) {
-                apiResult.Success = false;
-                apiResult.Message.Add(Message.RefuseUpdate);
-                apiResult.MessageCode = MessageCode.Validate;
-                apiResult.Data = new ErrorResult
-                {
-                    DevMsg = DevMsg.No_Content,
-                    ErrorCode = ErrorCode.No_Content,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = Message.RefuseUpdate,
-                    TraceId = TracerID.Id
-                };
             }
+            else
+            {
+                var avalabelStatus = new List<int>(){
+                    (int)StatusContract.APPROVED,
+                    (int)StatusContract.REFUSE
+                };
 
-            if(apiResult.Success)
+                if (!avalabelStatus.Contains(res.Status))
+                {
+
+                }
+                if (res.Status == (int)StatusContract.APPROVED || res.Status == (int)StatusContract.REFUSE)
+                {
+                    apiResult.Success = false;
+                    apiResult.Message.Add(Message.RefuseUpdate);
+                    apiResult.MessageCode = MessageCode.Validate;
+                    apiResult.Data = new ErrorResult
+                    {
+                        DevMsg = DevMsg.No_Content,
+                        ErrorCode = ErrorCode.No_Content,
+                        MoreInfo = MoreInfo.Help,
+                        UserMsg = Message.RefuseUpdate,
+                        TraceId = TracerID.Id
+                    };
+                }
+            }
+            // Chỉ cho update bản ghi chưa gửi và đang chờ yêu cầu
+
+
+            if (apiResult.Success)
             {
                 // hiên thị lỗi
                 bool check = true;
@@ -457,7 +473,7 @@ namespace MISA.IMS.BL.Services
 
                 // validate thành công
                 int result = await _contractRepository.UpdateAsync(contract);
-                if(!check  || res == null)
+                if (!check || res == null)
                 {
                     apiResult.Success = false;
                     apiResult.Data = new ErrorResult
@@ -487,11 +503,10 @@ namespace MISA.IMS.BL.Services
         /// <param name="contract">Đối tượng validate</param>
         /// <returns></returns>
         /// Created by : pnthuan(14/05/2021)
-
-        public  APIResult validateEntity(Contract contract)
+        public APIResult ValidateEntity(Contract contract)
         {
             var apiResult = new APIResult();
-            
+
             // check Email
             try
             {
@@ -503,7 +518,7 @@ namespace MISA.IMS.BL.Services
                         apiResult.Success = false;
                     }
                 }
-                
+
             }
             catch
             {
@@ -538,9 +553,9 @@ namespace MISA.IMS.BL.Services
         /// Created by : pnthuan(17/05/2021)
         public async Task<APIResult> GetByCodeAsync(object codeRequired)
         {
-            
+
             var apiResult = new APIResult();
-            var res = _contractRepository.GetByCodeAsync(codeRequired).Result;
+            var res = await _contractRepository.GetByCodeAsync(codeRequired);
             if (res == null)
             {
                 apiResult.Success = false;

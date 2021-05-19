@@ -117,5 +117,6 @@ namespace MISA.IMS.Data.DTOs
 
             return contract;
         }
+
     }
 }

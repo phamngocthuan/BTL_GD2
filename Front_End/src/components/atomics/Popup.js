@@ -11,9 +11,15 @@ import { removeRecordTable, setDataTabPane} from '../../redux/action/index'
  */
 const Popup = ({record, visible, x, y}) => {
   
+  const dataSelected = useSelector(state => state.table.dataSelected);
+
   const dispatch = useDispatch(); 
   const handleOnclick = () => {
-    console.log(record);
+    var arr = dataSelected.filter((item) => item.codeRequired === record.codeRequired)
+    console.log(arr)
+    if(arr.lenght == 0 || arr.lenght > 1){
+      console.log('abc')
+    }
   }
 
   const rmRecordSeleted = () => {
