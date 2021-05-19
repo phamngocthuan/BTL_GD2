@@ -15,6 +15,7 @@ namespace MISA.IMS.Data.DTOs
     public class ContractDTO
     {
 
+        
         public string ContractName { get; set; }
 
         
@@ -29,6 +30,8 @@ namespace MISA.IMS.Data.DTOs
 
         public string PackageProductCode { get; set; }
         public int Status { get; set; } = 0;
+
+
         public int Money { get; set; }
         public string NameCustomer { get; set; }
         public string ContactName { get; set; }
@@ -56,6 +59,7 @@ namespace MISA.IMS.Data.DTOs
         {
             var contract = Activator.CreateInstance<Contract>(); ;
             var properties = this.GetType().GetProperties();
+            // lắp các property của DTO và gắn các property có giá trị vào thực thể khởi tạo
             foreach(var property in properties)
             {
 
@@ -70,6 +74,7 @@ namespace MISA.IMS.Data.DTOs
                 }
                 
             }
+            // Khởi tạo các giá trị ban đầu
             contract.Status = status;
             contract.CreatedBy = createdBy;
             contract.CreatedDate = DateTime.UtcNow;
@@ -90,6 +95,7 @@ namespace MISA.IMS.Data.DTOs
         {
             var contract = Activator.CreateInstance<Contract>(); ;
             var properties = this.GetType().GetProperties();
+            // lắp các property của DTO và gắn các property có giá trị vào thực thể khởi tạo
             foreach (var property in properties)
             {
 
@@ -104,6 +110,7 @@ namespace MISA.IMS.Data.DTOs
                 }
 
             }
+            // Khởi tạo các giá trị ban đầu
             contract.ContractID = Guid.Parse(id);
             contract.ModifiedDate = DateTime.UtcNow;
             contract.ModifiedBy = modifiedBy;

@@ -18,7 +18,7 @@ namespace MISA.IMS.DL.Interfaces
         /// </summary>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        Task<string> GetCodeRequired();
+       /* Task<string> GetCodeRequired();*/
 
         /// <summary>
         /// Lấy bản ghi theo mã yêu cầu

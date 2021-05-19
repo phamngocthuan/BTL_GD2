@@ -92,7 +92,7 @@ namespace MISA.IMS.BL.Services
         /// <param name="status">Trạng thái của bản ghi</param>
         /// Created by : PNTHUAN (11/05/2021)
         /// <returns></returns>
-        public Task<APIResult> UpdateStatus(IEnumerable<string> codeRequired, int status)
+        public Task<APIResult> UpdateStatus(IEnumerable<string> codeRequired, int status, string modifiedBy)
         {
             throw new NotImplementedException();
         }

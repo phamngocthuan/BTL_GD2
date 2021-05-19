@@ -75,7 +75,7 @@ namespace MISA.IMS.Service.Controllers
                                     return Ok(responseData);
                                 }
                             }
-                        default: return Ok("lủng"); 
+                        default: return Ok(""); 
                     }
                 }
             }

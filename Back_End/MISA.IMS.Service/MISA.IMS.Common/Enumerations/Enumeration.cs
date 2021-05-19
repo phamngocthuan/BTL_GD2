@@ -34,6 +34,21 @@ namespace MISA.IMS.Common.Enumerations
         /// </summary>
         Exception = 500,
 
+        /// <summary>
+        /// Yêu cầu thành công , một tài nguyên mới được tạo
+        /// </summary>
+        Created = 201,
+
+        /// <summary>
+        /// Không có nội dung
+        /// </summary>
+        NoContent = 204,
+
+        /// <summary>
+        /// Không tìm thấy
+        /// </summary>
+        NotFound = 404
+
         
 
     }
@@ -100,6 +115,12 @@ namespace MISA.IMS.Common.Enumerations
         public static string ExcuteSuccess = "Thực thi yêu cầu thành công";
 
         public static string ExcuteError = "Thực thi yêu cầu thất bại";
+
+        public static string RefuseUpdate = "Yêu cầu không được cập nhật";
+
+        public static string ErrorValidateEmail = "Định dạng Email sai!";
+
+        public static string ErrorValidatePhone = "Định dạng số điện thoại sai!"
 
     }
 

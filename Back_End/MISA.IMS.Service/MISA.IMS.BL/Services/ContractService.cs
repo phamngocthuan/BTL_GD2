@@ -14,6 +14,7 @@ using MISA.IMS.Data.DTOs;
 using MISA.IMS.Common.Constants;
 using MISA.IMS.Common.Enumerations;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MISA.IMS.BL.Services
 {
@@ -87,7 +88,7 @@ namespace MISA.IMS.BL.Services
                     DevMsg = DevMsg.No_Content,
                     ErrorCode = ErrorCode.No_Content,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = UserMsg.NoContent,
                     TraceId = TracerID.Id
                 };
             }
@@ -121,7 +122,7 @@ namespace MISA.IMS.BL.Services
                     DevMsg = DevMsg.No_Content,
                     ErrorCode = ErrorCode.No_Content,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = UserMsg.NoContent,
                     TraceId = TracerID.Id
                 };
             }
@@ -148,7 +149,6 @@ namespace MISA.IMS.BL.Services
             //  check Email
             //  validate data
             apiResult = validateEntity(contract);
-            //  Tạo bản ghi với mã yêu cầu và id
             if( !apiResult.Success)
             {
                 apiResult.Data = new ErrorResult
@@ -162,12 +162,10 @@ namespace MISA.IMS.BL.Services
                 apiResult.MessageCode = MessageCode.Validate;
                 return apiResult;
             }
-            //lấy mã trên hệ thống theo yêu cầu
+
 
             /* string codeRequired = await _contractRepository.GetCodeRequired();
-             // lấy bản ghi vừa tạo và thực hiện update
-
-             codeRequired = Regex.Replace(codeRequired, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
+                codeRequired = Regex.Replace(codeRequired, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
              contract.CodeRequired = codeRequired;*/
             // Tạo bản ghi với ID, Mã yêu cầu ban đầu
             Contract newContract = new Contract();
@@ -175,24 +173,27 @@ namespace MISA.IMS.BL.Services
             newContract.CreatedBy = contract.CreatedBy;
             newContract.Status = contract.Status;
             newContract.CreatedDate = contract.CreatedDate;
-            //
+            // Thực hiện thêm bản ghi với các trường ban đầu tránh việc nhiều người cùng chung 1 mã yêu cầu
             var res = await _contractRepository.InsertOriginalAsync(newContract);
+
+            // Thêm mới thành công thì thực hiện việc update
             if(res > 0)
             {
                 contract.ContractID = newContract.ContractID;
+                // thực hiện update bản ghi
                 res = await _contractRepository.UpdateAsync(contract);
             }
             if ((int)res == 0)
             {
                 apiResult.Success = false;
-                apiResult.Message.Add(Message.ExcuteSuccess);
-                apiResult.MessageCode = MessageCode.Validate;
+                apiResult.Message.Add(Message.ExcuteError);
+                apiResult.MessageCode = MessageCode.NoContent;
                 apiResult.Data = new ErrorResult
                 {
                     DevMsg = DevMsg.No_Content,
                     ErrorCode = ErrorCode.No_Content,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = UserMsg.NoContent,
                     TraceId = TracerID.Id
                 };
             }
@@ -250,17 +251,38 @@ namespace MISA.IMS.BL.Services
         public async Task<APIResult> DeleteAsync(IEnumerable<string> codeRequireds)
         {
             var apiResult = new APIResult();
-
+            // Kiểm tra mảng mã yêu cầu là rỗng hoặc không có giá trị nào
+            if (codeRequireds == null || (codeRequireds.Count() == 0))
+            {
+                apiResult.Success = false;
+                apiResult.Message.Add(Message.InstanceIsNull);
+                apiResult.MessageCode = MessageCode.NotFound;
+                apiResult.Data = new ErrorResult
+                {
+                    DevMsg = DevMsg.Null,
+                    ErrorCode = ErrorCode.NotFound,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = UserMsg.DataIsNull,
+                    TraceId = TracerID.Id
+                };
+                return apiResult;
+            }
+            // trả về số lượng bản ghi bị ảnh hưởng
             var res = await _contractRepository.DeleteAsync(codeRequireds);
 
 
             if (res > 0)
             {
+                
                 apiResult.Message.Add(Message.ExcuteSuccess);
+                apiResult.MessageCode = MessageCode.Success;
             }
             else
             {
+                apiResult.Success = false;
                 apiResult.Message.Add(Message.ExcuteError);
+                apiResult.MessageCode = MessageCode.NotFound;
+                apiResult.Data = "";
             }
             return apiResult;
         }
@@ -272,21 +294,26 @@ namespace MISA.IMS.BL.Services
         /// <param name="contract">Đối tượng update</param>
         /// <returns></returns>
         /// Created by : PNTHUAN(11/5/2021)
-        public async Task<APIResult> UpdateAsync(Contract contract)
+       /* public async Task<APIResult> UpdateAsync(Contract contract)
         {
             var apiResult = new APIResult();
-
+            // Trả về số lượng bản ghi bị tác động
             var res = await _contractRepository.UpdateAsync(contract);
             if (res > 0)
             {
+
                 apiResult.Message.Add(Message.ExcuteSuccess);
+                apiResult.MessageCode = MessageCode.Success;
             }
             else
             {
+                apiResult.Success = false;
                 apiResult.Message.Add(Message.ExcuteError);
+                apiResult.MessageCode = MessageCode.NotFound;
+                apiResult.Data = "";
             }
             return apiResult;
-        }
+        }*/
 
         /// <summary>
         /// Hàm đếm số bản ghi theo filter
@@ -297,6 +324,7 @@ namespace MISA.IMS.BL.Services
         /// Created by : PNTHUAN(11/5/2021)
         public async Task<long> CountEntities(ListRequest listRequest, int status)
         {
+            // việc đếm chỉ thực hiện sau khi đã lấy danh sách và validate ở phần lấy danh sách
             var res = await _contractRepository.CountEntities(listRequest, status);
 
             return res;
@@ -309,42 +337,60 @@ namespace MISA.IMS.BL.Services
         /// <param name="status">Trạng thái ban đầu của bản ghi</param>
         /// <returns></returns>
         /// Created by : PNTHUAN(12/05/2021)
-        public async Task<APIResult> UpdateStatus(IEnumerable<string> codeRequired, int status)
+        public async Task<APIResult> UpdateStatus(IEnumerable<string> codeRequireds, int status, string modifiedBy)
         {
             // Lấy thông tin bản ghi
             var apiResult = new APIResult();
-            /*var res = _contractRepository.GetByIdAsync(id).Result;
-            if (res == null)
+            // Kiểm tra mảng mã yêu cầu là rỗng hoặc không có giá trị nào
+            if (codeRequireds == null || (codeRequireds.Count() == 0))
             {
                 apiResult.Success = false;
                 apiResult.Message.Add(Message.InstanceIsNull);
-                apiResult.MessageCode = MessageCode.Validate;
+                apiResult.MessageCode = MessageCode.NotFound;
                 apiResult.Data = new ErrorResult
                 {
-                    DevMsg = DevMsg.No_Content,
-                    ErrorCode = ErrorCode.No_Content,
+                    DevMsg = DevMsg.Null,
+                    ErrorCode = ErrorCode.NotFound,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = UserMsg.DataIsNull,
                     TraceId = TracerID.Id
                 };
             }
-            els*/
+            else
             {
-              /*  var check = true;
-                var status = (int)res.Status;*/
+                /*  var check = true;
+                  var status = (int)res.Status;*/
+                // Hiện tại chỉ thực hiện update với bản ghi chưa gửi
+                // các bản ghi với trạng thái khác cũng tương tự
+                int result = 0;
                 switch (status)
                 {
                     case (int)StatusContract.UNSENT:
                         status = (int)StatusContract.PENDING;
+                        result = await _contractRepository.UpdateStatus(codeRequireds, status, modifiedBy);
                         break;
                 }
-                int result = await _contractRepository.UpdateStatus(codeRequired, status);
+ 
                 if (result > 0)
                 {
                     apiResult.Success = true;
                     apiResult.Message.Add(Message.ExcuteSuccess);
                     apiResult.Data = result;
                     apiResult.MessageCode = MessageCode.Success;
+                }
+                else
+                {
+                    apiResult.Success = false;
+                    apiResult.Message.Add(Message.RefuseUpdate);
+                    apiResult.MessageCode = MessageCode.NotFound;
+                    apiResult.Data = new ErrorResult
+                    {
+                        DevMsg = DevMsg.Null,
+                        ErrorCode = ErrorCode.NotFound,
+                        MoreInfo = MoreInfo.Help,
+                        UserMsg = UserMsg.DataIsNull,
+                        TraceId = TracerID.Id
+                    };
                 }
             }
             return apiResult;
@@ -373,11 +419,26 @@ namespace MISA.IMS.BL.Services
                     DevMsg = DevMsg.No_Content,
                     ErrorCode = ErrorCode.No_Content,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = Message.InstanceIsNull,
+                    TraceId = TracerID.Id
+                };
+            }else
+            // Chỉ cho update bản ghi chưa gửi và đang chờ yêu cầu
+            if (res.Status == (int)StatusContract.APPROVED || res.Status == (int)StatusContract.REFUSE) {
+                apiResult.Success = false;
+                apiResult.Message.Add(Message.RefuseUpdate);
+                apiResult.MessageCode = MessageCode.Validate;
+                apiResult.Data = new ErrorResult
+                {
+                    DevMsg = DevMsg.No_Content,
+                    ErrorCode = ErrorCode.No_Content,
+                    MoreInfo = MoreInfo.Help,
+                    UserMsg = Message.RefuseUpdate,
                     TraceId = TracerID.Id
                 };
             }
-            else
+
+            if(apiResult.Success)
             {
                 // hiên thị lỗi
                 bool check = true;
@@ -391,7 +452,6 @@ namespace MISA.IMS.BL.Services
                 {
                     check = IsPhoneNumber(contract.ContactPhoneNumber);
                 }
-                // validate 1 số trường : Email, PhoneNumber
 
                 // Không update status  : chỉ update thông tin
 
@@ -439,7 +499,7 @@ namespace MISA.IMS.BL.Services
                 {
                     if (!checkEmail(contract.ContactEmailAddress))
                     {
-                        apiResult.Message.Add("Định dạng Email sai");
+                        apiResult.Message.Add(Message.ErrorValidateEmail);
                         apiResult.Success = false;
                     }
                 }
@@ -447,7 +507,7 @@ namespace MISA.IMS.BL.Services
             }
             catch
             {
-                apiResult.Message.Add("Định dạng Email sai");
+                apiResult.Message.Add(Message.ErrorValidateEmail);
                 apiResult.Success = false;
             }
             try
@@ -456,7 +516,7 @@ namespace MISA.IMS.BL.Services
                 {
                     if (!IsPhoneNumber(contract.ContactPhoneNumber))
                     {
-                        apiResult.Message.Add("Định dạng số điện thoại sai");
+                        apiResult.Message.Add(Message.ErrorValidatePhone);
                         apiResult.Success = false;
                     }
                 }
@@ -464,7 +524,7 @@ namespace MISA.IMS.BL.Services
             }
             catch
             {
-                apiResult.Message.Add("Định dạng số điện thoại sai");
+                apiResult.Message.Add(Message.ErrorValidatePhone);
                 apiResult.Success = false;
             }
             return apiResult;

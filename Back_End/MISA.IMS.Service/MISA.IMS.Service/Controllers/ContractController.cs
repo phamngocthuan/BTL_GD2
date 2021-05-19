@@ -85,7 +85,7 @@ namespace MISA.IMS.Service.Controllers
         // GET api/<ContractController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute][Required]string id)
-        {
+        {  
             try
             {
                 if (!ModelState.IsValid)
@@ -106,7 +106,7 @@ namespace MISA.IMS.Service.Controllers
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
                 }
             }
             catch (Exception ex)
@@ -185,8 +185,8 @@ namespace MISA.IMS.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertContract(
             [FromBody] ContractDTO contractDTO,
-            [FromHeader(Name = "CreatedBy")][Required] string createdBy,
-            [FromHeader(Name = "Status")] int status = 0
+            [FromHeader(Name = "CreatedBy")][Required] string createdBy
+/*            [FromHeader(Name = "Status")] int status = 0*/
             )
         {
             try
@@ -204,7 +204,8 @@ namespace MISA.IMS.Service.Controllers
                     return BadRequest(apiRes);
                 }
                 // convert sang đối tượng thêm vào và khởi tạo một số thuộc tính cần có
-                Contract contract = contractDTO.ConvertInsertContract(createdBy, status);
+                // Mặc định khi thêm mới là trạng thái bản ghi là 0: Chưa gửi
+                Contract contract = contractDTO.ConvertInsertContract(createdBy, 0);
 
                 APIResult aPIResult = await _contractService.InsertAsync(contract);
                 if (aPIResult.Success)
@@ -314,7 +315,14 @@ namespace MISA.IMS.Service.Controllers
                 
                 
                 var apiResult = await _contractService.DeleteAsync(codeRequireds);
-                return Ok(apiResult.Message);
+                if(apiResult.Success)
+                {
+                    return Ok(apiResult.Message);
+                }else
+                {
+                    return StatusCode((int)apiResult.MessageCode, apiResult.Message);
+                }
+                    
             }
             catch (Exception ex)
             {
@@ -323,7 +331,7 @@ namespace MISA.IMS.Service.Controllers
                     DevMsg = DevMsg.Error,
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
+                    UserMsg = UserMsg.NoContent,
                     TraceId = TracerID.Id
                 });
             }
@@ -361,10 +369,12 @@ namespace MISA.IMS.Service.Controllers
                     return BadRequest(apiRes);
                 }
                 
+                // Gọi đến hàm xử lý lấy thông tin theo yêu cầu
                 var apiResult = await _contractService.GetEntities(listRequest, listRequest.status, offset, limit);
                 if (apiResult.Success == true)
                 {
                     long totals = 0;
+                    // hàm trả về tổng số bản ghi thỏa mãn yêu cầu 
                     totals = await _contractService.CountEntities(listRequest, listRequest.status);
                     return Ok(new { 
                         Data = apiResult.Data,
@@ -385,7 +395,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
             
@@ -400,8 +410,11 @@ namespace MISA.IMS.Service.Controllers
         /// Created by : PNTHUAN (11/5/2021)
         [HttpPut("status")]
         public async Task<IActionResult> RequestChangeStatusContract(
+            [FromHeader(Name = "ModifiedBy")][Required] string modifiedBy,
             [FromBody][Required] IEnumerable<string> codes,
             [FromQuery][Required] int   status = (int)StatusContract.UNSENT
+            
+
         )
         {
             try
@@ -418,7 +431,7 @@ namespace MISA.IMS.Service.Controllers
                     };
                     return BadRequest(apiRes);
                 }
-                APIResult apiResult = await _contractService.UpdateStatus(codes,status);
+                APIResult apiResult = await _contractService.UpdateStatus(codes,status , modifiedBy);
                 if (apiResult.Success == true)
                 {
                     return Ok(apiResult);
@@ -436,7 +449,7 @@ namespace MISA.IMS.Service.Controllers
                     ErrorCode = ErrorCode.Exception,
                     MoreInfo = MoreInfo.Help,
                     UserMsg = UserMsg.Help,
-                    TraceId = "1211239b@dfj"
+                    TraceId = TracerID.Id
                 });
             }
         }

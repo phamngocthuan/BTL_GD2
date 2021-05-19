@@ -48,17 +48,9 @@ namespace MISA.IMS.DL.Repositories
         /// <param name="id">Id của bản ghi</param>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        public async Task<T> GetByIdAsync(object id)
+        public virtual async Task<T> GetByIdAsync(object id)
         {
-            var res = new List<T>();
-           
-            res = (await GetEntitiesAsync($"SELECT * FROM {_tableName} WHERE  {_tableName}ID = @id;", new { id = id.ToString()})).AsList();
-            
-            if (res.Count > 0)
-            {
-                return res[0];
-            }
-            return null;
+            throw new NotImplementedException();
         }
         /// <summary>
         /// Lấy tất cả bản ghi 
@@ -196,8 +188,7 @@ namespace MISA.IMS.DL.Repositories
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
-                /*var param = $"{_tableName}ID";
-                var res = await _dbContext.ExecuteAsync($"Proc_Delete{_tableName}", new { ContractID = id.ToString() }, commandType: CommandType.StoredProcedure);*/
+                
 
                 var sqlText = new StringBuilder($"DELETE FROM {_tableName} WHERE CodeRequired IN @codeRequireds;");
                 var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { codeRequireds });
@@ -408,7 +399,7 @@ namespace MISA.IMS.DL.Repositories
         /// <param name="entity">Đối tượng cập nhật</param>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        public async Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status)
+        public async Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status, string modifiedBy)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
@@ -416,8 +407,8 @@ namespace MISA.IMS.DL.Repositories
                 /*var proc = new StringBuilder($"Proc_UpdateStatus");
                 var res = await _dbContext._dbConnection.ExecuteAsync(proc.ToString(), new { ContractID = id, Status = status }, commandType: CommandType.StoredProcedure);
                 return res;*/
-                var sqlText = new StringBuilder($"UPDATE {_tableName}  c SET c.Status = @status WHERE CodeRequired IN @codeRequireds;");
-                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new {status,  codeRequireds });
+                var sqlText = new StringBuilder($"UPDATE {_tableName}  c SET c.Status = @status, c.ModifiedBy = @modifiedBy WHERE CodeRequired IN @codeRequireds;");
+                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new {status,  codeRequireds, modifiedBy });
                 return res;
             }
         }

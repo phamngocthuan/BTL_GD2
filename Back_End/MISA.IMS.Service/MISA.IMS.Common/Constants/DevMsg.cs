@@ -13,5 +13,7 @@ namespace MISA.IMS.Common.Constants
         public static string Error { set; get; } = "Lỗi";
         public static string No_Content { set; get; } = "Không có dữ liệu trả về";
 
+        public static string Null { set; get; } = "Dữ liệu trống";
+ 
     }
 }

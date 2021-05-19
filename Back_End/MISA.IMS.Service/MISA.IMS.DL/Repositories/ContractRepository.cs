@@ -59,22 +59,40 @@ namespace MISA.IMS.DL.Repositories
                 }
                 else return null;*/
 
-                var res = (await GetEntitiesAsync($"SELECT * FROM {_tableName} WHERE CodeRequired = @codeRequired", new { codeRequired = codeRequired.ToString() })).AsList();
-
-                if (res.Count > 0)
+                //var res = (await GetEntitiesAsync($"SELECT * FROM {_tableName} WHERE CodeRequired = @codeRequired", new { codeRequired = codeRequired.ToString() })).AsList();
+               /* var res = _dbContext.QueryProc($"Proc_Get{_tableName}ByCodeRequired", new { codeRequired = codeRequired.ToString() });*/
+                var res = _dbContext._dbConnection.Query<Contract>($"Proc_Get{_tableName}ByCodeRequired", new { CodeRequired = codeRequired.ToString() }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                if (res != null )
                 {
-                    return res[0];
+                    return (Contract)res;
                 }
                 return null;
             }
         }
 
         /// <summary>
+        /// Lấy bản ghi theo Id bất đồng bộ
+        /// </summary>
+        /// <param name="id">Id của bản ghi</param>
+        /// <returns></returns>
+        /// Created by : pnthuan(11/5/2021)
+        public  override async  Task<Contract> GetByIdAsync(object id)
+        {
+            using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
+            {
+                var res = _dbContext._dbConnection.Query<Contract>($"Proc_Get{_tableName}ByID", new { ContractID = id.ToString() }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                return res;
+            }
+        }
+
+
+        /// <summary>
         /// Lấy mã yêu cầu
         /// </summary>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        public async Task<string> GetCodeRequired()
+        /*public async Task<string> GetCodeRequired()
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
@@ -85,7 +103,7 @@ namespace MISA.IMS.DL.Repositories
                 res.Read();
                 return (string)res.GetValue(0);
             }
-        }
+        }*/
         #endregion
 
     }

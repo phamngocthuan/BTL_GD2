@@ -78,7 +78,7 @@ namespace MISA.IMS.BL.Interfaces
         /// <param name="status">Trạng thái của bản ghi</param>
         /// Created by : PNTHUAN (11/05/2021)
         /// <returns></returns>
-        Task<APIResult> UpdateStatus(IEnumerable<string> code, int status);
+        Task<APIResult> UpdateStatus(IEnumerable<string> code, int status, string modifiedBy);
 
 
 

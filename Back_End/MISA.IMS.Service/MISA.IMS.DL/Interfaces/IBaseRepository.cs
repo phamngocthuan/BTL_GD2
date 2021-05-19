@@ -85,7 +85,7 @@ namespace MISA.IMS.DL.Interfaces
         /// <param name="status">Trạng thái của tất cả bản ghi</param>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status);
+        Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status, string modifiedBy);
 
         /// <summary>
         /// Hàm thực hiện thêm mới 1 bản nháp

@@ -13,6 +13,8 @@ namespace MISA.IMS.Common.Constants
         public static string Exception { get; set; } = "500";
         public static string No_Content { get; set; } = "204";
 
+        public static string NotFound { get; set; } = "404";
+
 
     }
 }
