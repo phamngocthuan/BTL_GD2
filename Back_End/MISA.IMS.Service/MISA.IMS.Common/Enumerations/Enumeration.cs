@@ -122,6 +122,8 @@ namespace MISA.IMS.Common.Enumerations
 
         public static string ErrorValidatePhone = "Định dạng số điện thoại sai!";
 
+        public static string NoContent = "Không có dữ liệu trả về";
+
     }
 
     /// <summary>

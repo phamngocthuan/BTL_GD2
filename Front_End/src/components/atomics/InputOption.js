@@ -32,11 +32,11 @@ export default function InputOption  (props) {
                   setCondition(getCondition(value));
               }}
             >
-                <Option value="*">* </Option>
-                <Option value="=">= </Option>
+                <Option value="*">*</Option>
+                <Option value="=">=</Option>
             </Select>
             <Input 
-                style={{ width: '72%' }} 
+                style={{ width: '85%' }} 
                 defaultValue=""
                 name={name}
                 // Nhận sự kiện enter để kiểm tra xem

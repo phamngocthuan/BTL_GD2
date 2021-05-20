@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import { Form, Input, InputNumber,Select,  Button , Tooltip} from 'antd';
 import '../../assets/styles/molecules/Form.scss'
 const { Option } = Select;
@@ -81,7 +81,8 @@ const formItemLayout = {
 
 
 export default function ValidateForm (props){
-    const {inputRef, onSubmit, onSubmitFailed, form, productCodeData, dataModal, dataCity} = props;
+    const {inputRef, onSubmit, onSubmitFailed, form, productCodeData, dataCity} = props;
+    const dataModal = useSelector(state => state.modal.dataModal)
 
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>
@@ -106,53 +107,26 @@ export default function ValidateForm (props){
     /// redux
     const data = useSelector(state => state.modal.data);
     const isShow = useSelector(state => state.modal.isShow);
+    
 
     //Hàm lấy thông tin về local khi modal show 
     useEffect(() => {
       if(isShow){
         
         if(data.city){
-          // TH1 : District null( ward có thể null , hoặc khác null) -> get data district, ward
-          // Lấy quận huyện
-          if(data.district != null || data.district == ""){
-            debugger
-            LocsApi.getDistrict(2, data.city ,async  (res) => {
-              let result = res.data.map(a => a.locationName) 
-              setDistrictData(result)
-                
-            },
-            (err) => {
-              console.log(res);
-            }
-            )
+          // Lấy danh sách district
+           LocsApi.getDistrict(2, data.city,async  (res)=> {
+            let result =  res.data.map(a => a.locationName) 
+            await setDistrictData(result)
+          });
+          if(  data.district && data.district != ""){
+             LocsApi.getWard(3, data.district, (res) => {
+                let result1 = res.data.map(a => a.locationName)
+                setWardData(result1)
+             });
+          }else {
+            setWardData([])
           }
-          // TH2 : District != null -> get data ward
-          if(!data.ward){
-            LocsApi.getWard(3, data.district ,async (res) => {
-              let result1 = res.data.map(a => a.locationName)
-              setWardData(result1)
-              }, (err) => {
-                  console.log(err)
-              })
-          }
-          // else if(!data.district && !data.ward){
-              
-          //     LocsApi.getDistrict(2, data.city ,async  (res) => {
-          //       let result =  res.data.map(a => a.locationName)
-          //       setDistrictData(result)
-          //     },
-          //     (err) => {
-          //       console.log(res);
-          //     }
-          //     )
-          //     LocsApi.getWard(3, data.ward,async (res1) => {
-          //       let result1 =  res1.data.map(a => a.locationName)
-          //       setWardData(result1)
-          //       }, (err) => {
-          //           console.log(err);
-          //     })
-          // }
-          
         }else {
           setWardData([])
           setDistrictData([])
@@ -164,86 +138,92 @@ export default function ValidateForm (props){
   
 
     // Thực hiên lấy mã gói sản theo mã sản phẩm 
-    const handleProductCodeChange = value => {
-      PackageApi.get(
-        value, 
-        async (res) => {
-          let result = res.data.map(a => a.packageProductCode);
-          setProductCodes(result)
-          setPackageProductCode(result[0])
-          await form.setFieldsValue({
-            packageProductCode : result[0],
-          })
-        },(err) => {
-            console.log(err);
-        }
-        )
+    const handleProductCodeChange = async (value) => {
 
+      const response = await PackageApi.get(value);
+      if(response.success){
+        let result = response.data.map(a => a.packageProductCode);
+        setProductCodes(result)
+        setPackageProductCode(result[0])
+        await form.setFieldsValue({
+          packageProductCode : result[0],
+        })
+      }else {
+        console.log(response.Message)
+      }
     };
     
     // Lấy thông tin về , setup lại giá trị về quận , xã 
-    const handleCityChange = value => {
+    const handleCityChange =  (value) => {
       LocsApi.getDistrict(2, value,async  (res) => {
         let result = res.data.map(a => a.locationName)
         setCity(value);
         setDistrict(result[0])
         setDistrictData(result)
+        setWardData([])
         await form.setFieldsValue({
-          district : result[0],
+          district : "",
         })
-        LocsApi.getWard(3, result[0],async (res) => {
-          let result1 = res.data.map(a => a.locationName)
-          setWard(result1[0])
-          setWardData(result1)
-          await form.setFieldsValue({
-            ward : result1[0],
-          })
-          }, (err) => {
-              console.log(err)
-          })
+        await form.setFieldsValue({
+              ward : "",
+        })
+        // LocsApi.getWard(3, result[0],async (res) => {
+        //   let result1 = res.data.map(a => a.locationName)
+        //   setWard(result1[0])
+        //   setWardData(result1)
+        //   await form.setFieldsValue({
+        //     ward : result1[0],
+        //   })
+        //   }, (err) => {
+        //       console.log(err)
+        //   })
       },
       (err) => {
-        console.log(res);
+        console.log(err);
       }
       )
+      
     }
 
     // hàm lấy thông tin về xã , phường theo quận huyện
-    const handleDistrictChange = value => {
+    const handleDistrictChange =   (value) => {
       LocsApi.getWard(3, value,async (res) => {
-          let result = res.data.map(a => a.locationName)
-          setDistrict(value);
-          setWard(result[0])
-          setWardData(result)
-          await form.setFieldsValue({
-            ward : result[0],
-          })
-      }, (err) => {
-          console.log(err)
-      })
+        let result = res.data.map(a => a.locationName)
+        setDistrict(value);
+        setWard(result[0])
+        setWardData(result)
+        // await form.setFieldsValue({
+        //   ward : result[0],
+        // })
+        await form.setFieldsValue({
+          ward : "",
+        })
+    }, (err) => {
+        console.log(err)
+    })
     }
 
     // xử lý khi mã gói snar phẩm thay đổi
     const onPackageProductCodeChange = value => {
       setPackageProductCode(value);
     };
-    // call api lấy danh sách mã gói sản phẩm
-    useEffect(() => {
-      PackageApi.get(
-        productCodeData[0], 
-        async (res) => {
-          let result = res.data.map(a => a.packageProductCode);
+    // fletch data product code
+    const fetchDT = useCallback(async () => {
+      const response = await PackageApi.get(productCodeData[0]);
+      if(response.success){
+        let result = response.data.map(a => a.packageProductCode);
           setProductCodes(result)
           setPackageProductCode(result[0])
           await form.setFieldsValue({
             packageProductCode : result[0],
           })
-          
-        },(err) => {
-            console.log(err);
-        }
-        )
-    },[])
+      }
+    }, [])
+    // call api lấy danh sách mã gói sản phẩm
+    useEffect(() => {
+      fetchDT();
+      return () => {}
+    },[fetchDT])
 
 
     return (
@@ -269,7 +249,7 @@ export default function ValidateForm (props){
                   label="Sản phẩm"
                   {...tailFromSelect}
                 >
-                  <Select  style={{ width: 120 }} onChange={handleProductCodeChange} >
+                  <Select  style={{ width: 120, marginLeft : "-19px" }} onChange={handleProductCodeChange} >
                     {productCodeData.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
@@ -280,7 +260,7 @@ export default function ValidateForm (props){
                   label="Loại yêu cầu"
                   {...tailFromSelect}
                 >
-                  <Select  style={{ width: 150 }} onChange={() => {}} >
+                  <Select  style={{ width: 150 , marginLeft : "-23px"}} onChange={() => {}} >
                     {typeRequestData.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}
@@ -292,7 +272,7 @@ export default function ValidateForm (props){
                   {...tailFromSelect}
                   initialValue={packageProductCode}
                 >
-                  <Select style={{ width: 120 }}  onChange={onPackageProductCodeChange}>
+                  <Select style={{ width: 120, marginLeft : "-10px" }}  onChange={onPackageProductCodeChange}>
                     {productCodes.map(item => (
                       <Option key={item}>{item}</Option>
                     ))}

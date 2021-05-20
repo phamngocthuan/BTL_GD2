@@ -1,5 +1,5 @@
 
-import React, {  useState, useEffect} from 'react';
+import React, {  useState, useEffect, useCallback} from 'react';
 import '../../assets/styles/molecules/FilterBody.scss'
 import ItemOption from '../atomics/ItemOption'
 import { Radio, Button } from 'antd';
@@ -100,9 +100,8 @@ function FilterBody(props) {
         dispatch(setStatusTable({status : e.target.value}))
     };
 
-    // Theo dõi các request fileter thay đổi để cập nhật lại data table
-    // cập nhật lại : reset lại số lượng bản ghi, bảng data selected
-    useEffect(() => {
+
+    const fetchLoadData = useCallback(async () => {
         const newBody = {
             FieldNames : FieldNames,
             Requests : Requests,
@@ -110,50 +109,82 @@ function FilterBody(props) {
         }
         setOffset(0);
         dispatch(setLoading({loading : true}));
-        ContractApi.filter(
-            newBody,
-        {
+        const response = await ContractApi.filter(newBody, {
             offset : 0,
             limit : limit
-        },
-        (res) => {
+        });
+        if(response.success){
             SetCurrentRow(1);
-            setData(res.data.data);
-            dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+            setData(response.data.data);
+            dispatch(setTotalTable({status : getStatus(status) ,  totals : response.data.totals}))
             dispatch(resetIndexSelected({data : []}))
             dispatch(resetDataSelected({data : []}))
             dispatch(setLoading({loading : false}));
             dispatch(setDataTabPane({data : []}))
-        },(err) => {
-            console.log(err);
+        }
+        else {
             dispatch(setLoading({loading : false}));
-        })
-    },[Requests])
+        }
+      }, [Requests])
+    // Theo dõi các request fileter thay đổi để cập nhật lại data table
+    // cập nhật lại : reset lại số lượng bản ghi, bảng data selected
+    useEffect(() => {
+        // const newBody = {
+        //     FieldNames : FieldNames,
+        //     Requests : Requests,
+        //     status : status
+        // }
+        // setOffset(0);
+        // dispatch(setLoading({loading : true}));
+        // ContractApi.filter(
+        //     newBody,
+        // {
+        //     offset : 0,
+        //     limit : limit
+        // },
+        // (res) => {
+        //     SetCurrentRow(1);
+        //     setData(res.data.data);
+        //     dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+        //     dispatch(resetIndexSelected({data : []}))
+        //     dispatch(resetDataSelected({data : []}))
+        //     dispatch(setLoading({loading : false}));
+        //     dispatch(setDataTabPane({data : []}))
+        // },(err) => {
+        //     console.log(err);
+        //     dispatch(setLoading({loading : false}));
+        // })
+        fetchLoadData();
 
-    // status thay đổi , gọi sự kiện lấy bản ghi
-    useEffect(()=> {
+    },[fetchLoadData])
+
+
+
+    const fetchMyAPI = useCallback(async () => {
         dispatch(setLoading({loading : true}));
         const newBody = {
             FieldNames : FieldNames,
             Requests : Requests,
             status : status
         }
-        ContractApi.filter(
-            newBody,
-        {
+        const response = await ContractApi.filter(newBody, {
             offset : offset,
             limit : limit
-        },
-        (res) => {
-            setData(res.data.data);
-            dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+        });
+        if(response.success){
+            setData(response.data.data);
+            dispatch(setTotalTable({status : getStatus(status) ,  totals : response.data.totals}))
             dispatch(setLoading({loading : false}));
             dispatch(setDataTabPane({data : []}))
-        },(err) => {
-            console.log(err);
+        }
+        else {
             dispatch(setLoading({loading : false}));
-        })
-    },[status, limit, offset])
+        }
+      }, [status, limit, offset])
+    // status thay đổi , gọi sự kiện lấy bản ghi
+    useEffect(() => {
+        fetchMyAPI()
+    },[fetchMyAPI])
 
     /***
      * Theo dõi trạng thái table cập nhật lại data, set index mặc định của table là index 1
@@ -168,41 +199,69 @@ function FilterBody(props) {
     },[status])
 
 
+    //
+    const fetchLoadingSubmit = useCallback(async () => {
+        dispatch(setLoading({loading : true}));
+        const newBody = {
+            FieldNames : FieldNames,
+            Requests : Requests,
+            status : status
+        }
+        const response = await ContractApi.filter(newBody, {
+            offset : 0,
+            limit : limit
+        });
+        if(response.success){
+            setData(response.data.data);
+            dispatch(setTotalTable({status : getStatus(status) ,  totals : response.data.totals}))
+            dispatch(setLoading({loading : false}));
+
+        }
+        else {
+            dispatch(setLoading({loading : false}));
+        }
+        SetCurrentRow(1);
+        dispatch(resetIndexSelected({data : []}))
+        dispatch(resetDataSelected({data : []}))
+        dispatch(setLoadData({loadData : false}))
+        dispatch(setDataTabPane({data : []}))
+      }, [loadData])
     /**
      * Thực hiện việc loading data : khi submit , hoặc sự kiện j cần load lại data
      * @author pnthuan(12/5/2021)
      */
     useEffect(() => {
         if(loadData == true){
-            dispatch(setLoading({loading : true}));
-            const newBody = {
-                FieldNames : FieldNames,
-                Requests : Requests,
-                status : status
-            }
-                ContractApi.filter(
-                    newBody,
-                {
-                    offset : 0,
-                    limit : limit
-                },
-                (res) => {
-                    setData(res.data.data);
-                    dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
-                    dispatch(setLoading({loading : false}));
-                },(err) => {
-                    console.log(err);
-                    dispatch(setLoading({loading : false}));
-                })
-            SetCurrentRow(1);
-            dispatch(resetIndexSelected({data : []}))
-            dispatch(resetDataSelected({data : []}))
-            dispatch(setLoadData({loadData : false}))
-            dispatch(setDataTabPane({data : []}))
+            // dispatch(setLoading({loading : true}));
+            // const newBody = {
+            //     FieldNames : FieldNames,
+            //     Requests : Requests,
+            //     status : status
+            // }
+            //     ContractApi.filter(
+            //         newBody,
+            //     {
+            //         offset : 0,
+            //         limit : limit
+            //     },
+            //     (res) => {
+            //         setData(res.data.data);
+            //         dispatch(setTotalTable({status : getStatus(status) ,  totals : res.data.totals}))
+            //         dispatch(setLoading({loading : false}));
+            //     },(err) => {
+            //         console.log(err);
+            //         dispatch(setLoading({loading : false}));
+            //     })
+            // SetCurrentRow(1);
+            // dispatch(resetIndexSelected({data : []}))
+            // dispatch(resetDataSelected({data : []}))
+            // dispatch(setLoadData({loadData : false}))
+            // dispatch(setDataTabPane({data : []}))
+            fetchLoadingSubmit()
         }
         return () => {}
     },
-    [loadData])
+    [fetchLoadingSubmit])
 
     
     /**

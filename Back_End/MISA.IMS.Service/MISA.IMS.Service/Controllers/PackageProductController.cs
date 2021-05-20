@@ -46,11 +46,11 @@ namespace MISA.IMS.Service.Controllers
                 var apiResult = await _packageProductService.GetPackageProductCode(productCode);
                 if (apiResult.Success == true)
                 {
-                    return Ok(apiResult.Data);
+                    return Ok(apiResult);
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)

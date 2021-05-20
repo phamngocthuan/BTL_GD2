@@ -82,10 +82,11 @@ namespace MISA.IMS.DL.Interfaces
         /// Cập nhật trạng thái bản ghi
         /// </summary>
         /// <param name="codeRequireds">Danh sách mã yêu cầu</param>
-        /// <param name="status">Trạng thái của tất cả bản ghi</param>
+        /// <param name="afterStatus">Trạng thái của tất cả bản ghi ban đầu</param>
+        /// <param name="beforeStatus">Trạng thái của tất cả bản ghi sau khi update</param>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status, string modifiedBy);
+        Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int beforeStatus, int afterStatus, string modifiedBy);
 
         /// <summary>
         /// Hàm thực hiện thêm mới 1 bản nháp

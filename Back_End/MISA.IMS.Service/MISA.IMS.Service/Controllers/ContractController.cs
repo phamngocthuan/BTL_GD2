@@ -56,22 +56,21 @@ namespace MISA.IMS.Service.Controllers
                 var apiResult = await _contractService.GetAllEntity();
                 if (apiResult.Success == true)
                 {
-                    return Ok(apiResult.Data);
+                    return Ok(apiResult);
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -107,18 +106,17 @@ namespace MISA.IMS.Service.Controllers
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -162,13 +160,12 @@ namespace MISA.IMS.Service.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -187,7 +184,6 @@ namespace MISA.IMS.Service.Controllers
         public async Task<IActionResult> InsertContract(
             [FromBody] ContractDTO contractDTO,
             [FromHeader(Name = "CreatedBy")][Required] string createdBy
-/*            [FromHeader(Name = "Status")] int status = 0*/
             )
         {
             try
@@ -221,13 +217,12 @@ namespace MISA.IMS.Service.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -242,7 +237,7 @@ namespace MISA.IMS.Service.Controllers
         /// Error : return lỗi hoặc exception 
         /// Created by : PNTHUAN(11/5/2021)
         // PUT api/<ContractController>/5
-        [AllowAnonymous]
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateContract(
             [FromBody] ContractDTO contractDTO,
@@ -274,19 +269,18 @@ namespace MISA.IMS.Service.Controllers
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
             {
                 
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -321,22 +315,21 @@ namespace MISA.IMS.Service.Controllers
                 var apiResult = await _contractService.DeleteAsync(codeRequireds);
                 if(apiResult.Success)
                 {
-                    return Ok(apiResult.Message);
+                    return Ok(apiResult);
                 }else
                 {
-                    return StatusCode((int)apiResult.MessageCode, apiResult.Message);
+                    return StatusCode((int)apiResult.MessageCode,apiResult);
                 }
                     
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.NoContent,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }
@@ -380,26 +373,26 @@ namespace MISA.IMS.Service.Controllers
                     long totals = 0;
                     // hàm trả về tổng số bản ghi thỏa mãn yêu cầu 
                     totals = await _contractService.CountEntities(listRequest, listRequest.status);
-                    return Ok(new { 
-                        Data = apiResult.Data,
-                        Totals = totals,
-                    }
-                    );
+                    apiResult.Data = new
+                    {
+                        data = apiResult.Data,
+                        totals = totals
+                    };
+                    return Ok(apiResult);
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
             
@@ -442,18 +435,17 @@ namespace MISA.IMS.Service.Controllers
                 }
                 else
                 {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult.Data);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, apiResult);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResult
+                return StatusCode((int)HttpStatusCode.InternalServerError, new APIResult
                 {
-                    DevMsg = DevMsg.Error,
-                    ErrorCode = ErrorCode.Exception,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
+                    MessageCode = MessageCode.Exception,
+                    Success = false,
+                    Message = new List<string> { Message.Exception },
+                    Data = null
                 });
             }
         }

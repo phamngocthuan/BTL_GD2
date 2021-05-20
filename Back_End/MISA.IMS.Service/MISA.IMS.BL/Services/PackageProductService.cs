@@ -46,18 +46,13 @@ namespace MISA.IMS.BL.Services
         {
             var apiResult = new APIResult();
             var errorResult = new ErrorResult();
-            var res = _packageProductRepository.GetPackageProductCode(productCode).Result;
+            var res = await _packageProductRepository.GetPackageProductCode(productCode);
             if (res == null)
             {
                 apiResult.Success = false;
-                apiResult.Data = new ErrorResult
-                {
-                    DevMsg = DevMsg.No_Content,
-                    ErrorCode = ErrorCode.No_Content,
-                    MoreInfo = MoreInfo.Help,
-                    UserMsg = UserMsg.Help,
-                    TraceId = TracerID.Id
-                };
+                apiResult.Data = null;
+                apiResult.MessageCode = MessageCode.NoContent;
+                apiResult.Message = new List<string> { Message.NoContent };
             }
             else
             {

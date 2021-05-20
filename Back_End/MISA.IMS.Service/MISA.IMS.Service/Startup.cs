@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,6 +41,21 @@ namespace MISA.IMS.Service
             services.AddControllers();
             services.AddVersioning();
             services.AddLifeTimeServices(Configuration);
+            /*services.AddMvc()
+                .ConfigureApiBehaviorOptions(options => {
+                    //options.SuppressModelStateInvalidFilter = true;
+                    options.InvalidModelStateResponseFactory = actionContext =>
+                    {
+                        var modelState = actionContext.ModelState.Values;
+                        return new BadRequestObjectResult(FormatOutput(modelState));
+                    };
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }*/
+            services.AddMvc()
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

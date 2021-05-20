@@ -6,78 +6,46 @@ import {getQueryParam} from '../../constants/CommonFunction'
  */
 const ContractApi = {
     get : async(contractID, success, failure) => {
-        try {
-            const res = await callApi.get(`api/v1/contracts/${contractID}`)
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+        const res = await callApi.get(`api/v1/contracts/${contractID}`)
+        let response =    res.data;
+        return response;
 
     },
     post : async (data, success, failure) =>  {
-        try {
-            const res = await callApi.post(`api/v1/contracts`,data)
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+        const res = await callApi.post(`api/v1/contracts`,data)
+        let response =    res.data;
+        return response;
     },
     update : async (contractID, data, success, failure) =>  {
-        try {
             const res = await callApi.put(`api/v1/contracts/${contractID}`,data)
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+            let response =    res.data;
+            return response;
     },
     delete :  async (codes, success, failure) =>  {
-        try {
-            const res = await callApi.delete(`api/v1/contracts`,
-            {data : codes}
-            )
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+        const res = await callApi.delete(`api/v1/contracts`,{data : codes})
+        let response =    res.data;
+        return response;
     },
     filter :  async(body, headerParem, success, failure) => {
         var url = "api/v1/contracts/filter" + getQueryParam(headerParem);
-        try {
-            const res = await callApi.post(url ,
-            body
-            )
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+        const res = await callApi.post(url ,
+        body
+        )
+        let response =    res.data;
+        return response;
     }, 
     getByCode : async (codeRequired, success, failure) => {
         var url = `api/v1/contracts/code?codeRequired=${codeRequired}`;
-
-        try {
-            const res = await callApi.get(url 
-            )
-            if(success) success(res)
-        }
-        catch (ex){
-            if(failure) failure(ex?.response?.data);
-        }
+        const res = await callApi.get(url)
+        let response = res.data;
+        return response;
+       
     },
     sendRequest : async(codeRequired, status, success, failure) => {
-        try {
-            const res = await callApi.put(`api/v1/contracts/status?status=${status}`,
-                 codeRequired
-            )
-            if(success) success(res);
-        }
-        catch(ex){
-            if(failure) failure(ex?.response?.data);
-        }
+
+        const res = await callApi.put(`api/v1/contracts/status?status=${status}`,codeRequired)
+        let response =    res.data;
+        return response;
     }
 }
 export default ContractApi;

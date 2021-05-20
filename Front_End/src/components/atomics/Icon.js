@@ -9,6 +9,7 @@ import IconDownload from './Icons/IconDownload'
 import IconModify from './Icons/IconModify'
 import IconCancel from './Icons/IconCancel'
 import IconDone from './Icons/IconDone'
+import IconSend from './Icons/IconSend'
 /**
  * Component Icon
  * @param {*} props 
@@ -37,6 +38,8 @@ const Icon = (props) => {
             return <IconCancel {...props} />;
         case 'IconDone':
             return <IconDone {...props} />;
+        case 'IconSend': 
+            return <IconSend {...props} />;
         default : 
             return <Pointer {...props} />;
     }

@@ -301,7 +301,7 @@ function ListTable(props) {
                   // dispatch(setDataModal({data : selectedRows[le - 1]}))
                   // dispatch(setDataTabPane({data : selectedRows[le - 1]}))
       },
-      onSelect : (record, selected) => {
+      onSelect : async (record, selected) => {
         console.log("select one", selected)
         if(selected){
           let arr = [...indexSelected, record.codeRequired];
@@ -316,11 +316,11 @@ function ListTable(props) {
           setSelectedRowKeys(arr);
           dispatch(setIndexSelectedTable({indexSelected : arr }))
           dispatch(setDataSelectedTable({data : newDataSelected}))
-          dispatch(setDataTabPane({data : {}}))
+          if(newDataSelected.length > 0){
+            dispatch(setDataTabPane({data : newDataSelected[0]}))
+          }else 
+            dispatch(setDataTabPane({data : {}}))
         }
-      },
-      onSelectNone : () => {
-        console.log("Clear");
       },
       onSelectAll : (selected, selectedRows, changeRows) => {
         console.log(changeRows)
@@ -355,10 +355,10 @@ function ListTable(props) {
     })
     
     useEffect(() => {
-      if(loading)
-        setChange([])
+      if(dataSelected && dataSelected.length == 0)
+        setSelectedRowKeys([])
       return () => {}
-    },[loading])
+    },[dataSelected])
     //const selectedRowKeys = []
 
   return (
@@ -374,7 +374,7 @@ function ListTable(props) {
           dataSource={[ ...dataSource]}
           rowClassName={(record, index) => {
             
-            var arr = dataSelected.filter((item) => item.codeRequired  === record.codeRequired);
+            var arr = indexSelected.filter((item) => item.codeRequired  === record.codeRequired);
             return arr.length > 0 ? `table-row-select color-${status} ` : `color-${status}`;
           } }
           pagination={
@@ -394,7 +394,7 @@ function ListTable(props) {
               current : current
             }
           }
-          scroll={{ x: 1500, y : 520 }}
+          scroll={{ x: 1450, y : 520 }}
           // click 1 dòng
           // onRow={(record, index) => {
           //   return {

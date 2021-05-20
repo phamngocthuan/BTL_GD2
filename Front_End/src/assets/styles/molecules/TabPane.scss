@@ -5,35 +5,39 @@
     height: 30px;
 }
 .t-left {
-    width: 40%;
+    width: 25%;
     margin-right: 20px;
     font-size: 16px;
     display: block;
 }
-.t-left > div {
-    height: 26px;
-}
+
 .t-right {
-    width: 40%;
+    width: 36%;
     margin-right: 20px;
     font-size: 16px;
     display: block;
 }
 .dt-left {
-    width: 30%;
+    width: 36%;
     color : #000;
     font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: normal;
+    // text-overflow: ellipsis;
 }
 .dt-right {
-    width: 70%;
+    width: 60%;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    padding-right: 10px;
+    padding-left: 10px;
 }
-.h-w{
-    height: 20p;
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    font-size: 16px;
+}
+.ant-tabs-tab-btn{
+    font-size: 16px;
+}
+.ant-tabs-content-holder {
+    max-height: 180px;
+    overflow-y: scroll;
 }

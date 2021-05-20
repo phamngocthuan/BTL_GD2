@@ -2,7 +2,7 @@ import 'antd/dist/antd.css';
 
 import { Modal, Button } from 'antd';
 import Draggable from 'react-draggable';
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, useCallback} from 'react'
 import '../../assets/styles/molecules/Modal.scss'
 import ValidateForm from '../molecules/Form'
 import ButtonIcon from '../atomics/Button'
@@ -43,7 +43,7 @@ export default function ModalDraggable(props)  {
   };
 
   // Click Hủy , reset lại vị trí
-  const clickCancel = e => {
+  const clickCancel =  (e) => {
     form.resetFields();
     setBounds( { left: 0, top: 0, bottom: 0, right: 0 })
     handleCancel();
@@ -64,7 +64,7 @@ export default function ModalDraggable(props)  {
 
 
   // onSubmit , reset data của modal
-  const onSubmit = (obj) => {
+  const onSubmit =  (obj) => {
     form.resetFields();
     const newObj = {...instance, ...obj};
     handleOk(newObj);
@@ -82,29 +82,30 @@ export default function ModalDraggable(props)  {
   const onCancel = () => {
     clickCancel();
   }
-
+  // fetch product code
+  const fetchCode = useCallback(async () => {
+    const response = await ProductApi.getCodes();
+    if(response.success){
+      setProductCodeData(response.data);
+    }
+  }, [])
   // hàm chạy 1 lần duy nhất lấy mã sản phẩm
   useEffect(()=> {
-    ProductApi.getCodes(
-      (res) => {
-        setProductCodeData(res.data);
-      },(err) => {
-          console.log(err);
-      }
-    )
-    return () => {}
-  },[])
+    fetchCode();
+  },[fetchCode])
 
+
+ 
   // Lấy data  về city khi thêm mới
   useEffect(() => {
-    LocsApi.getCity(1,
-        async (res) => {
-            let result = res.data.map(a => a.locationName);
-            setDataCity(result)
-        },
-        (err) => {}
-        )
-},[])
+      LocsApi.getCity(1,
+          async (res) => {
+              let result = res.data.map(a => a.locationName);
+              setDataCity(result)
+          },
+          (err) => {}
+          )
+  },[])
 
     return (
       <>

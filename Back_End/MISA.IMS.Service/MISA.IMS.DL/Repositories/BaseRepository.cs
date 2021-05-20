@@ -120,16 +120,7 @@ namespace MISA.IMS.DL.Repositories
         /// Created by : pnthuan(11/5/2021)
         public virtual async  Task<IEnumerable<T>> GetAllEntity()
         {
-            /*var sql = "";
 
-            sql = $"SELECT * FROM {_tableName};";*/
-            /*List<T> res = new List<T>();
-            using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
-            {
-               res = _dbContext.QueryProc("Proc_GetContracts");
-                return null;
-            }*/
-            /*return await GetEntitiesAsync(sql);*/
             throw new NotImplementedException();
         }
 
@@ -188,10 +179,10 @@ namespace MISA.IMS.DL.Repositories
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
-                
 
-                var sqlText = new StringBuilder($"DELETE FROM {_tableName} WHERE CodeRequired IN @codeRequireds;");
-                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { codeRequireds });
+                int status = (int)StatusContract.APPROVED;
+                var sqlText = new StringBuilder($"DELETE FROM {_tableName} WHERE Status != @status AND CodeRequired IN @codeRequireds;");
+                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { status, codeRequireds  });
                 return res;
             }
         }
@@ -214,7 +205,7 @@ namespace MISA.IMS.DL.Repositories
                 var fields = new List<string>();
                 var requests = new List<Request>();
 
-                //
+                // 
                 if( listRequest.FieldNames != null)
                 {
                     foreach (var property in properties)
@@ -279,7 +270,7 @@ namespace MISA.IMS.DL.Repositories
                         }
                         sqlText.Remove(sqlText.ToString().LastIndexOf(" AND "), 5);
                     }
-                    sqlText.Append("ORDER BY CreatedDate DESC ");
+                    sqlText.Append("ORDER BY ModifiedDate DESC ");
                     sqlText.Append("LIMIT @limit OFFSET @offset");
                     
                     _dbContext._sqlCommand.Parameters.Add(new MySqlParameter($"limit", limit));
@@ -399,24 +390,17 @@ namespace MISA.IMS.DL.Repositories
         /// <param name="entity">Đối tượng cập nhật</param>
         /// <returns></returns>
         /// Created by : pnthuan(11/5/2021)
-        public async Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int status, string modifiedBy)
+        public async Task<int> UpdateStatus(IEnumerable<string> codeRequireds, int beforeStatus, int afterStatus, string modifiedBy)
         {
             using (var _dbContext = _dapperDBContextFactory.CreateDatabaseContext(ConnectionString))
             {
 
-                /*var proc = new StringBuilder($"Proc_UpdateStatus");
-                var res = await _dbContext._dbConnection.ExecuteAsync(proc.ToString(), new { ContractID = id, Status = status }, commandType: CommandType.StoredProcedure);
-                return res;*/
-                var sqlText = new StringBuilder($"UPDATE {_tableName}  c SET c.Status = @status, c.ModifiedBy = @modifiedBy WHERE CodeRequired IN @codeRequireds;");
-                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new {status,  codeRequireds, modifiedBy });
+                var modifiedDate = DateTime.UtcNow;
+                var sqlText = new StringBuilder($"UPDATE {_tableName}  c SET c.Status = @afterStatus, c.ModifiedBy = @modifiedBy, c.ModifiedDate = @modifiedDate WHERE c.Status = @beforeStatus AND CodeRequired IN @codeRequireds;");
+                var res = await _dbContext.ExecuteAsync(sqlText.ToString(), new { afterStatus,  codeRequireds, modifiedBy , beforeStatus , modifiedDate});
                 return res;
             }
         }
-        
-        
-        
-
-
         #endregion
     }
 }

@@ -17,7 +17,7 @@ const action = [
     {title: "Thêm yêu cầu", nameIcon: "Pointer", state : "Add", content : "Thêm yêu cầu"},
     {title: "Sửa", nameIcon: "IconModify", state : "Modified", content : "Sửa"},
     {title: "Xóa", nameIcon: "IconDelete", state : "Delete", content : "Xóa"},
-    {title: "Gửi yêu cầu", nameIcon : "Poinert" , state : "Sending", content : "Gửi yêu cầu"}
+    {title: "Gửi yêu cầu", nameIcon : "IconSend" , state : "Sending", content : "Gửi yêu cầu"}
 ]
 const status = [
     {status : 'Chưa gửi', color : '#007b00'},
@@ -76,7 +76,7 @@ function Manipulation(props) {
         if(state === "Add"){
             await form.resetFields();
             setInstance({})
-            dispatch(setDataModal({data : a}))
+            dispatch(setDataModal({data : {}}))
             dispatch(setTitleModal({title : obj.title}))
             dispatch(setMethodModal({method : obj.method}))
             dispatch(setShowModal({isShow : obj.isShow}))
@@ -86,15 +86,14 @@ function Manipulation(props) {
                     Notification("error","Lỗi","Chưa chọn bản ghi")
                 }else if(statusTable  === "UNSENT" && state === "Sending" && dataSelected.length > 0  ){
                     var codes = dataSelected.map((item) => item.codeRequired.toString())
-                    ContractApi.sendRequest(codes,0,
-                        (res)=> {
-                            Notification("success", "Thành công", "Gửi yêu cầu thành công")
+                    const response = await ContractApi.sendRequest(codes,0);
+                    if(response.success){
+                            Notification("success", "Thành công", response.message[0])
                             dispatch(setLoadData({loadData : true}))
-                        },
-                        (err) =>{
-                            Notification("error","Lỗi", err.moreInfo)
-                        }
-                    )
+                    }else {
+                        Notification("error","Lỗi", response.message[0])
+                    }
+                    
                 }
                  else
                 if(dataSelected.length > 1){
@@ -108,17 +107,18 @@ function Manipulation(props) {
                             Notification('error',"Lỗi", "Bản ghi đã được gửi yêu cầu")
                         }else{
                            
-                            ///////////////////////
-                            ContractApi.getByCode(dataSelected[0].codeRequired, async (res) => {
-                                await setInstance(res.data.data)
-                                form.setFieldsValue(res.data.data)
-                                dispatch(setDataModal({data : res.data.data}))
+                            let response = await ContractApi.getByCode(dataSelected[0].codeRequired);
+                            if( response.success){
+                                setInstance(response.data)
+                                form.setFieldsValue(response.data)
+                                dispatch(setDataModal({data : response.data}))
                                 dispatch(setTitleModal({title : obj.title}))
                                 dispatch(setMethodModal({method : obj.method}))
                                 dispatch(setShowModal({isShow : obj.isShow}))
-                            },(err) => {
-                                Notification("error","Lỗi",err.moreInfo)
-                            })
+                            }else {
+                                Notification("error","Lỗi",response.message[0])
+                            }
+                            
                         }
                     }
                     else
@@ -151,16 +151,18 @@ function Manipulation(props) {
                         switch(state) {
 
                             case "Modified" : 
-                                ContractApi.getByCode(dataSelected[0].codeRequired, async (res) => {
-                                    await setInstance(res.data.data)
-                                    form.setFieldsValue(res.data.data)
-                                    dispatch(setDataModal({data : res.data.data}))
+                                let response = await ContractApi.getByCode(dataSelected[0].codeRequired);
+                                if(response.success){
+                                    await setInstance(response.data)
+                                    form.setFieldsValue(response.data)
+                                    dispatch(setDataModal({data : response.data}))
                                     dispatch(setTitleModal({title : obj.title}))
                                     dispatch(setMethodModal({method : obj.method}))
                                     dispatch(setShowModal({isShow : obj.isShow}))
-                                },(err) => {
-                                    Notification("error","Lỗi",err.moreInfo)
-                                })
+                                }else {
+                                    Notification("error","Lỗi",response.message[0])
+                                }
+                                
                                 break;
                         }
                         
@@ -179,16 +181,13 @@ function Manipulation(props) {
      */
     const handleDelete = async () => {
             var codes = dataSelected.map((item) => item.codeRequired.toString());
-            await ContractApi.delete(codes, 
-                (res) => {
-                    Notification("success","Thành công", "Xóa thành công");
+            let response = await ContractApi.delete(codes);
+            if(response.success){
+                    Notification("success","Thành công", response.message[0]);
                     dispatch(setLoadData({loadData : true}))
-                },(err) => {
-                    
-                    Notification("error","Lỗi", err.moreInfo)
-                }
-                )
-       
+            }else {
+                Notification("error","Lỗi", response.message[0])
+            }    
         
     }
     ///Hiên thị khi click vào xóa
@@ -261,36 +260,33 @@ function Manipulation(props) {
      * @param {*} obj 
      * @author pnthuan(17/5/2021)
      */
-    const handleSubmit = (obj) => {
-        console.log('hello')
-        if(methodModal === "Add")
-            ContractApi.post(
-                obj, 
-                (res) => {
-                    Notification("success","Thành công", "Thêm thành công");
-                    dispatch(setLoadData({loadData : true}))  
-
-                },(err) => {
-                    
-                    Notification("error","Lỗi", err.moreInfo)
-                }
-                
-                )
+    const handleSubmit = async (obj) => {
+        dispatch(setShowModal({isShowModal : false}))
+        
+        if(methodModal === "Add"){
+            let response = await ContractApi.post(obj);
+            if(response.success){
+                Notification("success","Thành công", response.message[0]);
+                dispatch(setLoadData({loadData : true})) 
+            }else {
+                Notification("error","Lỗi", response.message[0])
+            }
+        }
+            
         if(methodModal === "Modified")
-            ContractApi.update(
-                obj.contractID,
-                obj, 
-                (res) => {
-                    Notification("success","Thành công", "Sửa thành công");
+        {
+            let response = await ContractApi.update(obj.contractID, obj);
+            if(response.success){
+                    Notification("success","Thành công", response.message[0]);
                     dispatch(setLoadData({loadData : true}))
-                },(err) => {
-                    Notification("error","Lỗi", err.moreInfo)
-                }
-                
-                )
+            }else {
+                Notification("error","Lỗi", response.message[0])
+            }
+        }
+        setInstance({})
         dispatch(setTitleModal({title : ""}))
         dispatch(setMethodModal({method : "Add"}))
-        dispatch(setShowModal({isShowModal : false}))
+        
         // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
 
@@ -298,20 +294,11 @@ function Manipulation(props) {
      * Hàm click Hủy thao tác : thêm , sửa , xóa
      * @author pnthuan(19/5/2021)
      */
-    const  handleCancel = async  () => {
-        await setInstance({
-            codeRequired : '',
-            codeProjectSales : '',
-            nameProjectSales : '',
-            numberContract : '',
-            productCode : '',
-            createdDate : '',
-            packageProductCode : '',
-        })
+    const  handleCancel =   () => {
+        setInstance({})
         //Reset lại Modal
         dispatch(setTitleModal({title : ""}))
         dispatch(setShowModal({isShowModal : false}))
-        // dispatch(setIndexSelectedTable({indexSelected : -1}))
     }
 
 
