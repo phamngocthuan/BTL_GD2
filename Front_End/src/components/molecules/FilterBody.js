@@ -256,7 +256,7 @@ function FilterBody(props) {
                                 onClick={() => addFilter()}
                             >Lấy dữ liệu</Button>
                         </div>
-                        {
+                        {/* {
                             dataSelected.length > 0 && 
                             <div className="remove-selected">
                             <Button
@@ -266,7 +266,7 @@ function FilterBody(props) {
                             </Button>
                         </div>
                         }
-                        
+                         */}
                 </div>
                 
             </div>

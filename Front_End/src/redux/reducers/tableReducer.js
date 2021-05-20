@@ -29,30 +29,24 @@ const initialState = {
             status : action.payload.status
         }
         case DATA_SELECTED : 
-        var arr = state.dataSelected.filter((item) => item.codeRequired === action.payload.data.codeRequired)
-        if(arr.length == 0) {
+       // var arr = state.dataSelected.filter((item) => item.codeRequired === action.payload.data.codeRequired)
+        // if(arr.length == 0) {
             return {
                 ...state,
-                dataSelected : [...state.dataSelected, action.payload.data]
+                dataSelected : [...action.payload.data]
             }
-        }else{
-            return {
-                ...state
-            };
-        }
-            
+        // }else{
+        //     return {
+        //         ...state
+        //     };
+        // }
         case INDEX_SELECTED : 
-        var arr = state.indexSelected.filter((item) => item === action.payload.indexSelected);
-        if(arr.length == 0){
+
             return {
                 ...state,
-                indexSelected : [...state.indexSelected, action.payload.indexSelected]
+                indexSelected : [...action.payload.indexSelected]
             }
-        }else{
-            return {
-                ...state
-            };
-        }
+        
         case STATUS_TABLE : 
         return {
             ...state, 

@@ -110,28 +110,22 @@ export default function ValidateForm (props){
     //Hàm lấy thông tin về local khi modal show 
     useEffect(() => {
       if(isShow){
-        debugger
+        
         if(data.city){
           // TH1 : District null( ward có thể null , hoặc khác null) -> get data district, ward
           // Lấy quận huyện
-          if(!data.district){
+          if(data.district != null || data.district == ""){
+            debugger
             LocsApi.getDistrict(2, data.city ,async  (res) => {
-              let result = res.data.map(a => a.locationName)
-  
+              let result = res.data.map(a => a.locationName) 
               setDistrictData(result)
-              LocsApi.getWard(3, result[0],async (res) => {
-                let result1 = res.data.map(a => a.locationName)
-                setWardData(result1)
-                }, (err) => {
-                    console.log(err)
-                })
+                
             },
             (err) => {
               console.log(res);
             }
             )
           }
-          else
           // TH2 : District != null -> get data ward
           if(!data.ward){
             LocsApi.getWard(3, data.district ,async (res) => {
@@ -141,6 +135,24 @@ export default function ValidateForm (props){
                   console.log(err)
               })
           }
+          // else if(!data.district && !data.ward){
+              
+          //     LocsApi.getDistrict(2, data.city ,async  (res) => {
+          //       let result =  res.data.map(a => a.locationName)
+          //       setDistrictData(result)
+          //     },
+          //     (err) => {
+          //       console.log(res);
+          //     }
+          //     )
+          //     LocsApi.getWard(3, data.ward,async (res1) => {
+          //       let result1 =  res1.data.map(a => a.locationName)
+          //       setWardData(result1)
+          //       }, (err) => {
+          //           console.log(err);
+          //     })
+          // }
+          
         }else {
           setWardData([])
           setDistrictData([])
